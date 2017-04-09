@@ -306,7 +306,7 @@ namespace RestServer
 
 				if(jsn.PutGet == "G")
 				{
-					var mac = Db.SQL<MAC>("select ttt from MAC ttt");
+					var mac = Db.SQL<MAC>("select ttt from PPDB.MAC ttt");
 					var i = 0;
 					foreach(var f in mac)
 					{
