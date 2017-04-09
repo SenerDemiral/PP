@@ -307,6 +307,7 @@ namespace RestServer
 				if(jsn.PutGet == "G")
 				{
 					var mac = Db.SQL<MAC>("select t from MAC t");
+					var i = 0;
 					foreach(var f in mac)
 					{
 						jsn.ONo = (long)f.GetObjectNo();
