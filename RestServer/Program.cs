@@ -101,7 +101,7 @@ namespace RestServer
 
 				if(jsn.PutGet == "G")
 				{
-					var oyn = Db.SQL<OYN>("select t from OYN");
+					var oyn = Db.SQL<OYN>("select t from OYN t");
 					foreach(var f in oyn)
 					{
 						jsn.ONo = (long)f.GetObjectNo();
@@ -148,7 +148,7 @@ namespace RestServer
 
 				if(jsn.PutGet == "G")
 				{
-					var tkm = Db.SQL<TKM>("select t from TKM");
+					var tkm = Db.SQL<TKM>("select t from TKM t");
 					foreach(var f in tkm)
 					{
 						jsn.ONo = (long)f.GetObjectNo();
@@ -192,7 +192,7 @@ namespace RestServer
 
 				if(jsn.PutGet == "G")
 				{
-					var trn = Db.SQL<TRN>("select t from TRN");
+					var trn = Db.SQL<TRN>("select t from TRN t");
 					foreach(var f in trn)
 					{
 						jsn.ONo = (long)f.GetObjectNo();
@@ -238,7 +238,7 @@ namespace RestServer
 
 				if(jsn.PutGet == "G")
 				{
-					var msb = Db.SQL<MSB>("select t from TKM");
+					var msb = Db.SQL<MSB>("select t from TKM t");
 					foreach(var f in msb)
 					{
 						jsn.ONo = (long)f.GetObjectNo();
@@ -306,7 +306,7 @@ namespace RestServer
 
 				if(jsn.PutGet == "G")
 				{
-					var mac = Db.SQL<MAC>("select t from MAC");
+					var mac = Db.SQL<MAC>("select t from MAC t");
 					foreach(var f in mac)
 					{
 						jsn.ONo = (long)f.GetObjectNo();
