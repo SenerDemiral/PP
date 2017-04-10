@@ -238,7 +238,7 @@ namespace RestServer
 
 				if(jsn.PutGet == "G")
 				{
-					var msb = Db.SQL<MSB>("select t from TKM t");
+					var msb = Db.SQL<MSB>("select t from MSB t");
 					foreach(var f in msb)
 					{
 						jsn.ONo = (long)f.GetObjectNo();
