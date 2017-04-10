@@ -10,7 +10,8 @@ namespace WinClient
 	{
 		public string PutGet;
 		public long newONo;
-		
+		public int NOR;
+
 		public long ONo;
 		public string Stu;
 		public string Ad;
@@ -19,7 +20,8 @@ namespace WinClient
 		public Trn()
 		{
 			PutGet = "P";
-			newONo = 0;	// Eger ONo (-) gitmis ise SCden duzeltilmis deger gelir
+			newONo = 0; // Eger ONo (-) gitmis ise SCden duzeltilmis deger gelir
+			NOR = 0;    //Number of Record left
 		}
 	}
 
@@ -27,7 +29,8 @@ namespace WinClient
 	{
 		public string PutGet;
 		public long newONo;
-		
+		public int NOR;
+
 		public long ONo;
 		public string Stu;
 		public string Ad;
@@ -36,6 +39,7 @@ namespace WinClient
 		{
 			PutGet = "P";
 			newONo = 0;
+			NOR = 0;    //Number of Record left
 		}
 	}
 
@@ -43,7 +47,8 @@ namespace WinClient
 	{
 		public string PutGet;
 		public long newONo;
-		
+		public int NOR;
+
 		public long ONo;
 		public string Stu;
 		public string Ad;
@@ -53,6 +58,7 @@ namespace WinClient
 		{
 			PutGet = "P";
 			newONo = 0;
+			NOR = 0;    //Number of Record left
 			Sex = "E";
 		}
 	}
@@ -61,7 +67,8 @@ namespace WinClient
 	{
 		public string PutGet;
 		public long newONo;
-		
+		public int NOR;
+
 		public long ONo;
 		public string Stu;
 		public long TrnONo;
@@ -77,6 +84,7 @@ namespace WinClient
 		{
 			PutGet = "P";
 			newONo = 0;
+			NOR = 0;    //Number of Record left
 		}
 	}
 

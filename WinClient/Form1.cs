@@ -16,7 +16,6 @@ namespace WinClient
 	{
 		public long TrnOno = 0;
 
-		private static WebSocket ws    = new WebSocket("ws://rest.masatenisi.online/wsConnect");
 		private static WebSocket wsTkm = new WebSocket("ws://rest.masatenisi.online/wsTkmConnect");
 		private static WebSocket wsOyn = new WebSocket("ws://rest.masatenisi.online/wsOynConnect");
 		private static WebSocket wsTrn = new WebSocket("ws://rest.masatenisi.online/wsTrnConnect");
@@ -78,14 +77,16 @@ namespace WinClient
 		{
 			Oyn d = JsonConvert.DeserializeObject<Oyn>(e.Data);
 			queriesTableAdapter.OYN_MDF(d.PutGet, d.newONo, d.ONo, d.Stu, d.Ad, d.Sex);
-			textBox1.Invoke(new Action(() => textBox1.AppendText($">> {i} {d.ONo}\r\n")));
+			label1.Invoke(new Action(() => label1.Text = $"{d.PutGet} -> {d.NOR - 1}"));
+			textBox1.Invoke(new Action(() => textBox1.AppendText($" {d.PutGet} -> {d.NOR} {d.ONo}\r\n")));
 		}
 
 		private void wsTkm_OnMessage(object sender, MessageEventArgs e)
 		{
 			Tkm d = JsonConvert.DeserializeObject<Tkm>(e.Data);
 			queriesTableAdapter.TKM_MDF(d.PutGet, d.newONo, d.ONo, d.Stu, d.Ad);
-			textBox1.Invoke(new Action(() => textBox1.AppendText($">> {i} {d.ONo}\r\n")));
+			label1.Invoke(new Action(() => label1.Text = $"{d.PutGet} -> {d.NOR - 1}"));
+			textBox1.Invoke(new Action(() => textBox1.AppendText($" {d.PutGet} -> {d.NOR} {d.ONo}\r\n")));
 		}
 
 		private void wsTrn_OnMessage(object sender, MessageEventArgs e)
@@ -95,24 +96,24 @@ namespace WinClient
 			
 			Trn d = JsonConvert.DeserializeObject<Trn>(e.Data);
 			queriesTableAdapter.TRN_MDF(d.PutGet, d.newONo, d.ONo, d.Stu, d.Ad, d.Tarih);
-			textBox1.Invoke(new Action(() => textBox1.AppendText($">> {i} {d.ONo}\r\n")));
+			label1.Invoke(new Action(() => label1.Text = $"{d.PutGet} -> {d.NOR - 1}"));
+			textBox1.Invoke(new Action(() => textBox1.AppendText($" {d.PutGet} -> {d.NOR} {d.ONo}\r\n")));
 		}
 
 		private void wsMsb_OnMessage(object sender, MessageEventArgs e)
 		{
 			Msb d = JsonConvert.DeserializeObject<Msb>(e.Data);
 			queriesTableAdapter.MSB_MDF(d.PutGet, d.newONo, d.ONo, d.Stu, d.TrnONo, d.Tarih, d.Skl, d.Ktg, d.Rnd, d.Grp, d.HmTkmONo, d.GsTkmONo);
-			textBox1.Invoke(new Action(() => textBox1.AppendText($">> {d.PutGet} {i} {d.ONo}\r\n")));
+			label1.Invoke(new Action(() => label1.Text = $"{d.PutGet} -> {d.NOR - 1}"));
+			textBox1.Invoke(new Action(() => textBox1.AppendText($" {d.PutGet} -> {d.NOR} {d.ONo}\r\n")));
 		}
-		int i = 0;
-		
+
 		private void wsMac_OnMessage(object sender, MessageEventArgs e)
 		{
-			i++;
 			Mac d = JsonConvert.DeserializeObject<Mac>(e.Data);
-			//label1.Invoke(new Action(() => label1.Text = i.ToString() + "  " + d.TrnONo));
-			textBox1.Invoke(new Action(() => textBox1.AppendText($">> {d.PutGet} {d.NOR} {d.ONo}\r\n")));
 			//queriesTableAdapter.MAC_MDF(d.PutGet, d.newONo, d.ONo, d.Stu, d.TrnONo, d.MsbONo, d.Ktg, d.Sra, d.HmOyn1ONo, d.HmOyn2ONo, d.GsOyn1ONo, d.GsOyn2ONo, d.Set1HmSyi, d.Set1GsSyi, d.Set2HmSyi, d.Set2GsSyi, d.Set3HmSyi, d.Set3GsSyi, d.Set4HmSyi, d.Set4GsSyi, d.Set5HmSyi, d.Set5GsSyi, d.Set6HmSyi, d.Set6GsSyi, d.Set7HmSyi, d.Set7GsSyi);
+			label1.Invoke(new Action(() => label1.Text = $"{d.PutGet} -> {d.NOR-1}"));
+			textBox1.Invoke(new Action(() => textBox1.AppendText($" {d.PutGet} -> {d.NOR} {d.ONo}\r\n")));
 		}
 
 		#endregion
@@ -123,15 +124,16 @@ namespace WinClient
 		{
 			textBox1.AppendText("\r\nTakmlar\r\n");
 
-			if(ws.ReadyState != WebSocketState.Open)
-				ws.Connect();
-
-			// Client -> Server'a GetRequest gonderir, record wsTkm_OnMessage da gelir
 			if(wsTkm.ReadyState != WebSocketState.Open)
 				wsTkm.Connect();
 
-			if(ws.ReadyState == WebSocketState.Open && wsTkm.ReadyState == WebSocketState.Open)
-				ws.Send("GetTKM");
+			if(wsTkm.ReadyState == WebSocketState.Open)
+			{
+				var obj = new Tkm();
+				obj.PutGet = "G";
+				string output = JsonConvert.SerializeObject(obj);
+				wsTkm.Send(output);
+			}
 			else
 				textBox1.AppendText("--X\r\n");
 		}
@@ -140,15 +142,16 @@ namespace WinClient
 		{
 			textBox1.AppendText("\r\nOyuncular\r\n");
 
-			if(ws.ReadyState != WebSocketState.Open)
-				ws.Connect();
-
-			// Client -> Server'a GetRequest gonderir, record wsTkm_OnMessage da gelir
 			if(wsOyn.ReadyState != WebSocketState.Open)
 				wsOyn.Connect();
 
-			if(ws.ReadyState == WebSocketState.Open && wsOyn.ReadyState == WebSocketState.Open)
-				ws.Send("GetOyn");
+			if(wsOyn.ReadyState == WebSocketState.Open)
+			{
+				var obj = new Oyn();
+				obj.PutGet = "G";
+				string output = JsonConvert.SerializeObject(obj);
+				wsOyn.Send(output);
+			}
 			else
 				textBox1.AppendText("--X\r\n");
 		}
@@ -157,14 +160,16 @@ namespace WinClient
 		{
 			textBox1.AppendText("\r\nTurnuvalar\r\n");
 			
-			if(ws.ReadyState != WebSocketState.Open)
-				ws.Connect();
-
 			if(wsTrn.ReadyState != WebSocketState.Open)
 				wsTrn.Connect();
 
-			if(ws.ReadyState == WebSocketState.Open && wsTrn.ReadyState == WebSocketState.Open)
-				ws.Send("GetTRN");
+			if(wsTrn.ReadyState == WebSocketState.Open)
+			{
+				var obj = new Trn();
+				obj.PutGet = "G";
+				string output = JsonConvert.SerializeObject(obj);
+				wsTrn.Send(output);
+			}
 			else
 				textBox1.AppendText("--X\r\n");
 		}
@@ -173,15 +178,16 @@ namespace WinClient
 		{
 			textBox1.AppendText("\r\nMüsabakalar\r\n");
 			
-			if(ws.ReadyState != WebSocketState.Open)
-				ws.Connect();
-
-			// Client -> Server'a GetRequest gonderir, record wsTkm_OnMessage da gelir
 			if(wsMsb.ReadyState != WebSocketState.Open)
 				wsMsb.Connect();
 
-			if(ws.ReadyState == WebSocketState.Open && wsMsb.ReadyState == WebSocketState.Open)
-				ws.Send("GetMsb");
+			if(wsMsb.ReadyState == WebSocketState.Open)
+			{
+				var obj = new Msb();
+				obj.PutGet = "G";
+				string output = JsonConvert.SerializeObject(obj);
+				wsMsb.Send(output);
+			}
 			else
 				textBox1.AppendText("--X\r\n");
 		}
@@ -196,9 +202,9 @@ namespace WinClient
 
 			if(wsMac.ReadyState == WebSocketState.Open)
 			{
-				var mac = new Mac();
-				mac.PutGet = "G";
-				string output = JsonConvert.SerializeObject(mac);
+				var obj = new Mac();
+				obj.PutGet = "G";
+				string output = JsonConvert.SerializeObject(obj);
 				wsMac.Send(output);
 			}
 			else
@@ -223,12 +229,14 @@ namespace WinClient
 
 				foreach(DataSet1.TKMRow row in ds.TKM.Rows)
 				{
-					var tkm = new Tkm();
-					tkm.ONo = row.ONO;
-					tkm.Stu = row.STU;
-					tkm.Ad = row.AD;
+					var obj = new Tkm();
+					obj.NOR = nor--;
 
-					string output = JsonConvert.SerializeObject(tkm);
+					obj.ONo = row.ONO;
+					obj.Stu = row.STU;
+					obj.Ad = row.AD;
+
+					string output = JsonConvert.SerializeObject(obj);
 					wsTkm.Send(output);
 				}
 			}
@@ -250,13 +258,15 @@ namespace WinClient
 
 				foreach(DataSet1.OYNRow row in ds.OYN.Rows)
 				{
-					var oyn = new Oyn();
-					oyn.ONo = row.ONO;
-					oyn.Stu = row.STU;
-					oyn.Ad = row.AD;
-					oyn.Sex = row.SEX;
+					var obj = new Oyn();
+					obj.NOR = nor--;
+					
+					obj.ONo = row.ONO;
+					obj.Stu = row.STU;
+					obj.Ad = row.AD;
+					obj.Sex = row.SEX;
 
-					string output = JsonConvert.SerializeObject(oyn);
+					string output = JsonConvert.SerializeObject(obj);
 					wsOyn.Send(output);
 				}
 			}
@@ -284,12 +294,14 @@ namespace WinClient
 
 				foreach(DataSet1.TRNRow row in ds.TRN.Rows)
 				{
-					var trn = new Trn();
-					trn.ONo = row.ONO;
-					trn.Stu = row.STU;
-					trn.Ad = row.AD;
+					var obj = new Trn();
+					obj.NOR = nor--;
 
-					string output = JsonConvert.SerializeObject(trn);
+					obj.ONo = row.ONO;
+					obj.Stu = row.STU;
+					obj.Ad = row.AD;
+
+					string output = JsonConvert.SerializeObject(obj);
 					wsTrn.Send(output);
 				}
 			}
@@ -316,22 +328,23 @@ namespace WinClient
 
 				foreach(DataSet1.MSBRow row in ds.MSB.Rows)
 				{
-					var msb = new Msb();
-					
-					msb.ONo = row.ONO;
-					msb.Stu = row.STU;
-					msb.TrnONo = row.TRNONO;
-					
-					msb.Tarih = row.TRH.ToString();
-					msb.Skl = row.IsSKLNull() ? "?" : row.SKL;
-					msb.Ktg = row.IsKTGNull() ? "?" : row.KTG;
-					msb.Rnd = row.IsRNDNull() ? "?" : row.RND;
-					msb.Grp = row.IsGRPNull() ? "?" : row.GRP;
-					
-					msb.HmTkmONo = row.IsHMTKMONONull() ? 0 : row.HMTKMONO;
-					msb.GsTkmONo = row.IsGSTKMONONull() ? 0 : row.GSTKMONO;
+					var obj = new Msb();
+					obj.NOR = nor--;
 
-					string output = JsonConvert.SerializeObject(msb);
+					obj.ONo = row.ONO;
+					obj.Stu = row.STU;
+					obj.TrnONo = row.TRNONO;
+					
+					obj.Tarih = row.TRH.ToString();
+					obj.Skl = row.IsSKLNull() ? "?" : row.SKL;
+					obj.Ktg = row.IsKTGNull() ? "?" : row.KTG;
+					obj.Rnd = row.IsRNDNull() ? "?" : row.RND;
+					obj.Grp = row.IsGRPNull() ? "?" : row.GRP;
+
+					obj.HmTkmONo = row.IsHMTKMONONull() ? 0 : row.HMTKMONO;
+					obj.GsTkmONo = row.IsGSTKMONONull() ? 0 : row.GSTKMONO;
+
+					string output = JsonConvert.SerializeObject(obj);
 					wsMsb.Send(output);
 				}
 			}
@@ -357,39 +370,38 @@ namespace WinClient
 
 				foreach(DataSet1.MACRow row in ds.MAC.Rows)
 				{
-					var mac = new Mac();
+					var obj = new Mac();
+					obj.NOR = nor--;
 
-					mac.NOR = nor--;
+					obj.ONo = row.ONO;
+					obj.Stu = row.STU;
 
-					mac.ONo = row.ONO;
-					mac.Stu = row.STU;
-					mac.TrnONo = row.TRNONO;
-					mac.MsbONo = row.MSBONO;
+					obj.TrnONo = row.TRNONO;
+					obj.MsbONo = row.MSBONO;
+					obj.Ktg = row.IsKTGNull() ? "?" : row.KTG;
+					obj.Sra = row.IsSRANull() ? (short)0 : row.SRA;
+
+					obj.HmOyn1ONo = row.IsHMOYN1ONONull() ? 0 : row.HMOYN1ONO;
+					obj.HmOyn2ONo = row.IsHMOYN2ONONull() ? 0 : row.HMOYN2ONO;
+					obj.GsOyn1ONo = row.IsGSOYN1ONONull() ? 0 : row.GSOYN1ONO;
+					obj.GsOyn2ONo = row.IsGSOYN2ONONull() ? 0 : row.GSOYN2ONO;
 					
-					mac.Ktg = row.IsKTGNull() ? "?" : row.KTG;
-					mac.Sra = row.IsSRANull() ? (short)0 : row.SRA;
-					
-					mac.HmOyn1ONo = row.IsHMOYN1ONONull() ? 0 : row.HMOYN1ONO;
-					mac.HmOyn2ONo = row.IsHMOYN2ONONull() ? 0 : row.HMOYN2ONO;
-					mac.GsOyn1ONo = row.IsGSOYN1ONONull() ? 0 : row.GSOYN1ONO;
-					mac.GsOyn2ONo = row.IsGSOYN2ONONull() ? 0 : row.GSOYN2ONO;
+					obj.Set1HmSyi = row.IsSET1HMSYINull() ? (short)0 : row.SET1HMSYI;
+					obj.Set1GsSyi = row.IsSET1GSSYINull() ? (short)0 : row.SET1GSSYI;
+					obj.Set2HmSyi = row.IsSET2HMSYINull() ? (short)0 : row.SET2HMSYI;
+					obj.Set2GsSyi = row.IsSET2GSSYINull() ? (short)0 : row.SET2GSSYI;
+					obj.Set3HmSyi = row.IsSET3HMSYINull() ? (short)0 : row.SET3HMSYI;
+					obj.Set3GsSyi = row.IsSET3GSSYINull() ? (short)0 : row.SET3GSSYI;
+					obj.Set4HmSyi = row.IsSET4HMSYINull() ? (short)0 : row.SET4HMSYI;
+					obj.Set4GsSyi = row.IsSET4GSSYINull() ? (short)0 : row.SET4GSSYI;
+					obj.Set5HmSyi = row.IsSET5HMSYINull() ? (short)0 : row.SET5HMSYI;
+					obj.Set5GsSyi = row.IsSET5GSSYINull() ? (short)0 : row.SET5GSSYI;
+					obj.Set6HmSyi = row.IsSET6HMSYINull() ? (short)0 : row.SET6HMSYI;
+					obj.Set6GsSyi = row.IsSET6GSSYINull() ? (short)0 : row.SET6GSSYI;
+					obj.Set7HmSyi = row.IsSET7HMSYINull() ? (short)0 : row.SET7HMSYI;
+					obj.Set7GsSyi = row.IsSET7GSSYINull() ? (short)0 : row.SET7GSSYI;
 
-					mac.Set1HmSyi = row.IsSET1HMSYINull() ? (short)0 : row.SET1HMSYI;
-					mac.Set1GsSyi = row.IsSET1GSSYINull() ? (short)0 : row.SET1GSSYI;
-					mac.Set2HmSyi = row.IsSET2HMSYINull() ? (short)0 : row.SET2HMSYI;
-					mac.Set2GsSyi = row.IsSET2GSSYINull() ? (short)0 : row.SET2GSSYI;
-					mac.Set3HmSyi = row.IsSET3HMSYINull() ? (short)0 : row.SET3HMSYI;
-					mac.Set3GsSyi = row.IsSET3GSSYINull() ? (short)0 : row.SET3GSSYI;
-					mac.Set4HmSyi = row.IsSET4HMSYINull() ? (short)0 : row.SET4HMSYI;
-					mac.Set4GsSyi = row.IsSET4GSSYINull() ? (short)0 : row.SET4GSSYI;
-					mac.Set5HmSyi = row.IsSET5HMSYINull() ? (short)0 : row.SET5HMSYI;
-					mac.Set5GsSyi = row.IsSET5GSSYINull() ? (short)0 : row.SET5GSSYI;
-					mac.Set6HmSyi = row.IsSET6HMSYINull() ? (short)0 : row.SET6HMSYI;
-					mac.Set6GsSyi = row.IsSET6GSSYINull() ? (short)0 : row.SET6GSSYI;
-					mac.Set7HmSyi = row.IsSET7HMSYINull() ? (short)0 : row.SET7HMSYI;
-					mac.Set7GsSyi = row.IsSET7GSSYINull() ? (short)0 : row.SET7GSSYI;
-
-					string output = JsonConvert.SerializeObject(mac);
+					string output = JsonConvert.SerializeObject(obj);
 					wsMac.Send(output);
 				}
 			}
@@ -399,15 +411,6 @@ namespace WinClient
 
 		#endregion
 
-		private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
-		{
-
-		}
-
-		private void button1_Click(object sender, EventArgs e)
-		{
-			button1.Text = i.ToString();
-		}
 	}
 
 

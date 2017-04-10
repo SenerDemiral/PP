@@ -42,11 +42,11 @@ namespace RestServer
 				};
 			});
 
-			Handle.GET("/wsMacConnect", (Request req) =>
+			Handle.GET("/wsTrnConnect", (Request req) =>
 			{
 				if(req.WebSocketUpgrade)
 				{
-					req.SendUpgrade("wsMac");
+					req.SendUpgrade("wsTrn");
 					Console.WriteLine("ws Connected {0}", DateTime.Now);
 					return HandlerStatus.Handled;
 				}
@@ -74,11 +74,11 @@ namespace RestServer
 				};
 			});
 
-			Handle.GET("/wsTrnConnect", (Request req) =>
+			Handle.GET("/wsMacConnect", (Request req) =>
 			{
 				if(req.WebSocketUpgrade)
 				{
-					req.SendUpgrade("wsTrn");
+					req.SendUpgrade("wsMac");
 					Console.WriteLine("ws Connected {0}", DateTime.Now);
 					return HandlerStatus.Handled;
 				}
@@ -101,9 +101,12 @@ namespace RestServer
 
 				if(jsn.PutGet == "G")
 				{
-					var oyn = Db.SQL<OYN>("select t from OYN t");
+					var nor = Db.SQL<long>("select count(o) from PPDB.OYN o").First;
+
+					var oyn = Db.SQL<OYN>("select o from OYN o");
 					foreach(var f in oyn)
 					{
+						jsn.NOR = nor--;
 						jsn.ONo = (long)f.GetObjectNo();
 						jsn.Ad = f.Ad;
 						jsn.Sex = f.Sex;
@@ -148,9 +151,12 @@ namespace RestServer
 
 				if(jsn.PutGet == "G")
 				{
-					var tkm = Db.SQL<TKM>("select t from TKM t");
+					var nor = Db.SQL<long>("select count(o) from PPDB.TKM o").First;
+
+					var tkm = Db.SQL<TKM>("select o from TKM o");
 					foreach(var f in tkm)
 					{
+						jsn.NOR = nor--;
 						jsn.ONo = (long)f.GetObjectNo();
 						jsn.Ad = f.Ad;
 
@@ -192,9 +198,12 @@ namespace RestServer
 
 				if(jsn.PutGet == "G")
 				{
-					var trn = Db.SQL<TRN>("select t from TRN t");
+					var nor = Db.SQL<long>("select count(o) from PPDB.TRN o").First;
+
+					var trn = Db.SQL<TRN>("select o from TRN o");
 					foreach(var f in trn)
 					{
+						jsn.NOR = nor--;
 						jsn.ONo = (long)f.GetObjectNo();
 						jsn.Ad = f.Ad;
 						jsn.Tarih = f.Tarih;
@@ -238,9 +247,12 @@ namespace RestServer
 
 				if(jsn.PutGet == "G")
 				{
-					var msb = Db.SQL<MSB>("select t from MSB t");
+					var nor = Db.SQL<long>("select count(o) from PPDB.MSB o").First;
+
+					var msb = Db.SQL<MSB>("select o from MSB o");
 					foreach(var f in msb)
 					{
+						jsn.NOR = nor--;
 						jsn.ONo = (long)f.GetObjectNo();
 						
 						jsn.Tarih = f.Tarih;
@@ -310,10 +322,9 @@ namespace RestServer
 				}
 				if(jsn.PutGet == "G")
 				{
-					var macs = Db.SQL<MAC>("select ttt from PPDB.MAC ttt");
-					var i = 0;
-					var nor = Db.SQL<long>("select count(t) from PPDB.MAC t").First;
+					var nor = Db.SQL<long>("select count(o) from PPDB.MAC o").First;
 
+					var macs = Db.SQL<MAC>("select o from PPDB.MAC o");
 					foreach(var f in macs)
 					{
 						jsn.NOR = nor--;
