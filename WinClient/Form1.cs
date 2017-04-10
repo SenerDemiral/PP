@@ -78,14 +78,14 @@ namespace WinClient
 		{
 			Oyn d = JsonConvert.DeserializeObject<Oyn>(e.Data);
 			queriesTableAdapter.OYN_MDF(d.PutGet, d.newONo, d.ONo, d.Stu, d.Ad, d.Sex);
-			textBox1.AppendText($"--{d.ONo}:{d.Ad}\r\n");
+			textBox1.Invoke(new Action(() => textBox1.AppendText($">> {i} {d.ONo}\r\n")));
 		}
 
 		private void wsTkm_OnMessage(object sender, MessageEventArgs e)
 		{
 			Tkm d = JsonConvert.DeserializeObject<Tkm>(e.Data);
 			queriesTableAdapter.TKM_MDF(d.PutGet, d.newONo, d.ONo, d.Stu, d.Ad);
-			textBox1.AppendText($"--{d.ONo}:{d.Ad}\r\n");
+			textBox1.Invoke(new Action(() => textBox1.AppendText($">> {i} {d.ONo}\r\n")));
 		}
 
 		private void wsTrn_OnMessage(object sender, MessageEventArgs e)
@@ -95,24 +95,24 @@ namespace WinClient
 			
 			Trn d = JsonConvert.DeserializeObject<Trn>(e.Data);
 			queriesTableAdapter.TRN_MDF(d.PutGet, d.newONo, d.ONo, d.Stu, d.Ad, d.Tarih);
-			textBox1.AppendText($"--{d.ONo}:{d.Ad}\r\n");
+			textBox1.Invoke(new Action(() => textBox1.AppendText($">> {i} {d.ONo}\r\n")));
 		}
 
 		private void wsMsb_OnMessage(object sender, MessageEventArgs e)
 		{
 			Msb d = JsonConvert.DeserializeObject<Msb>(e.Data);
 			queriesTableAdapter.MSB_MDF(d.PutGet, d.newONo, d.ONo, d.Stu, d.TrnONo, d.Tarih, d.Skl, d.Ktg, d.Rnd, d.Grp, d.HmTkmONo, d.GsTkmONo);
-			textBox1.AppendText($"--{d.ONo}\r\n");
+			textBox1.Invoke(new Action(() => textBox1.AppendText($">> {d.PutGet} {i} {d.ONo}\r\n")));
 		}
 		int i = 0;
+		
 		private void wsMac_OnMessage(object sender, MessageEventArgs e)
 		{
 			i++;
-			Text = i.ToString();
 			Mac d = JsonConvert.DeserializeObject<Mac>(e.Data);
+			//label1.Invoke(new Action(() => label1.Text = i.ToString() + "  " + d.TrnONo));
+			textBox1.Invoke(new Action(() => textBox1.AppendText($">> {d.PutGet} {d.NOR} {d.ONo}\r\n")));
 			//queriesTableAdapter.MAC_MDF(d.PutGet, d.newONo, d.ONo, d.Stu, d.TrnONo, d.MsbONo, d.Ktg, d.Sra, d.HmOyn1ONo, d.HmOyn2ONo, d.GsOyn1ONo, d.GsOyn2ONo, d.Set1HmSyi, d.Set1GsSyi, d.Set2HmSyi, d.Set2GsSyi, d.Set3HmSyi, d.Set3GsSyi, d.Set4HmSyi, d.Set4GsSyi, d.Set5HmSyi, d.Set5GsSyi, d.Set6HmSyi, d.Set6GsSyi, d.Set7HmSyi, d.Set7GsSyi);
-			textBox1.AppendText($"--{d.ONo}\r\n");
-			//Application.DoEvents();
 		}
 
 		#endregion
@@ -358,7 +358,9 @@ namespace WinClient
 				foreach(DataSet1.MACRow row in ds.MAC.Rows)
 				{
 					var mac = new Mac();
-					
+
+					mac.NOR = nor--;
+
 					mac.ONo = row.ONO;
 					mac.Stu = row.STU;
 					mac.TrnONo = row.TRNONO;
@@ -400,6 +402,11 @@ namespace WinClient
 		private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
 		{
 
+		}
+
+		private void button1_Click(object sender, EventArgs e)
+		{
+			button1.Text = i.ToString();
 		}
 	}
 

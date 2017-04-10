@@ -84,6 +84,7 @@ namespace WinClient
 	{
 		public string PutGet;
 		public long newONo;
+		public int NOR;
 
 		public long ONo;
 		public string Stu;
@@ -116,6 +117,7 @@ namespace WinClient
 		{
 			PutGet = "P";
 			newONo = 0;
+			NOR = 0;	//Number of Record left
 		}
 	}
 
