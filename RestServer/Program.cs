@@ -304,22 +304,28 @@ namespace RestServer
 				MacJson jsn = new MacJson();
 				jsn.PopulateFromJson(s);
 
+				for(int i = 0; i < 1; i++)
+				{
+					//ws.Send(jsn.ToJson());
+				}
 				if(jsn.PutGet == "G")
 				{
-					var mac = Db.SQL<MAC>("select ttt from PPDB.MAC ttt");
+					var macs = Db.SQL<MAC>("select ttt from PPDB.MAC ttt");
 					var i = 0;
-					foreach(var f in mac)
-					{
-						jsn.ONo = (long)f.GetObjectNo();
+					var nor = Db.SQL<long>("select count(t) from PPDB.MAC t").First;
 
+					foreach(var f in macs)
+					{
+						jsn.NOR = nor--;
+						jsn.ONo = (long)f.GetObjectNo();
 						jsn.TrnONo = (long)f.Trn.GetObjectNo();
 						jsn.MsbONo = (long)f.Msb.GetObjectNo();
-
-						jsn.HmOyn1ONo = (long)f.HmOyn1.GetObjectNo();
-						jsn.HmOyn2ONo = (long)f.HmOyn2.GetObjectNo();
-						jsn.GsOyn1ONo = (long)f.GsOyn1.GetObjectNo();
-						jsn.GsOyn2ONo = (long)f.GsOyn2.GetObjectNo();
-
+						
+						jsn.HmOyn1ONo = f.HmOyn1 == null ? 0 : (long)f.HmOyn1.GetObjectNo();
+						jsn.HmOyn2ONo = f.HmOyn2 == null ? 0 : (long)f.HmOyn2.GetObjectNo();
+						jsn.GsOyn1ONo = f.GsOyn1 == null ? 0 : (long)f.GsOyn1.GetObjectNo();
+						jsn.GsOyn2ONo = f.GsOyn2 == null ? 0 : (long)f.GsOyn2.GetObjectNo();
+						
 						jsn.Ktg = f.Ktg;
 						jsn.Sra = f.Sra;
 
@@ -337,7 +343,7 @@ namespace RestServer
 						jsn.Set6GsSyi = f.Set6GsSyi;
 						jsn.Set7HmSyi = f.Set7HmSyi;
 						jsn.Set7GsSyi = f.Set7GsSyi;
-
+						
 						ws.Send(jsn.ToJson());
 					}
 				}
@@ -351,12 +357,12 @@ namespace RestServer
 							{
 								Trn = (TRN)DbHelper.FromID((ulong)jsn.TrnONo),
 								Msb = (MSB)DbHelper.FromID((ulong)jsn.MsbONo),
-
+								
 								HmOyn1 = (OYN)DbHelper.FromID((ulong)jsn.HmOyn1ONo),
 								HmOyn2 = (OYN)DbHelper.FromID((ulong)jsn.HmOyn2ONo),
 								GsOyn1 = (OYN)DbHelper.FromID((ulong)jsn.GsOyn1ONo),
 								GsOyn2 = (OYN)DbHelper.FromID((ulong)jsn.GsOyn2ONo),
-
+								
 								Ktg = jsn.Ktg,
 								Sra = (short)jsn.Sra,
 
