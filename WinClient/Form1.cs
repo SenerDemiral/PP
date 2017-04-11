@@ -14,7 +14,7 @@ namespace WinClient
 {
 	public partial class Form1 : Form
 	{
-		public long TrnOno = 0;
+		public long TrnID = 0;
 
 		private static WebSocket wsTkm = new WebSocket("ws://rest.masatenisi.online/wsTkmConnect");
 		private static WebSocket wsOyn = new WebSocket("ws://rest.masatenisi.online/wsOynConnect");
@@ -49,9 +49,9 @@ namespace WinClient
 
 			//PutOYN();
 			//PutTKM();
-			//PutTRN(TrnOno);
-			//PutMSB(TrnOno);
-			PutMAC(TrnOno);
+			//PutTRN(TrnID);
+			//PutMSB(TrnID);
+			PutMAC(TrnID);
 
 			textBox1.AppendText("End\r\n");
 			Application.DoEvents();
@@ -76,44 +76,44 @@ namespace WinClient
 		private void wsOyn_OnMessage(object sender, MessageEventArgs e)
 		{
 			Oyn d = JsonConvert.DeserializeObject<Oyn>(e.Data);
-			queriesTableAdapter.OYN_MDF(d.PutGet, d.newONo, d.ONo, d.Stu, d.Ad, d.Sex);
+			queriesTableAdapter.OYN_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.Ad, d.Sex);
 			label1.Invoke(new Action(() => label1.Text = $"{d.PutGet} -> {d.NOR - 1}"));
-			textBox1.Invoke(new Action(() => textBox1.AppendText($" {d.PutGet} -> {d.NOR} {d.ONo}\r\n")));
+			textBox1.Invoke(new Action(() => textBox1.AppendText($" {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
 		}
 
 		private void wsTkm_OnMessage(object sender, MessageEventArgs e)
 		{
 			Tkm d = JsonConvert.DeserializeObject<Tkm>(e.Data);
-			queriesTableAdapter.TKM_MDF(d.PutGet, d.newONo, d.ONo, d.Stu, d.Ad);
+			queriesTableAdapter.TKM_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.Ad);
 			label1.Invoke(new Action(() => label1.Text = $"{d.PutGet} -> {d.NOR - 1}"));
-			textBox1.Invoke(new Action(() => textBox1.AppendText($" {d.PutGet} -> {d.NOR} {d.ONo}\r\n")));
+			textBox1.Invoke(new Action(() => textBox1.AppendText($" {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
 		}
 
 		private void wsTrn_OnMessage(object sender, MessageEventArgs e)
 		{
 			//1:SC2FB Client GetTRN ile Istek yapar, Server gonderir FB ye kayit edilir
-			//2:FB2SC Client PutTRN ile FB kayitlarini gonderir, duzeltme varsa gelir (Sadece ONo duzeltilir)
+			//2:FB2SC Client PutTRN ile FB kayitlarini gonderir, duzeltme varsa gelir (Sadece ID duzeltilir)
 			
 			Trn d = JsonConvert.DeserializeObject<Trn>(e.Data);
-			queriesTableAdapter.TRN_MDF(d.PutGet, d.newONo, d.ONo, d.Stu, d.Ad, d.Tarih);
+			queriesTableAdapter.TRN_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.Ad, d.Tarih);
 			label1.Invoke(new Action(() => label1.Text = $"{d.PutGet} -> {d.NOR - 1}"));
-			textBox1.Invoke(new Action(() => textBox1.AppendText($" {d.PutGet} -> {d.NOR} {d.ONo}\r\n")));
+			textBox1.Invoke(new Action(() => textBox1.AppendText($" {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
 		}
 
 		private void wsMsb_OnMessage(object sender, MessageEventArgs e)
 		{
 			Msb d = JsonConvert.DeserializeObject<Msb>(e.Data);
-			queriesTableAdapter.MSB_MDF(d.PutGet, d.newONo, d.ONo, d.Stu, d.TrnONo, d.Tarih, d.Skl, d.Ktg, d.Rnd, d.Grp, d.HmTkmONo, d.GsTkmONo);
+			queriesTableAdapter.MSB_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.TrnID, d.Tarih, d.Skl, d.Ktg, d.Rnd, d.Grp, d.HTkmID, d.GTkmID);
 			label1.Invoke(new Action(() => label1.Text = $"{d.PutGet} -> {d.NOR - 1}"));
-			textBox1.Invoke(new Action(() => textBox1.AppendText($" {d.PutGet} -> {d.NOR} {d.ONo}\r\n")));
+			textBox1.Invoke(new Action(() => textBox1.AppendText($" {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
 		}
 
 		private void wsMac_OnMessage(object sender, MessageEventArgs e)
 		{
 			Mac d = JsonConvert.DeserializeObject<Mac>(e.Data);
-			//queriesTableAdapter.MAC_MDF(d.PutGet, d.newONo, d.ONo, d.Stu, d.TrnONo, d.MsbONo, d.Ktg, d.Sra, d.HmOyn1ONo, d.HmOyn2ONo, d.GsOyn1ONo, d.GsOyn2ONo, d.Set1HmSyi, d.Set1GsSyi, d.Set2HmSyi, d.Set2GsSyi, d.Set3HmSyi, d.Set3GsSyi, d.Set4HmSyi, d.Set4GsSyi, d.Set5HmSyi, d.Set5GsSyi, d.Set6HmSyi, d.Set6GsSyi, d.Set7HmSyi, d.Set7GsSyi);
+			//queriesTableAdapter.MAC_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.TrnID, d.MsbRN, d.Ktg, d.Sra, d.HOyn1ID, d.HOyn2ID, d.GOyn1ID, d.GOyn2ID, d.S1HP, d.S1GP, d.S2HP, d.S2GP, d.S3HP, d.S3GP, d.S4HP, d.S4GP, d.S5HP, d.S5GP, d.S6HP, d.S6GP, d.S7HP, d.S7GP);
 			label1.Invoke(new Action(() => label1.Text = $"{d.PutGet} -> {d.NOR-1}"));
-			textBox1.Invoke(new Action(() => textBox1.AppendText($" {d.PutGet} -> {d.NOR} {d.ONo}\r\n")));
+			textBox1.Invoke(new Action(() => textBox1.AppendText($" {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
 		}
 
 		#endregion
@@ -232,7 +232,7 @@ namespace WinClient
 					var obj = new Tkm();
 					obj.NOR = nor--;
 
-					obj.ONo = row.ONO;
+					obj.ID = row.ID;
 					obj.Stu = row.STU;
 					obj.Ad = row.AD;
 
@@ -261,7 +261,7 @@ namespace WinClient
 					var obj = new Oyn();
 					obj.NOR = nor--;
 					
-					obj.ONo = row.ONO;
+					obj.ID = row.ID;
 					obj.Stu = row.STU;
 					obj.Ad = row.AD;
 					obj.Sex = row.SEX;
@@ -274,7 +274,7 @@ namespace WinClient
 				textBox1.AppendText("--X\r\n");
 		}
 
-		private void PutTRN(long TrnOno)
+		private void PutTRN(long TrnID)
 		{
 			textBox1.AppendText("\r\nTurnuvalar\r\n");
 
@@ -285,10 +285,10 @@ namespace WinClient
 			
 			{
 				int nor = 0;
-				if(TrnOno == 0)
+				if(TrnID == 0)
 					nor = trnTableAdapter.Fill(this.ds.TRN);
 				else
-					nor = trnTableAdapter.FillByTrnStu(this.ds.TRN, TrnOno);
+					nor = trnTableAdapter.FillByTrnStu(this.ds.TRN, TrnID);
 				
 				textBox1.AppendText($"--Kayıt sayısı: {nor}\r\n");
 
@@ -297,7 +297,7 @@ namespace WinClient
 					var obj = new Trn();
 					obj.NOR = nor--;
 
-					obj.ONo = row.ONO;
+					obj.ID = row.ID;
 					obj.Stu = row.STU;
 					obj.Ad = row.AD;
 
@@ -309,7 +309,7 @@ namespace WinClient
 				textBox1.AppendText("--X\r\n");
 		}
 
-		private void PutMSB(long TrnOno)
+		private void PutMSB(long TrnID)
 		{
 			textBox1.AppendText("\r\nMüsabakalar\r\n");
 
@@ -319,10 +319,10 @@ namespace WinClient
 			if(wsMsb.ReadyState == WebSocketState.Open)
 			{
 				int nor = 0;
-				if(TrnOno == 0)
+				if(TrnID == 0)
 					nor = msbTableAdapter.Fill(this.ds.MSB);
 				else
-					nor = msbTableAdapter.FillByTrnStu(this.ds.MSB, TrnOno);
+					nor = msbTableAdapter.FillByTrnStu(this.ds.MSB, TrnID);
 
 				textBox1.AppendText($"--Kayıt sayısı: {nor}\r\n");
 
@@ -331,9 +331,11 @@ namespace WinClient
 					var obj = new Msb();
 					obj.NOR = nor--;
 
-					obj.ONo = row.ONO;
+					
+
+					obj.ID = row.ID;
 					obj.Stu = row.STU;
-					obj.TrnONo = row.TRNONO;
+					obj.TrnID = row.TRNID;
 					
 					obj.Tarih = row.TRH.ToString();
 					obj.Skl = row.IsSKLNull() ? "?" : row.SKL;
@@ -341,8 +343,8 @@ namespace WinClient
 					obj.Rnd = row.IsRNDNull() ? "?" : row.RND;
 					obj.Grp = row.IsGRPNull() ? "?" : row.GRP;
 
-					obj.HmTkmONo = row.IsHMTKMONONull() ? 0 : row.HMTKMONO;
-					obj.GsTkmONo = row.IsGSTKMONONull() ? 0 : row.GSTKMONO;
+					obj.HTkmID = row.IsHTKMIDNull() ? 0 : row.HTKMID;
+					obj.GTkmID = row.IsGTKMIDNull() ? 0 : row.GTKMID;
 
 					string output = JsonConvert.SerializeObject(obj);
 					wsMsb.Send(output);
@@ -352,7 +354,7 @@ namespace WinClient
 				textBox1.AppendText("--X\r\n");
 		}
 
-		private void PutMAC(long TrnOno)
+		private void PutMAC(long TrnID)
 		{
 			textBox1.AppendText("\r\nMaçlar\r\n");
 
@@ -362,10 +364,10 @@ namespace WinClient
 			if(wsMac.ReadyState == WebSocketState.Open)
 			{
 				int nor = 0;
-				if(TrnOno == 0)
+				if(TrnID == 0)
 					nor = macTableAdapter.Fill(this.ds.MAC);
 				else
-					nor = macTableAdapter.FillByTrnStu(this.ds.MAC, TrnOno);
+					nor = macTableAdapter.FillByTrnStu(this.ds.MAC, TrnID);
 				textBox1.AppendText($"--Kayıt sayısı: {nor}\r\n");
 
 				foreach(DataSet1.MACRow row in ds.MAC.Rows)
@@ -373,33 +375,38 @@ namespace WinClient
 					var obj = new Mac();
 					obj.NOR = nor--;
 
-					obj.ONo = row.ONO;
+					obj.ID = row.ID;
 					obj.Stu = row.STU;
 
-					obj.TrnONo = row.TRNONO;
-					obj.MsbONo = row.MSBONO;
+					obj.TrnID = row.TRNID;
+					obj.MsbRN = row.MSBID;
 					obj.Ktg = row.IsKTGNull() ? "?" : row.KTG;
 					obj.Sra = row.IsSRANull() ? (short)0 : row.SRA;
 
-					obj.HmOyn1ONo = row.IsHMOYN1ONONull() ? 0 : row.HMOYN1ONO;
-					obj.HmOyn2ONo = row.IsHMOYN2ONONull() ? 0 : row.HMOYN2ONO;
-					obj.GsOyn1ONo = row.IsGSOYN1ONONull() ? 0 : row.GSOYN1ONO;
-					obj.GsOyn2ONo = row.IsGSOYN2ONONull() ? 0 : row.GSOYN2ONO;
+					obj.HOyn1ID = row.IsHOYN1IDNull() ? 0 : row.HOYN1ID;
+					obj.HOyn2ID = row.IsHOYN2IDNull() ? 0 : row.HOYN2ID;
+					obj.GOyn1ID = row.IsGOYN1IDNull() ? 0 : row.GOYN1ID;
+					obj.GOyn2ID = row.IsGOYN2IDNull() ? 0 : row.GOYN2ID;
 					
-					obj.Set1HmSyi = row.IsSET1HMSYINull() ? (short)0 : row.SET1HMSYI;
-					obj.Set1GsSyi = row.IsSET1GSSYINull() ? (short)0 : row.SET1GSSYI;
-					obj.Set2HmSyi = row.IsSET2HMSYINull() ? (short)0 : row.SET2HMSYI;
-					obj.Set2GsSyi = row.IsSET2GSSYINull() ? (short)0 : row.SET2GSSYI;
-					obj.Set3HmSyi = row.IsSET3HMSYINull() ? (short)0 : row.SET3HMSYI;
-					obj.Set3GsSyi = row.IsSET3GSSYINull() ? (short)0 : row.SET3GSSYI;
-					obj.Set4HmSyi = row.IsSET4HMSYINull() ? (short)0 : row.SET4HMSYI;
-					obj.Set4GsSyi = row.IsSET4GSSYINull() ? (short)0 : row.SET4GSSYI;
-					obj.Set5HmSyi = row.IsSET5HMSYINull() ? (short)0 : row.SET5HMSYI;
-					obj.Set5GsSyi = row.IsSET5GSSYINull() ? (short)0 : row.SET5GSSYI;
-					obj.Set6HmSyi = row.IsSET6HMSYINull() ? (short)0 : row.SET6HMSYI;
-					obj.Set6GsSyi = row.IsSET6GSSYINull() ? (short)0 : row.SET6GSSYI;
-					obj.Set7HmSyi = row.IsSET7HMSYINull() ? (short)0 : row.SET7HMSYI;
-					obj.Set7GsSyi = row.IsSET7GSSYINull() ? (short)0 : row.SET7GSSYI;
+					obj.S1HP = row.IsS1HPNull() ? (short)0 : row.S1HP;
+					obj.S1GP = row.IsS1GPNull() ? (short)0 : row.S1GP;
+					obj.S2HP = row.IsS2HPNull() ? (short)0 : row.S2HP;
+					obj.S2GP = row.IsS2GPNull() ? (short)0 : row.S2GP;
+					obj.S3HP = row.IsS3HPNull() ? (short)0 : row.S3HP;
+					obj.S3GP = row.IsS3GPNull() ? (short)0 : row.S3GP;
+					obj.S4HP = row.IsS4HPNull() ? (short)0 : row.S4HP;
+					obj.S4GP = row.IsS4GPNull() ? (short)0 : row.S4GP;
+					obj.S5HP = row.IsS5HPNull() ? (short)0 : row.S5HP;
+					obj.S5GP = row.IsS5GPNull() ? (short)0 : row.S5GP;
+					obj.S6HP = row.IsS6HPNull() ? (short)0 : row.S6HP;
+					obj.S6GP = row.IsS6GPNull() ? (short)0 : row.S6GP;
+					obj.S7HP = row.IsS7HPNull() ? (short)0 : row.S7HP;
+					obj.S7GP = row.IsS7GPNull() ? (short)0 : row.S7GP;
+
+					obj.HWL = row.IsHWLNull() ? "" : row.HWL;
+					obj.GWL = row.IsGWLNull() ? "" : row.GWL;
+					obj.HP = row.IsHPNull() ? (short)0 : row.HP;
+					obj.GP = row.IsGPNull() ? (short)0 : row.GP;
 
 					string output = JsonConvert.SerializeObject(obj);
 					wsMac.Send(output);

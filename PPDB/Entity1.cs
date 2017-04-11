@@ -37,13 +37,17 @@ namespace PPDB
 	public class MSB
 	{
 		public TRN Trn;
-		public TKM HmTkm;
-		public TKM GsTkm;
+		public TKM HTkm;
+		public TKM GTkm;
+
 		public DateTime Trh;
 		public string Skl;
 		public string Ktg;
 		public string Rnd;
 		public string Grp;
+
+		public short HP;    // MsbHomePuan if Skl=T
+		public short GP;
 
 		// Computed Fields
 		public string Tarih => Trh.ToString("yyyy-MM-dd HH:mm:ss");
@@ -62,46 +66,58 @@ namespace PPDB
 	{
 		public TRN Trn;
 		public MSB Msb;
-		public OYN HmOyn1;
-		public OYN HmOyn2;
-		public OYN GsOyn1;
-		public OYN GsOyn2;
+		public OYN HOyn1;
+		public OYN HOyn2;
+		public OYN GOyn1;
+		public OYN GOyn2;
+		
 		public string Ktg;
 		public short Sra;
 	
-		public short Set1HmSyi;
-		public short Set1GsSyi;
-		public short Set2HmSyi;
-		public short Set2GsSyi;
-		public short Set3HmSyi;
-		public short Set3GsSyi;
-		public short Set4HmSyi;
-		public short Set4GsSyi;
-		public short Set5HmSyi;
-		public short Set5GsSyi;
-		public short Set6HmSyi;
-		public short Set6GsSyi;
-		public short Set7HmSyi;
-		public short Set7GsSyi;
+		public short S1HP;	// Set1HomePuan(Sayı)
+		public short S1GP;
+		public short S2HP;
+		public short S2GP;
+		public short S3HP;
+		public short S3GP;
+		public short S4HP;
+		public short S4GP;
+		public short S5HP;
+		public short S5GP;
+		public short S6HP;
+		public short S6GP;
+		public short S7HP;
+		public short S7GP;
+
+		public string HWL;  // Home Win/Lost
+		public string GWL;  // Guest Win/Lost
+
+		public short HP;	// MacHomePuan
+		public short GP;
 
 		public MAC()
 		{
 			Ktg = "?";
 			Sra = 0;
-			Set1HmSyi = 0;
-			Set1GsSyi = 0;
-			Set2HmSyi = 0;
-			Set2GsSyi = 0;
-			Set3HmSyi = 0;
-			Set3GsSyi = 0;
-			Set4HmSyi = 0;
-			Set4GsSyi = 0;
-			Set5HmSyi = 0;
-			Set5GsSyi = 0;
-			Set6HmSyi = 0;
-			Set6GsSyi = 0;
-			Set7HmSyi = 0;
-			Set7GsSyi = 0;
+			S1HP = 0;
+			S1GP = 0;
+			S2HP = 0;
+			S2GP = 0;
+			S3HP = 0;
+			S3GP = 0;
+			S4HP = 0;
+			S4GP = 0;
+			S5HP = 0;
+			S5GP = 0;
+			S6HP = 0;
+			S6GP = 0;
+			S7HP = 0;
+			S7GP = 0;
+
+			HWL = "-";
+			GWL = "-";
+			HP = 0;
+			GP = 0;
 		}
 	}
 

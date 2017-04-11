@@ -1,9 +1,9 @@
 {
 	"PutGet": "",
-	"newONo": 0,
+	"NewID": 0,
 	"NOR": 0,
 
-	"ONo": 0,
+	"ID": 0,
 	"Stu": "",
 	"Ad": "",
 	"Sex": ""

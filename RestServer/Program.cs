@@ -104,12 +104,12 @@ namespace RestServer
 					var nor = Db.SQL<long>("select count(o) from PPDB.OYN o").First;
 
 					var oyn = Db.SQL<OYN>("select o from OYN o");
-					foreach(var f in oyn)
-					{
+					foreach(var obj in oyn)
+					{		
 						jsn.NOR = nor--;
-						jsn.ONo = (long)f.GetObjectNo();
-						jsn.Ad = f.Ad;
-						jsn.Sex = f.Sex;
+						jsn.ID = (long)obj.GetObjectNo();
+						jsn.Ad = obj.Ad;
+						jsn.Sex = obj.Sex;
 
 						ws.Send(jsn.ToJson());
 					}
@@ -118,24 +118,24 @@ namespace RestServer
 				{
 					Db.Transact(() =>
 					{
-						if(jsn.ONo < 0)
+						if(jsn.ID < 0)
 						{
-							var n = new OYN()
+							var obj = new OYN()
 							{
 								Ad = jsn.Ad,
 								Sex = jsn.Sex
 							};
-							jsn.newONo = (long)n.GetObjectNo();
+							jsn.NewID = (long)obj.GetObjectNo();
 						}
 						else
 						{
-							var f = (OYN)DbHelper.FromID((ulong)jsn.ONo);
+							var obj = (OYN)DbHelper.FromID((ulong)jsn.ID);
 							if(jsn.Stu == "D")
-								f.Delete();
+								obj.Delete();
 							else
 							{
-								f.Ad = jsn.Ad;
-								f.Sex = jsn.Sex;
+								obj.Ad = jsn.Ad;
+								obj.Sex = jsn.Sex;
 							}
 						}
 					});
@@ -154,11 +154,11 @@ namespace RestServer
 					var nor = Db.SQL<long>("select count(o) from PPDB.TKM o").First;
 
 					var tkm = Db.SQL<TKM>("select o from TKM o");
-					foreach(var f in tkm)
+					foreach(var obj in tkm)
 					{
 						jsn.NOR = nor--;
-						jsn.ONo = (long)f.GetObjectNo();
-						jsn.Ad = f.Ad;
+						jsn.ID = (long)obj.GetObjectNo();
+						jsn.Ad = obj.Ad;
 
 						ws.Send(jsn.ToJson());
 					}
@@ -167,22 +167,22 @@ namespace RestServer
 				{
 					Db.Transact(() =>
 					{
-						if(jsn.ONo < 0)
+						if(jsn.ID < 0)
 						{
-							var n = new TKM()
+							var obj = new TKM()
 							{
 								Ad = jsn.Ad
 							};
-							jsn.newONo = (long)n.GetObjectNo();
+							jsn.NewID = (long)obj.GetObjectNo();
 						}
 						else
 						{
-							var f = (TKM)DbHelper.FromID((ulong)jsn.ONo);
+							var obj = (TKM)DbHelper.FromID((ulong)jsn.ID);
 							if(jsn.Stu == "D")
-								f.Delete();
+								obj.Delete();
 							else
 							{
-								f.Ad = jsn.Ad;
+								obj.Ad = jsn.Ad;
 							}
 						}
 					});
@@ -201,12 +201,12 @@ namespace RestServer
 					var nor = Db.SQL<long>("select count(o) from PPDB.TRN o").First;
 
 					var trn = Db.SQL<TRN>("select o from TRN o");
-					foreach(var f in trn)
+					foreach(var obj in trn)
 					{
 						jsn.NOR = nor--;
-						jsn.ONo = (long)f.GetObjectNo();
-						jsn.Ad = f.Ad;
-						jsn.Tarih = f.Tarih;
+						jsn.ID = (long)obj.GetObjectNo();
+						jsn.Ad = obj.Ad;
+						jsn.Tarih = obj.Tarih;
 
 						ws.Send(jsn.ToJson());
 					}
@@ -215,23 +215,23 @@ namespace RestServer
 				{
 					Db.Transact(() =>
 					{
-						if(jsn.ONo < 0)
+						if(jsn.ID < 0)
 						{
-							var n = new TRN()
+							var obj = new TRN()
 							{
 								Ad = jsn.Ad
 							};
-							jsn.newONo = (long)n.GetObjectNo();
+							jsn.NewID = (long)obj.GetObjectNo();
 						}
 						else
 						{
-							var f = (TRN)DbHelper.FromID((ulong)jsn.ONo);
+							var obj = (TRN)DbHelper.FromID((ulong)jsn.ID);
 							if(jsn.Stu == "D")
-								f.Delete();
+								obj.Delete();
 							else
 							{
-								f.Ad = jsn.Ad;
-								f.Trh = DateTime.Parse(jsn.Tarih);
+								obj.Ad = jsn.Ad;
+								obj.Trh = DateTime.Parse(jsn.Tarih);
 							}
 						}
 					});
@@ -250,21 +250,21 @@ namespace RestServer
 					var nor = Db.SQL<long>("select count(o) from PPDB.MSB o").First;
 
 					var msb = Db.SQL<MSB>("select o from MSB o");
-					foreach(var f in msb)
+					foreach(var obj in msb)
 					{
 						jsn.NOR = nor--;
-						jsn.ONo = (long)f.GetObjectNo();
+						jsn.ID = (long)obj.GetObjectNo();
 						
-						jsn.Tarih = f.Tarih;
-						jsn.TrnONo = (long)f.Trn.GetObjectNo();
+						jsn.Tarih = obj.Tarih;
+						jsn.TrnID = (long)obj.Trn.GetObjectNo();
 
-						jsn.Skl = f.Skl;
-						jsn.Ktg = f.Ktg;
-						jsn.Rnd = f.Rnd;
-						jsn.Grp = f.Grp;
+						jsn.Skl = obj.Skl;
+						jsn.Ktg = obj.Ktg;
+						jsn.Rnd = obj.Rnd;
+						jsn.Grp = obj.Grp;
 
-						jsn.HmTkmONo = (long)f.HmTkm.GetObjectNo();
-						jsn.GsTkmONo = (long)f.GsTkm.GetObjectNo();
+						jsn.HTkmID = (long)obj.HTkm.GetObjectNo();
+						jsn.GTkmID = (long)obj.GTkm.GetObjectNo();
 
 						ws.Send(jsn.ToJson());
 					}
@@ -273,36 +273,36 @@ namespace RestServer
 				{
 					Db.Transact(() =>
 					{
-						if(jsn.ONo < 0)
+						if(jsn.ID < 0)
 						{
-							var n = new MSB()
+							var obj = new MSB()
 							{
 								Trh = DateTime.Parse(jsn.Tarih),
-								Trn = (TRN)DbHelper.FromID((ulong)jsn.TrnONo),
-								HmTkm = (TKM)DbHelper.FromID((ulong)jsn.HmTkmONo),
-								GsTkm = (TKM)DbHelper.FromID((ulong)jsn.GsTkmONo),
+								Trn = (TRN)DbHelper.FromID((ulong)jsn.TrnID),
+								HTkm = (TKM)DbHelper.FromID((ulong)jsn.HTkmID),
+								GTkm = (TKM)DbHelper.FromID((ulong)jsn.GTkmID),
 								Skl = jsn.Skl,
 								Ktg = jsn.Ktg,
 								Rnd = jsn.Rnd,
 								Grp = jsn.Grp
 							};
-							jsn.newONo = (long)n.GetObjectNo();
+							jsn.NewID = (long)obj.GetObjectNo();
 						}
 						else
 						{
-							var f = (MSB)DbHelper.FromID((ulong)jsn.ONo);
+							var obj = (MSB)DbHelper.FromID((ulong)jsn.ID);
 							if(jsn.Stu == "D")
-								f.Delete();
+								obj.Delete();
 							else
 							{
-								f.Trh = DateTime.Parse(jsn.Tarih);
-								f.Trn = (TRN)DbHelper.FromID((ulong)jsn.TrnONo);
-								f.HmTkm = (TKM)DbHelper.FromID((ulong)jsn.HmTkmONo);
-								f.GsTkm = (TKM)DbHelper.FromID((ulong)jsn.GsTkmONo);
-								f.Skl = jsn.Skl;
-								f.Ktg = jsn.Ktg;
-								f.Rnd = jsn.Rnd;
-								f.Grp = jsn.Grp;
+								obj.Trh = DateTime.Parse(jsn.Tarih);
+								obj.Trn = (TRN)DbHelper.FromID((ulong)jsn.TrnID);
+								obj.HTkm = (TKM)DbHelper.FromID((ulong)jsn.HTkmID);
+								obj.GTkm = (TKM)DbHelper.FromID((ulong)jsn.GTkmID);
+								obj.Skl = jsn.Skl;
+								obj.Ktg = jsn.Ktg;
+								obj.Rnd = jsn.Rnd;
+								obj.Grp = jsn.Grp;
 							}
 						}
 					});
@@ -324,37 +324,42 @@ namespace RestServer
 				{
 					var nor = Db.SQL<long>("select count(o) from PPDB.MAC o").First;
 
-					var macs = Db.SQL<MAC>("select o from PPDB.MAC o");
-					foreach(var f in macs)
+					var mac = Db.SQL<MAC>("select o from PPDB.MAC o");
+					foreach(var obj in mac)
 					{
 						jsn.NOR = nor--;
-						jsn.ONo = (long)f.GetObjectNo();
-						jsn.TrnONo = (long)f.Trn.GetObjectNo();
-						jsn.MsbONo = (long)f.Msb.GetObjectNo();
+						jsn.ID = (long)obj.GetObjectNo();
+						jsn.TrnID = (long)obj.Trn.GetObjectNo();
+						jsn.MsbRN = (long)obj.Msb.GetObjectNo();
 						
-						jsn.HmOyn1ONo = f.HmOyn1 == null ? 0 : (long)f.HmOyn1.GetObjectNo();
-						jsn.HmOyn2ONo = f.HmOyn2 == null ? 0 : (long)f.HmOyn2.GetObjectNo();
-						jsn.GsOyn1ONo = f.GsOyn1 == null ? 0 : (long)f.GsOyn1.GetObjectNo();
-						jsn.GsOyn2ONo = f.GsOyn2 == null ? 0 : (long)f.GsOyn2.GetObjectNo();
+						jsn.HOyn1ID = obj.HOyn1 == null ? 0 : (long)obj.HOyn1.GetObjectNo();
+						jsn.HOyn2ID = obj.HOyn2 == null ? 0 : (long)obj.HOyn2.GetObjectNo();
+						jsn.GOyn1ID = obj.GOyn1 == null ? 0 : (long)obj.GOyn1.GetObjectNo();
+						jsn.GOyn2ID = obj.GOyn2 == null ? 0 : (long)obj.GOyn2.GetObjectNo();
 						
-						jsn.Ktg = f.Ktg;
-						jsn.Sra = f.Sra;
+						jsn.Ktg = obj.Ktg;
+						jsn.Sra = obj.Sra;
 
-						jsn.Set1HmSyi = f.Set1HmSyi;
-						jsn.Set1GsSyi = f.Set1GsSyi;
-						jsn.Set2HmSyi = f.Set2HmSyi;
-						jsn.Set2GsSyi = f.Set2GsSyi;
-						jsn.Set3HmSyi = f.Set3HmSyi;
-						jsn.Set3GsSyi = f.Set3GsSyi;
-						jsn.Set4HmSyi = f.Set4HmSyi;
-						jsn.Set4GsSyi = f.Set4GsSyi;
-						jsn.Set5HmSyi = f.Set5HmSyi;
-						jsn.Set5GsSyi = f.Set5GsSyi;
-						jsn.Set6HmSyi = f.Set6HmSyi;
-						jsn.Set6GsSyi = f.Set6GsSyi;
-						jsn.Set7HmSyi = f.Set7HmSyi;
-						jsn.Set7GsSyi = f.Set7GsSyi;
-						
+						jsn.S1HP = obj.S1HP;
+						jsn.S1GP = obj.S1GP;
+						jsn.S2HP = obj.S2HP;
+						jsn.S2GP = obj.S2GP;
+						jsn.S3HP = obj.S3HP;
+						jsn.S3GP = obj.S3GP;
+						jsn.S4HP = obj.S4HP;
+						jsn.S4GP = obj.S4GP;
+						jsn.S5HP = obj.S5HP;
+						jsn.S5GP = obj.S5GP;
+						jsn.S6HP = obj.S6HP;
+						jsn.S6GP = obj.S6GP;
+						jsn.S7HP = obj.S7HP;
+						jsn.S7GP = obj.S7GP;
+
+						jsn.HWL = obj.HWL;
+						jsn.GWL = obj.GWL;
+						jsn.HP = obj.HP;
+						jsn.GP = obj.GP;
+
 						ws.Send(jsn.ToJson());
 					}
 				}
@@ -362,71 +367,81 @@ namespace RestServer
 				{
 					Db.Transact(() =>
 					{
-						if(jsn.ONo < 0)
+						if(jsn.ID < 0)
 						{
-							var n = new MAC()
+							var obj = new MAC()
 							{
-								Trn = (TRN)DbHelper.FromID((ulong)jsn.TrnONo),
-								Msb = (MSB)DbHelper.FromID((ulong)jsn.MsbONo),
+								Trn = (TRN)DbHelper.FromID((ulong)jsn.TrnID),
+								Msb = (MSB)DbHelper.FromID((ulong)jsn.MsbRN),
 								
-								HmOyn1 = (OYN)DbHelper.FromID((ulong)jsn.HmOyn1ONo),
-								HmOyn2 = (OYN)DbHelper.FromID((ulong)jsn.HmOyn2ONo),
-								GsOyn1 = (OYN)DbHelper.FromID((ulong)jsn.GsOyn1ONo),
-								GsOyn2 = (OYN)DbHelper.FromID((ulong)jsn.GsOyn2ONo),
+								HOyn1 = (OYN)DbHelper.FromID((ulong)jsn.HOyn1ID),
+								HOyn2 = (OYN)DbHelper.FromID((ulong)jsn.HOyn2ID),
+								GOyn1 = (OYN)DbHelper.FromID((ulong)jsn.GOyn1ID),
+								GOyn2 = (OYN)DbHelper.FromID((ulong)jsn.GOyn2ID),
 								
 								Ktg = jsn.Ktg,
 								Sra = (short)jsn.Sra,
 
-								Set1HmSyi = (short)jsn.Set1HmSyi,
-								Set1GsSyi = (short)jsn.Set1GsSyi,
-								Set2HmSyi = (short)jsn.Set2HmSyi,
-								Set2GsSyi = (short)jsn.Set2GsSyi,
-								Set3HmSyi = (short)jsn.Set3HmSyi,
-								Set3GsSyi = (short)jsn.Set3GsSyi,
-								Set4HmSyi = (short)jsn.Set4HmSyi,
-								Set4GsSyi = (short)jsn.Set4GsSyi,
-								Set5HmSyi = (short)jsn.Set5HmSyi,
-								Set5GsSyi = (short)jsn.Set5GsSyi,
-								Set6HmSyi = (short)jsn.Set6HmSyi,
-								Set6GsSyi = (short)jsn.Set6GsSyi,
-								Set7HmSyi = (short)jsn.Set7HmSyi,
-								Set7GsSyi = (short)jsn.Set7GsSyi,
+								S1HP = (short)jsn.S1HP,
+								S1GP = (short)jsn.S1GP,
+								S2HP = (short)jsn.S2HP,
+								S2GP = (short)jsn.S2GP,
+								S3HP = (short)jsn.S3HP,
+								S3GP = (short)jsn.S3GP,
+								S4HP = (short)jsn.S4HP,
+								S4GP = (short)jsn.S4GP,
+								S5HP = (short)jsn.S5HP,
+								S5GP = (short)jsn.S5GP,
+								S6HP = (short)jsn.S6HP,
+								S6GP = (short)jsn.S6GP,
+								S7HP = (short)jsn.S7HP,
+								S7GP = (short)jsn.S7GP,
+
+								HWL = jsn.HWL,
+								GWL = jsn.GWL,
+								HP = (short)jsn.HP,
+								GP = (short)jsn.GP,
 							};
 
-							jsn.newONo = (long)n.GetObjectNo();
+							jsn.NewID = (long)obj.GetObjectNo();
 						}
 						else
 						{
-							var f = (MAC)DbHelper.FromID((ulong)jsn.ONo);
+							var obj = (MAC)DbHelper.FromID((ulong)jsn.ID);
 							if(jsn.Stu == "D")
-								f.Delete();
+								obj.Delete();
 							else
 							{
-								f.Trn = (TRN)DbHelper.FromID((ulong)jsn.TrnONo);
-								f.Msb = (MSB)DbHelper.FromID((ulong)jsn.MsbONo);
+								obj.Trn = (TRN)DbHelper.FromID((ulong)jsn.TrnID);
+								obj.Msb = (MSB)DbHelper.FromID((ulong)jsn.MsbRN);
 
-								f.HmOyn1 = (OYN)DbHelper.FromID((ulong)jsn.HmOyn1ONo);
-								f.HmOyn2 = (OYN)DbHelper.FromID((ulong)jsn.HmOyn2ONo);
-								f.GsOyn1 = (OYN)DbHelper.FromID((ulong)jsn.GsOyn1ONo);
-								f.GsOyn2 = (OYN)DbHelper.FromID((ulong)jsn.GsOyn2ONo);
+								obj.HOyn1 = (OYN)DbHelper.FromID((ulong)jsn.HOyn1ID);
+								obj.HOyn2 = (OYN)DbHelper.FromID((ulong)jsn.HOyn2ID);
+								obj.GOyn1 = (OYN)DbHelper.FromID((ulong)jsn.GOyn1ID);
+								obj.GOyn2 = (OYN)DbHelper.FromID((ulong)jsn.GOyn2ID);
+								
+								obj.Ktg = jsn.Ktg;
+								obj.Sra = (short)jsn.Sra;
+								
+								obj.S1HP = (short)jsn.S1HP;
+								obj.S1GP = (short)jsn.S1GP;
+								obj.S2HP = (short)jsn.S2HP;
+								obj.S2GP = (short)jsn.S2GP;
+								obj.S3HP = (short)jsn.S3HP;
+								obj.S3GP = (short)jsn.S3GP;
+								obj.S4HP = (short)jsn.S4HP;
+								obj.S4GP = (short)jsn.S4GP;
+								obj.S5HP = (short)jsn.S5HP;
+								obj.S5GP = (short)jsn.S5GP;
+								obj.S6HP = (short)jsn.S6HP;
+								obj.S6GP = (short)jsn.S6GP;
+								obj.S7HP = (short)jsn.S7HP;
+								obj.S7GP = (short)jsn.S7GP;
 
-								f.Ktg = jsn.Ktg;
-								f.Sra = (short)jsn.Sra;
-
-								f.Set1HmSyi = (short)jsn.Set1HmSyi;
-								f.Set1GsSyi = (short)jsn.Set1GsSyi;
-								f.Set2HmSyi = (short)jsn.Set2HmSyi;
-								f.Set2GsSyi = (short)jsn.Set2GsSyi;
-								f.Set3HmSyi = (short)jsn.Set3HmSyi;
-								f.Set3GsSyi = (short)jsn.Set3GsSyi;
-								f.Set4HmSyi = (short)jsn.Set4HmSyi;
-								f.Set4GsSyi = (short)jsn.Set4GsSyi;
-								f.Set5HmSyi = (short)jsn.Set5HmSyi;
-								f.Set5GsSyi = (short)jsn.Set5GsSyi;
-								f.Set6HmSyi = (short)jsn.Set6HmSyi;
-								f.Set6GsSyi = (short)jsn.Set6GsSyi;
-								f.Set7HmSyi = (short)jsn.Set7HmSyi;
-								f.Set7GsSyi = (short)jsn.Set7GsSyi;
+								obj.HWL = jsn.HWL;
+								obj.GWL = jsn.GWL;
+								obj.HP = (short)jsn.HP;
+								obj.GP = (short)jsn.GP;
 							}
 						}
 					});

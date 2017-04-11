@@ -9,10 +9,10 @@ namespace WinClient
 	public class Trn
 	{
 		public string PutGet;
-		public long newONo;
+		public long NewID;
 		public int NOR;
 
-		public long ONo;
+		public long ID;
 		public string Stu;
 		public string Ad;
 		public string Tarih;
@@ -20,7 +20,7 @@ namespace WinClient
 		public Trn()
 		{
 			PutGet = "P";
-			newONo = 0; // Eger ONo (-) gitmis ise SCden duzeltilmis deger gelir
+			NewID = 0; // Eger ID (-) gitmis ise SCden duzeltilmis deger gelir
 			NOR = 0;    //Number of Record left
 		}
 	}
@@ -28,17 +28,17 @@ namespace WinClient
 	public class Tkm
 	{
 		public string PutGet;
-		public long newONo;
+		public long NewID;
 		public int NOR;
 
-		public long ONo;
+		public long ID;
 		public string Stu;
 		public string Ad;
 
 		public Tkm()
 		{
 			PutGet = "P";
-			newONo = 0;
+			NewID = 0;
 			NOR = 0;    //Number of Record left
 		}
 	}
@@ -46,10 +46,10 @@ namespace WinClient
 	public class Oyn
 	{
 		public string PutGet;
-		public long newONo;
+		public long NewID;
 		public int NOR;
 
-		public long ONo;
+		public long ID;
 		public string Stu;
 		public string Ad;
 		public string Sex;
@@ -57,7 +57,7 @@ namespace WinClient
 		public Oyn()
 		{
 			PutGet = "P";
-			newONo = 0;
+			NewID = 0;
 			NOR = 0;    //Number of Record left
 			Sex = "E";
 		}
@@ -66,24 +66,24 @@ namespace WinClient
 	public class Msb
 	{
 		public string PutGet;
-		public long newONo;
+		public long NewID;
 		public int NOR;
 
-		public long ONo;
+		public long ID;
 		public string Stu;
-		public long TrnONo;
+		public long TrnID;
 		public string Tarih;
 		public string Skl;
 		public string Ktg;
 		public string Rnd;
 		public string Grp;
-		public long HmTkmONo;
-		public long GsTkmONo;
+		public long HTkmID;
+		public long GTkmID;
 
 		public Msb()
 		{
 			PutGet = "P";
-			newONo = 0;
+			NewID = 0;
 			NOR = 0;    //Number of Record left
 		}
 	}
@@ -91,40 +91,46 @@ namespace WinClient
 	public class Mac
 	{
 		public string PutGet;
-		public long newONo;
+		public long NewID;
 		public int NOR;
 
-		public long ONo;
+		public long ID;
 		public string Stu;
-		public long TrnONo;
-		public long MsbONo;
+
+		public long TrnID;
+		public long MsbRN;
+		public long HOyn1ID;
+		public long HOyn2ID;
+		public long GOyn1ID;
+		public long GOyn2ID;
+
 		public string Ktg;
 		public short Sra;
+
+		public short S1HP;
+		public short S1GP;
+		public short S2HP;
+		public short S2GP;
+		public short S3HP;
+		public short S3GP;
+		public short S4HP;
+		public short S4GP;
+		public short S5HP;
+		public short S5GP;
+		public short S6HP;
+		public short S6GP;
+		public short S7HP;
+		public short S7GP;
+
+		public string HWL;  // Home Win/Lost
+		public string GWL;  // Guest Win/Lost
+		public short HP;   // MacHomePuan
+		public short GP;
 		
-		public long HmOyn1ONo;
-		public long HmOyn2ONo;
-		public long GsOyn1ONo;
-		public long GsOyn2ONo;
-
-		public short Set1HmSyi;
-		public short Set1GsSyi;
-		public short Set2HmSyi;
-		public short Set2GsSyi;
-		public short Set3HmSyi;
-		public short Set3GsSyi;
-		public short Set4HmSyi;
-		public short Set4GsSyi;
-		public short Set5HmSyi;
-		public short Set5GsSyi;
-		public short Set6HmSyi;
-		public short Set6GsSyi;
-		public short Set7HmSyi;
-		public short Set7GsSyi;
-
 		public Mac()
 		{
 			PutGet = "P";
-			newONo = 0;
+			NewID = 0;
 			NOR = 0;	//Number of Record left
 		}
 	}
