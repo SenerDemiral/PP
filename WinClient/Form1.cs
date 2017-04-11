@@ -47,11 +47,11 @@ namespace WinClient
 			textBox1.AppendText("Put to Server\r\n");
 			Application.DoEvents();
 
-			//PutOYN();
-			//PutTKM();
-			//PutTRN(TrnID);
-			PutMSB(TrnID);
-			PutMAC(TrnID);
+			PutOYN();
+			PutTKM();
+			PutTRN(TrnID);
+			//PutMSB(TrnID);
+			//PutMAC(TrnID);
 
 			textBox1.AppendText("End\r\n");
 			Application.DoEvents();
@@ -77,6 +77,7 @@ namespace WinClient
 		{
 			Oyn d = JsonConvert.DeserializeObject<Oyn>(e.Data);
 			queriesTableAdapter.OYN_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.Ad, d.Sex);
+			//System.Threading.Thread.Sleep(100);
 			label1.Invoke(new Action(() => label1.Text = $"{d.PutGet} -> {d.NOR - 1}"));
 			textBox1.Invoke(new Action(() => textBox1.AppendText($" {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
 		}
@@ -84,7 +85,14 @@ namespace WinClient
 		private void wsTkm_OnMessage(object sender, MessageEventArgs e)
 		{
 			Tkm d = JsonConvert.DeserializeObject<Tkm>(e.Data);
+			/*
+			using(var scope = new System.Transactions.TransactionScope())
+			{
+				queriesTableAdapter.TKM_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.Ad);
+				scope.Complete();
+			}*/
 			queriesTableAdapter.TKM_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.Ad);
+			//System.Threading.Thread.Sleep(100);
 			label1.Invoke(new Action(() => label1.Text = $"{d.PutGet} -> {d.NOR - 1}"));
 			textBox1.Invoke(new Action(() => textBox1.AppendText($" {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
 		}
@@ -96,6 +104,7 @@ namespace WinClient
 			
 			Trn d = JsonConvert.DeserializeObject<Trn>(e.Data);
 			queriesTableAdapter.TRN_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.Ad, d.Tarih);
+			//System.Threading.Thread.Sleep(100);
 			label1.Invoke(new Action(() => label1.Text = $"{d.PutGet} -> {d.NOR - 1}"));
 			textBox1.Invoke(new Action(() => textBox1.AppendText($" {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
 		}
