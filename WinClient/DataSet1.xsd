@@ -112,6 +112,14 @@
               <Mapping SourceColumn="TRH" DataSetColumn="TRH" />
             </Mappings>
             <Sources>
+              <DbSource ConnectionRef="ConnectionString (Settings)" DbObjectName="TRN" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="FillByStu" GenerateMethods="Fill" GenerateShortCommands="true" GeneratorSourceName="FillByStu" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="FillByStu">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT * FROM TRN WHERE STU &lt;&gt; '-'</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
               <DbSource ConnectionRef="ConnectionString (Settings)" DbObjectName="TRN" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="FillByTrnStu" GenerateMethods="Fill" GenerateShortCommands="true" GeneratorSourceName="FillByTrnStu" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="FillByTrnStu">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
@@ -631,7 +639,7 @@
   <xs:element name="DataSet1" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="False" msprop:Generator_DataSetName="DataSet1" msprop:Generator_UserDSName="DataSet1">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="TKM" msprop:Generator_TableClassName="TKMDataTable" msprop:Generator_TableVarName="tableTKM" msprop:Generator_TablePropName="TKM" msprop:Generator_RowDeletingName="TKMRowDeleting" msprop:Generator_RowChangingName="TKMRowChanging" msprop:Generator_RowEvHandlerName="TKMRowChangeEventHandler" msprop:Generator_RowDeletedName="TKMRowDeleted" msprop:Generator_UserTableName="TKM" msprop:Generator_RowChangedName="TKMRowChanged" msprop:Generator_RowEvArgName="TKMRowChangeEvent" msprop:Generator_RowClassName="TKMRow">
+        <xs:element name="TKM" msprop:Generator_TableClassName="TKMDataTable" msprop:Generator_TableVarName="tableTKM" msprop:Generator_RowChangedName="TKMRowChanged" msprop:Generator_TablePropName="TKM" msprop:Generator_RowDeletingName="TKMRowDeleting" msprop:Generator_RowChangingName="TKMRowChanging" msprop:Generator_RowEvHandlerName="TKMRowChangeEventHandler" msprop:Generator_RowDeletedName="TKMRowDeleted" msprop:Generator_RowClassName="TKMRow" msprop:Generator_UserTableName="TKM" msprop:Generator_RowEvArgName="TKMRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ID" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:long" />
@@ -652,7 +660,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="TRN" msprop:Generator_TableClassName="TRNDataTable" msprop:Generator_TableVarName="tableTRN" msprop:Generator_TablePropName="TRN" msprop:Generator_RowDeletingName="TRNRowDeleting" msprop:Generator_RowChangingName="TRNRowChanging" msprop:Generator_RowEvHandlerName="TRNRowChangeEventHandler" msprop:Generator_RowDeletedName="TRNRowDeleted" msprop:Generator_UserTableName="TRN" msprop:Generator_RowChangedName="TRNRowChanged" msprop:Generator_RowEvArgName="TRNRowChangeEvent" msprop:Generator_RowClassName="TRNRow">
+        <xs:element name="TRN" msprop:Generator_TableClassName="TRNDataTable" msprop:Generator_TableVarName="tableTRN" msprop:Generator_RowChangedName="TRNRowChanged" msprop:Generator_TablePropName="TRN" msprop:Generator_RowDeletingName="TRNRowDeleting" msprop:Generator_RowChangingName="TRNRowChanging" msprop:Generator_RowEvHandlerName="TRNRowChangeEventHandler" msprop:Generator_RowDeletedName="TRNRowDeleted" msprop:Generator_RowClassName="TRNRow" msprop:Generator_UserTableName="TRN" msprop:Generator_RowEvArgName="TRNRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ID" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:long" />
@@ -674,7 +682,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="OYN" msprop:Generator_TableClassName="OYNDataTable" msprop:Generator_TableVarName="tableOYN" msprop:Generator_TablePropName="OYN" msprop:Generator_RowDeletingName="OYNRowDeleting" msprop:Generator_RowChangingName="OYNRowChanging" msprop:Generator_RowEvHandlerName="OYNRowChangeEventHandler" msprop:Generator_RowDeletedName="OYNRowDeleted" msprop:Generator_UserTableName="OYN" msprop:Generator_RowChangedName="OYNRowChanged" msprop:Generator_RowEvArgName="OYNRowChangeEvent" msprop:Generator_RowClassName="OYNRow">
+        <xs:element name="OYN" msprop:Generator_TableClassName="OYNDataTable" msprop:Generator_TableVarName="tableOYN" msprop:Generator_RowChangedName="OYNRowChanged" msprop:Generator_TablePropName="OYN" msprop:Generator_RowDeletingName="OYNRowDeleting" msprop:Generator_RowChangingName="OYNRowChanging" msprop:Generator_RowEvHandlerName="OYNRowChangeEventHandler" msprop:Generator_RowDeletedName="OYNRowDeleted" msprop:Generator_RowClassName="OYNRow" msprop:Generator_UserTableName="OYN" msprop:Generator_RowEvArgName="OYNRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ID" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:long" />
@@ -703,7 +711,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="MSB" msprop:Generator_TableClassName="MSBDataTable" msprop:Generator_TableVarName="tableMSB" msprop:Generator_TablePropName="MSB" msprop:Generator_RowDeletingName="MSBRowDeleting" msprop:Generator_RowChangingName="MSBRowChanging" msprop:Generator_RowEvHandlerName="MSBRowChangeEventHandler" msprop:Generator_RowDeletedName="MSBRowDeleted" msprop:Generator_UserTableName="MSB" msprop:Generator_RowChangedName="MSBRowChanged" msprop:Generator_RowEvArgName="MSBRowChangeEvent" msprop:Generator_RowClassName="MSBRow">
+        <xs:element name="MSB" msprop:Generator_TableClassName="MSBDataTable" msprop:Generator_TableVarName="tableMSB" msprop:Generator_RowChangedName="MSBRowChanged" msprop:Generator_TablePropName="MSB" msprop:Generator_RowDeletingName="MSBRowDeleting" msprop:Generator_RowChangingName="MSBRowChanging" msprop:Generator_RowEvHandlerName="MSBRowChangeEventHandler" msprop:Generator_RowDeletedName="MSBRowDeleted" msprop:Generator_RowClassName="MSBRow" msprop:Generator_UserTableName="MSB" msprop:Generator_RowEvArgName="MSBRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ID" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:long" />
@@ -749,7 +757,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="MAC" msprop:Generator_TableClassName="MACDataTable" msprop:Generator_TableVarName="tableMAC" msprop:Generator_TablePropName="MAC" msprop:Generator_RowDeletingName="MACRowDeleting" msprop:Generator_RowChangingName="MACRowChanging" msprop:Generator_RowEvHandlerName="MACRowChangeEventHandler" msprop:Generator_RowDeletedName="MACRowDeleted" msprop:Generator_UserTableName="MAC" msprop:Generator_RowChangedName="MACRowChanged" msprop:Generator_RowEvArgName="MACRowChangeEvent" msprop:Generator_RowClassName="MACRow">
+        <xs:element name="MAC" msprop:Generator_TableClassName="MACDataTable" msprop:Generator_TableVarName="tableMAC" msprop:Generator_RowChangedName="MACRowChanged" msprop:Generator_TablePropName="MAC" msprop:Generator_RowDeletingName="MACRowDeleting" msprop:Generator_RowChangingName="MACRowChanging" msprop:Generator_RowEvHandlerName="MACRowChangeEventHandler" msprop:Generator_RowDeletedName="MACRowDeleted" msprop:Generator_RowClassName="MACRow" msprop:Generator_UserTableName="MAC" msprop:Generator_RowEvArgName="MACRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ID" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:long" />
@@ -860,15 +868,15 @@
   </xs:element>
   <xs:annotation>
     <xs:appinfo>
-      <msdata:Relationship name="FK_MSB_GTKM" msdata:parent="TKM" msdata:child="MSB" msdata:parentkey="ID" msdata:childkey="GTKMID" msprop:Generator_UserChildTable="MSB" msprop:Generator_ChildPropName="GetMSBRowsByFK_MSB_GTKM" msprop:Generator_UserRelationName="FK_MSB_GTKM" msprop:Generator_ParentPropName="TKMRowByFK_MSB_GTKM" msprop:Generator_RelationVarName="relationFK_MSB_GTKM" msprop:Generator_UserParentTable="TKM" />
-      <msdata:Relationship name="FK_MSB_HTKM" msdata:parent="TKM" msdata:child="MSB" msdata:parentkey="ID" msdata:childkey="HTKMID" msprop:Generator_UserChildTable="MSB" msprop:Generator_ChildPropName="GetMSBRowsByFK_MSB_HTKM" msprop:Generator_UserRelationName="FK_MSB_HTKM" msprop:Generator_ParentPropName="TKMRowByFK_MSB_HTKM" msprop:Generator_RelationVarName="relationFK_MSB_HTKM" msprop:Generator_UserParentTable="TKM" />
-      <msdata:Relationship name="FK_MSB_TRN" msdata:parent="TRN" msdata:child="MSB" msdata:parentkey="ID" msdata:childkey="TRNID" msprop:Generator_UserChildTable="MSB" msprop:Generator_ChildPropName="GetMSBRows" msprop:Generator_UserRelationName="FK_MSB_TRN" msprop:Generator_ParentPropName="TRNRow" msprop:Generator_RelationVarName="relationFK_MSB_TRN" msprop:Generator_UserParentTable="TRN" />
-      <msdata:Relationship name="FK_MAC_GOYN1" msdata:parent="OYN" msdata:child="MAC" msdata:parentkey="ID" msdata:childkey="GOYN1ID" msprop:Generator_UserChildTable="MAC" msprop:Generator_ChildPropName="GetMACRowsByFK_MAC_GOYN1" msprop:Generator_UserRelationName="FK_MAC_GOYN1" msprop:Generator_ParentPropName="OYNRowByFK_MAC_GOYN1" msprop:Generator_RelationVarName="relationFK_MAC_GOYN1" msprop:Generator_UserParentTable="OYN" />
-      <msdata:Relationship name="FK_MAC_GOYN2" msdata:parent="OYN" msdata:child="MAC" msdata:parentkey="ID" msdata:childkey="GOYN2ID" msprop:Generator_UserChildTable="MAC" msprop:Generator_ChildPropName="GetMACRowsByFK_MAC_GOYN2" msprop:Generator_UserRelationName="FK_MAC_GOYN2" msprop:Generator_ParentPropName="OYNRowByFK_MAC_GOYN2" msprop:Generator_RelationVarName="relationFK_MAC_GOYN2" msprop:Generator_UserParentTable="OYN" />
-      <msdata:Relationship name="FK_MAC_HOYN1" msdata:parent="OYN" msdata:child="MAC" msdata:parentkey="ID" msdata:childkey="HOYN1ID" msprop:Generator_UserChildTable="MAC" msprop:Generator_ChildPropName="GetMACRowsByFK_MAC_HOYN1" msprop:Generator_UserRelationName="FK_MAC_HOYN1" msprop:Generator_ParentPropName="OYNRowByFK_MAC_HOYN1" msprop:Generator_RelationVarName="relationFK_MAC_HOYN1" msprop:Generator_UserParentTable="OYN" />
-      <msdata:Relationship name="FK_MAC_HOYN2" msdata:parent="OYN" msdata:child="MAC" msdata:parentkey="ID" msdata:childkey="HOYN2ID" msprop:Generator_UserChildTable="MAC" msprop:Generator_ChildPropName="GetMACRowsByFK_MAC_HOYN2" msprop:Generator_UserRelationName="FK_MAC_HOYN2" msprop:Generator_ParentPropName="OYNRowByFK_MAC_HOYN2" msprop:Generator_RelationVarName="relationFK_MAC_HOYN2" msprop:Generator_UserParentTable="OYN" />
-      <msdata:Relationship name="FK_MAC_MSB" msdata:parent="MSB" msdata:child="MAC" msdata:parentkey="ID" msdata:childkey="MSBID" msprop:Generator_UserChildTable="MAC" msprop:Generator_ChildPropName="GetMACRows" msprop:Generator_UserRelationName="FK_MAC_MSB" msprop:Generator_ParentPropName="MSBRow" msprop:Generator_RelationVarName="relationFK_MAC_MSB" msprop:Generator_UserParentTable="MSB" />
-      <msdata:Relationship name="FK_MAC_TRN" msdata:parent="TRN" msdata:child="MAC" msdata:parentkey="ID" msdata:childkey="TRNID" msprop:Generator_UserChildTable="MAC" msprop:Generator_ChildPropName="GetMACRows" msprop:Generator_UserRelationName="FK_MAC_TRN" msprop:Generator_ParentPropName="TRNRow" msprop:Generator_RelationVarName="relationFK_MAC_TRN" msprop:Generator_UserParentTable="TRN" />
+      <msdata:Relationship name="FK_MSB_GTKM" msdata:parent="TKM" msdata:child="MSB" msdata:parentkey="ID" msdata:childkey="GTKMID" msprop:Generator_UserChildTable="MSB" msprop:Generator_ChildPropName="GetMSBRowsByFK_MSB_GTKM" msprop:Generator_UserRelationName="FK_MSB_GTKM" msprop:Generator_RelationVarName="relationFK_MSB_GTKM" msprop:Generator_UserParentTable="TKM" msprop:Generator_ParentPropName="TKMRowByFK_MSB_GTKM" />
+      <msdata:Relationship name="FK_MSB_HTKM" msdata:parent="TKM" msdata:child="MSB" msdata:parentkey="ID" msdata:childkey="HTKMID" msprop:Generator_UserChildTable="MSB" msprop:Generator_ChildPropName="GetMSBRowsByFK_MSB_HTKM" msprop:Generator_UserRelationName="FK_MSB_HTKM" msprop:Generator_RelationVarName="relationFK_MSB_HTKM" msprop:Generator_UserParentTable="TKM" msprop:Generator_ParentPropName="TKMRowByFK_MSB_HTKM" />
+      <msdata:Relationship name="FK_MSB_TRN" msdata:parent="TRN" msdata:child="MSB" msdata:parentkey="ID" msdata:childkey="TRNID" msprop:Generator_UserChildTable="MSB" msprop:Generator_ChildPropName="GetMSBRows" msprop:Generator_UserRelationName="FK_MSB_TRN" msprop:Generator_RelationVarName="relationFK_MSB_TRN" msprop:Generator_UserParentTable="TRN" msprop:Generator_ParentPropName="TRNRow" />
+      <msdata:Relationship name="FK_MAC_GOYN1" msdata:parent="OYN" msdata:child="MAC" msdata:parentkey="ID" msdata:childkey="GOYN1ID" msprop:Generator_UserChildTable="MAC" msprop:Generator_ChildPropName="GetMACRowsByFK_MAC_GOYN1" msprop:Generator_UserRelationName="FK_MAC_GOYN1" msprop:Generator_RelationVarName="relationFK_MAC_GOYN1" msprop:Generator_UserParentTable="OYN" msprop:Generator_ParentPropName="OYNRowByFK_MAC_GOYN1" />
+      <msdata:Relationship name="FK_MAC_GOYN2" msdata:parent="OYN" msdata:child="MAC" msdata:parentkey="ID" msdata:childkey="GOYN2ID" msprop:Generator_UserChildTable="MAC" msprop:Generator_ChildPropName="GetMACRowsByFK_MAC_GOYN2" msprop:Generator_UserRelationName="FK_MAC_GOYN2" msprop:Generator_RelationVarName="relationFK_MAC_GOYN2" msprop:Generator_UserParentTable="OYN" msprop:Generator_ParentPropName="OYNRowByFK_MAC_GOYN2" />
+      <msdata:Relationship name="FK_MAC_HOYN1" msdata:parent="OYN" msdata:child="MAC" msdata:parentkey="ID" msdata:childkey="HOYN1ID" msprop:Generator_UserChildTable="MAC" msprop:Generator_ChildPropName="GetMACRowsByFK_MAC_HOYN1" msprop:Generator_UserRelationName="FK_MAC_HOYN1" msprop:Generator_RelationVarName="relationFK_MAC_HOYN1" msprop:Generator_UserParentTable="OYN" msprop:Generator_ParentPropName="OYNRowByFK_MAC_HOYN1" />
+      <msdata:Relationship name="FK_MAC_HOYN2" msdata:parent="OYN" msdata:child="MAC" msdata:parentkey="ID" msdata:childkey="HOYN2ID" msprop:Generator_UserChildTable="MAC" msprop:Generator_ChildPropName="GetMACRowsByFK_MAC_HOYN2" msprop:Generator_UserRelationName="FK_MAC_HOYN2" msprop:Generator_RelationVarName="relationFK_MAC_HOYN2" msprop:Generator_UserParentTable="OYN" msprop:Generator_ParentPropName="OYNRowByFK_MAC_HOYN2" />
+      <msdata:Relationship name="FK_MAC_MSB" msdata:parent="MSB" msdata:child="MAC" msdata:parentkey="ID" msdata:childkey="MSBID" msprop:Generator_UserChildTable="MAC" msprop:Generator_ChildPropName="GetMACRows" msprop:Generator_UserRelationName="FK_MAC_MSB" msprop:Generator_RelationVarName="relationFK_MAC_MSB" msprop:Generator_UserParentTable="MSB" msprop:Generator_ParentPropName="MSBRow" />
+      <msdata:Relationship name="FK_MAC_TRN" msdata:parent="TRN" msdata:child="MAC" msdata:parentkey="ID" msdata:childkey="TRNID" msprop:Generator_UserChildTable="MAC" msprop:Generator_ChildPropName="GetMACRows" msprop:Generator_UserRelationName="FK_MAC_TRN" msprop:Generator_RelationVarName="relationFK_MAC_TRN" msprop:Generator_UserParentTable="TRN" msprop:Generator_ParentPropName="TRNRow" />
     </xs:appinfo>
   </xs:annotation>
 </xs:schema>

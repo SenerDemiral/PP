@@ -278,6 +278,7 @@ namespace RestServer
 							var obj = new MSB()
 							{
 								Trh = DateTime.Parse(jsn.Tarih),
+
 								Trn = (TRN)DbHelper.FromID((ulong)jsn.TrnID),
 								HTkm = (TKM)DbHelper.FromID((ulong)jsn.HTkmID),
 								GTkm = (TKM)DbHelper.FromID((ulong)jsn.GTkmID),
@@ -330,7 +331,7 @@ namespace RestServer
 						jsn.NOR = nor--;
 						jsn.ID = (long)obj.GetObjectNo();
 						jsn.TrnID = (long)obj.Trn.GetObjectNo();
-						jsn.MsbRN = (long)obj.Msb.GetObjectNo();
+						jsn.MsbID = (long)obj.Msb.GetObjectNo();
 						
 						jsn.HOyn1ID = obj.HOyn1 == null ? 0 : (long)obj.HOyn1.GetObjectNo();
 						jsn.HOyn2ID = obj.HOyn2 == null ? 0 : (long)obj.HOyn2.GetObjectNo();
@@ -372,7 +373,7 @@ namespace RestServer
 							var obj = new MAC()
 							{
 								Trn = (TRN)DbHelper.FromID((ulong)jsn.TrnID),
-								Msb = (MSB)DbHelper.FromID((ulong)jsn.MsbRN),
+								Msb = (MSB)DbHelper.FromID((ulong)jsn.MsbID),
 								
 								HOyn1 = (OYN)DbHelper.FromID((ulong)jsn.HOyn1ID),
 								HOyn2 = (OYN)DbHelper.FromID((ulong)jsn.HOyn2ID),
@@ -413,7 +414,7 @@ namespace RestServer
 							else
 							{
 								obj.Trn = (TRN)DbHelper.FromID((ulong)jsn.TrnID);
-								obj.Msb = (MSB)DbHelper.FromID((ulong)jsn.MsbRN);
+								obj.Msb = (MSB)DbHelper.FromID((ulong)jsn.MsbID);
 
 								obj.HOyn1 = (OYN)DbHelper.FromID((ulong)jsn.HOyn1ID);
 								obj.HOyn2 = (OYN)DbHelper.FromID((ulong)jsn.HOyn2ID);

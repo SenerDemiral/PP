@@ -50,7 +50,7 @@ namespace WinClient
 			//PutOYN();
 			//PutTKM();
 			//PutTRN(TrnID);
-			//PutMSB(TrnID);
+			PutMSB(TrnID);
 			PutMAC(TrnID);
 
 			textBox1.AppendText("End\r\n");
@@ -111,7 +111,7 @@ namespace WinClient
 		private void wsMac_OnMessage(object sender, MessageEventArgs e)
 		{
 			Mac d = JsonConvert.DeserializeObject<Mac>(e.Data);
-			//queriesTableAdapter.MAC_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.TrnID, d.MsbRN, d.Ktg, d.Sra, d.HOyn1ID, d.HOyn2ID, d.GOyn1ID, d.GOyn2ID, d.S1HP, d.S1GP, d.S2HP, d.S2GP, d.S3HP, d.S3GP, d.S4HP, d.S4GP, d.S5HP, d.S5GP, d.S6HP, d.S6GP, d.S7HP, d.S7GP);
+			queriesTableAdapter.MAC_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.TrnID, d.MsbRN, d.Ktg, d.Sra, d.HOyn1ID, d.HOyn2ID, d.GOyn1ID, d.GOyn2ID, d.S1HP, d.S1GP, d.S2HP, d.S2GP, d.S3HP, d.S3GP, d.S4HP, d.S4GP, d.S5HP, d.S5GP, d.S6HP, d.S6GP, d.S7HP, d.S7GP);
 			label1.Invoke(new Action(() => label1.Text = $"{d.PutGet} -> {d.NOR-1}"));
 			textBox1.Invoke(new Action(() => textBox1.AppendText($" {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
 		}
@@ -282,11 +282,10 @@ namespace WinClient
 				wsTrn.Connect();
 			
 			if(wsTrn.ReadyState == WebSocketState.Open)
-			
 			{
 				int nor = 0;
 				if(TrnID == 0)
-					nor = trnTableAdapter.Fill(this.ds.TRN);
+					nor = trnTableAdapter.FillByStu(this.ds.TRN);
 				else
 					nor = trnTableAdapter.FillByTrnStu(this.ds.TRN, TrnID);
 				
@@ -299,6 +298,7 @@ namespace WinClient
 
 					obj.ID = row.ID;
 					obj.Stu = row.STU;
+					obj.Tarih = row.IsTRHNull() ? "" : row.TRH.ToString("s");
 					obj.Ad = row.AD;
 
 					string output = JsonConvert.SerializeObject(obj);
