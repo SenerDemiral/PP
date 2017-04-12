@@ -15,7 +15,31 @@ namespace RestServer
 
 			Handle.GET("/OynSay", () =>
 			{
-				var nor = Db.SQL<long>("select count(o) from PPDB.OYN o").First;
+				var nor = Db.SQL<long>("select count(o) from OYN o").First;
+				return nor.ToString();
+			});
+
+			Handle.GET("/TkmSay", () =>
+			{
+				var nor = Db.SQL<long>("select count(o) from TKM o").First;
+				return nor.ToString();
+			});
+
+			Handle.GET("/TrnSay", () =>
+			{
+				var nor = Db.SQL<long>("select count(o) from TRN o").First;
+				return nor.ToString();
+			});
+
+			Handle.GET("/MsbSay", () =>
+			{
+				var nor = Db.SQL<long>("select count(o) from MSB o").First;
+				return nor.ToString();
+			});
+
+			Handle.GET("/MacSay", () =>
+			{
+				var nor = Db.SQL<long>("select count(o) from MAC o").First;
 				return nor.ToString();
 			});
 

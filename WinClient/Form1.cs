@@ -25,6 +25,31 @@ namespace WinClient
 
 		static HttpClient client = new HttpClient();
 
+		int oynSay = 0;
+		int tkmSay = 0;
+		int trnSay = 0;
+		
+		public int OynSay {
+			get { return oynSay; }
+			set { 
+				oynSay = value;
+				if(oynSay == 0)
+				{
+					MessageBox.Show(oynSay.ToString());
+					GetTKM();
+					
+				}
+			}
+		}
+		public int TkmSay {
+			get { return tkmSay; }
+			set {
+				tkmSay = value;
+				if(tkmSay == 0)
+					MessageBox.Show(tkmSay.ToString());
+			}
+		}
+
 		public Form1()
 		{
 			InitializeComponent();
@@ -83,7 +108,7 @@ namespace WinClient
 		}
 
 		#region OnMessage
-		int OynSay = 0;
+		//int OynSay = 0;
 
 		private void wsOyn_OnMessage(object sender, MessageEventArgs e)
 		{
@@ -94,8 +119,13 @@ namespace WinClient
 			textBox1.Invoke(new Action(() => textBox1.AppendText($"Oyn: {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
 
 			OynSay--;
-			if (OynSay == 0)
-				GETbutton.Invoke(new Action(() => GETbutton.Text = "xxx"));
+			/*
+			if(OynSay == 0)
+			{
+				
+				GETbutton.Invoke(new Action(() => GETbutton.Enabled = true));
+				//POSTdenemeButton.Invoke(new Action(() => POSTdenemeButton.PerformClick()));
+			}*/
 		}
 
 		private void wsTkm_OnMessage(object sender, MessageEventArgs e)
@@ -112,6 +142,8 @@ namespace WinClient
 			//System.Threading.Thread.Sleep(100);
 			label1.Invoke(new Action(() => label1.Text = $"Tkm: {d.PutGet} -> {d.NOR - 1}"));
 			textBox1.Invoke(new Action(() => textBox1.AppendText($"Tkm: {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
+			
+			TkmSay--;
 		}
 
 		private void wsTrn_OnMessage(object sender, MessageEventArgs e)
@@ -148,7 +180,9 @@ namespace WinClient
 
 		private void GetTKM()
 		{
-			textBox1.AppendText("\r\nTakmlar\r\n");
+			//textBox1.AppendText("\r\nTakmlar\r\n");
+			textBox1.Invoke(new Action(() => textBox1.AppendText("\r\nTakmlar\r\n")));
+
 
 			if(wsTkm.ReadyState != WebSocketState.Open)
 				wsTkm.Connect();
@@ -158,7 +192,8 @@ namespace WinClient
 				var obj = new Tkm();
 				obj.PutGet = "G";
 				string output = JsonConvert.SerializeObject(obj);
-				wsTkm.Send(output);
+				if(GetTkmSay() > 0)
+					wsTkm.Send(output);
 			}
 			else
 				textBox1.AppendText("--X\r\n");
@@ -176,8 +211,9 @@ namespace WinClient
 				var obj = new Oyn();
 				obj.PutGet = "G";
 				string output = JsonConvert.SerializeObject(obj);
-				OynSay = 200;
-				wsOyn.Send(output);
+
+				if(GetOynSay() > 0)
+					wsOyn.Send(output);
 			}
 			else
 				textBox1.AppendText("--X\r\n");
@@ -195,7 +231,7 @@ namespace WinClient
 				var obj = new Trn();
 				obj.PutGet = "G";
 				string output = JsonConvert.SerializeObject(obj);
-				wsTrn.Send(output);
+					wsTrn.Send(output);
 			}
 			else
 				textBox1.AppendText("--X\r\n");
@@ -446,11 +482,35 @@ namespace WinClient
 
 		#endregion
 
+		private int GetOynSay()
+		{
+			var response = client.GetAsync("http://rest.masatenisi.online/OynSay").Result;
+			var data = response.Content.ReadAsStringAsync().Result;
+			OynSay = Convert.ToInt32(data);
+			return OynSay;
+		}
+
+		private int GetTkmSay()
+		{
+			TkmSay = 12;
+			return TkmSay;
+
+			var response = client.GetAsync("http://rest.masatenisi.online/TkmSay").Result;
+			var data = response.Content.ReadAsStringAsync().Result;
+			TkmSay = Convert.ToInt32(data);
+			return TkmSay;
+		}
+
 		private void POSTdenemeButton_Click(object sender, EventArgs e)
+		{
+			deneme();
+		}
+
+		private void deneme()
 		{
 			//HttpRequestMessage rm = new HttpRequestMessage(HttpMethod.Put, "");
 			//client.SendAsync(rm, HttpCompletionOption.ResponseContentRead);
-			
+
 			var obj = new Tkm();
 			obj.NOR = 1;
 			obj.ID = 123;
@@ -463,12 +523,13 @@ namespace WinClient
 				string output = JsonConvert.SerializeObject(obj);
 				var response = client.PostAsync("http://rest.masatenisi.online/Tkm",
 					new StringContent(output, Encoding.UTF8, "application/json")).Result;
-				
+
 				var data = response.Content.ReadAsStringAsync().Result;
 				Tkm d = JsonConvert.DeserializeObject<Tkm>(data);
 
 				textBox1.AppendText($"--Kayıt sayısı: {d.NOR}\r\n");
 			}
+
 		}
 	}
 
