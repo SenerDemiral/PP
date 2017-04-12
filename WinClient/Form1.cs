@@ -25,108 +25,115 @@ namespace WinClient
 
 		static HttpClient client = new HttpClient();
 
-		int oynSay = 0;
-		int tkmSay = 0;
-		int trnSay = 0;
-		int msbSay = 0;
-		int macSay = 0;
 		string putGet = "G";
+		int oynSay = 0,
+			tkmSay = 0,
+			trnSay = 0,
+			msbSay = 0,
+			macSay = 0;
 
-		public int OynSay {
+		public int OynSay
+		{
 			get { return oynSay; }
-			set { 
+			set
+			{
 				oynSay = value;
-				if(oynSay == 0)
-					if(putGet == "G")
+				if (oynSay == 0)
+					if (putGet == "G")
 						GetTKM();
 					else
 						PutTKM();
 			}
 		}
 
-		public int TkmSay {
+		public int TkmSay
+		{
 			get { return tkmSay; }
-			set {
+			set
+			{
 				tkmSay = value;
-				if(tkmSay == 0)
-					if(putGet == "G")
+				if (tkmSay == 0)
+					if (putGet == "G")
 						GetTRN();
 					else
-						PutTRN(TrnID);
+						PutTRN( TrnID );
 			}
 		}
 
-		public int TrnSay {
+		public int TrnSay
+		{
 			get { return trnSay; }
-			set {
+			set
+			{
 				trnSay = value;
-				if(trnSay == 0)
-					if(putGet == "G")
+				if (trnSay == 0)
+					if (putGet == "G")
 						GetMSB();
 					else
-						PutMSB(TrnID);
+						PutMSB( TrnID );
 			}
 		}
 
-		public int MsbSay {
+		public int MsbSay
+		{
 			get { return msbSay; }
-			set {
+			set
+			{
 				msbSay = value;
-				if(msbSay == 0)
-					if(putGet == "G")
+				if (msbSay == 0)
+					if (putGet == "G")
 						GetMAC();
 					else
-						PutMAC(TrnID);
+						PutMAC( TrnID );
 			}
 		}
 
-		public int MacSay {
+		public int MacSay
+		{
 			get { return macSay; }
-			set {
+			set
+			{
 				macSay = value;
-				if(macSay == 0)
-					MessageBox.Show("BITTI");
+				if (macSay == 0)
+					MessageBox.Show( "BITTI" );
 			}
 		}
 
 		public Form1()
 		{
 			InitializeComponent();
-
-			
 		}
 
 		private void GETbutton_Click(object sender, EventArgs e)
 		{
-			GETbutton.Enabled = false;
 			putGet = "G";
+			GETbutton.Enabled = false;
+
 			textBox1.Clear();
 			textBox1.AppendText("Get from Server\r\n");
 			Application.DoEvents();
 
-			//GetTKM();
-			GetOYN();
-			//GetTRN();
-			//GetMSB();
-			//GetMAC();
-			
+			GetOYN(); // Bitince sonrakini tetikler
+					  //GetTKM();
+					  //GetTRN();
+					  //GetMSB();
+					  //GetMAC();
 		}
 
 		private void PUTbutton_Click(object sender, EventArgs e)
 		{
 			putGet = "P";
+			PUTbutton.Enabled = false;
 
 			textBox1.Clear();
 			textBox1.AppendText("Put to Server\r\n");
 			Application.DoEvents();
 
-			//PutTRN(TrnID);
-			//PutTKM();
-			//PutOYN();
-			//PutMSB(TrnID);
-			PutMAC(TrnID);
-
-			Application.DoEvents();
+			PutOYN(); // Bitince sonrakini tetikler
+					  //PutTKM();
+					  //PutTRN(TrnID);
+					  //PutMSB(TrnID);
+					  //PutMAC(TrnID);
 		}
 
 		private void Form1_Load(object sender, EventArgs e)
@@ -149,32 +156,15 @@ namespace WinClient
 		{
 			Oyn d = JsonConvert.DeserializeObject<Oyn>(e.Data);
 			queriesTableAdapter.OYN_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.Ad, d.Sex);
-			//System.Threading.Thread.Sleep(100);
-			label1.Invoke(new Action(() => label1.Text = $"Oyn: {d.PutGet} -> {d.NOR - 1}"));
 			textBox1.Invoke(new Action(() => textBox1.AppendText($"Oyn: {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
 
 			OynSay--;
-			/*
-			if(OynSay == 0)
-			{
-				
-				GETbutton.Invoke(new Action(() => GETbutton.Enabled = true));
-				//POSTdenemeButton.Invoke(new Action(() => POSTdenemeButton.PerformClick()));
-			}*/
 		}
 
 		private void wsTkm_OnMessage(object sender, MessageEventArgs e)
 		{
 			Tkm d = JsonConvert.DeserializeObject<Tkm>(e.Data);
-			/*
-			using(var scope = new System.Transactions.TransactionScope())
-			{
-				queriesTableAdapter.TKM_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.Ad);
-				scope.Complete();
-			}*/
-			
 			queriesTableAdapter.TKM_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.Ad);
-			label1.Invoke(new Action(() => label1.Text = $"Tkm: {d.PutGet} -> {d.NOR - 1}"));
 			textBox1.Invoke(new Action(() => textBox1.AppendText($"Tkm: {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
 			
 			TkmSay--;
@@ -187,7 +177,6 @@ namespace WinClient
 			
 			Trn d = JsonConvert.DeserializeObject<Trn>(e.Data);
 			queriesTableAdapter.TRN_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.Ad, d.Tarih);
-			label1.Invoke(new Action(() => label1.Text = $"Trn: {d.PutGet} -> {d.NOR - 1}"));
 			textBox1.Invoke(new Action(() => textBox1.AppendText($"Trn: {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
 			
 			TrnSay--;
@@ -197,7 +186,6 @@ namespace WinClient
 		{
 			Msb d = JsonConvert.DeserializeObject<Msb>(e.Data);
 			queriesTableAdapter.MSB_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.TrnID, d.Tarih, d.Skl, d.Ktg, d.Rnd, d.Grp, d.HTkmID, d.GTkmID);
-			label1.Invoke(new Action(() => label1.Text = $"Msb: {d.PutGet} -> {d.NOR - 1}"));
 			textBox1.Invoke(new Action(() => textBox1.AppendText($"Msb: {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
 			
 			MsbSay--;
@@ -206,8 +194,7 @@ namespace WinClient
 		private void wsMac_OnMessage(object sender, MessageEventArgs e)
 		{
 			Mac d = JsonConvert.DeserializeObject<Mac>(e.Data);
-			queriesTableAdapter.MAC_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.TrnID, d.MsbRN, d.Ktg, d.Sra, d.HOyn1ID, d.HOyn2ID, d.GOyn1ID, d.GOyn2ID, d.S1HP, d.S1GP, d.S2HP, d.S2GP, d.S3HP, d.S3GP, d.S4HP, d.S4GP, d.S5HP, d.S5GP, d.S6HP, d.S6GP, d.S7HP, d.S7GP);
-			label1.Invoke(new Action(() => label1.Text = $"Mac: {d.PutGet} -> {d.NOR-1}"));
+			queriesTableAdapter.MAC_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.TrnID, d.MsbID, d.Ktg, d.Sra, d.HOyn1ID, d.HOyn2ID, d.GOyn1ID, d.GOyn2ID, d.S1HP, d.S1GP, d.S2HP, d.S2GP, d.S3HP, d.S3GP, d.S4HP, d.S4GP, d.S5HP, d.S5GP, d.S6HP, d.S6GP, d.S7HP, d.S7GP);
 			textBox1.Invoke(new Action(() => textBox1.AppendText($"Mac: {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
 			
 			MacSay--;
@@ -318,17 +305,47 @@ namespace WinClient
 
 		#region Put
 
+		private void PutOYN()
+		{
+			textBox1.Invoke(new Action(() => textBox1.AppendText("\r\nOyuncular\r\n")));
+
+			if(wsOyn.ReadyState != WebSocketState.Open)
+				wsOyn.Connect();
+
+			if(wsOyn.ReadyState == WebSocketState.Open)
+			{
+				int nor = oynTableAdapter.FillByStu(this.ds.OYN);
+				OynSay = nor;
+
+				foreach(DataSet1.OYNRow row in ds.OYN.Rows)
+				{
+					var obj = new Oyn();
+					obj.NOR = nor--;
+
+					obj.ID = row.ID;
+					obj.Stu = row.STU;
+					obj.Ad = row.AD;
+					obj.Sex = row.SEX;
+
+					string output = JsonConvert.SerializeObject(obj);
+					wsOyn.Send(output);
+				}
+			}
+			else
+				textBox1.AppendText("--X\r\n");
+		}
+
 		private void PutTKM()
 		{
-			textBox1.AppendText("\r\nTakımlar\r\n");
-			
+			textBox1.Invoke(new Action(() => textBox1.AppendText("\r\nTakımlar\r\n")));
+
 			if(wsTkm.ReadyState != WebSocketState.Open)
 				wsTkm.Connect();
 
 			if(wsTkm.ReadyState == WebSocketState.Open)
 			{
 				int nor = tkmTableAdapter.FillByStu(this.ds.TKM);
-				textBox1.AppendText($"--Kayıt sayısı: {nor}\r\n");
+				TkmSay = nor;
 
 				foreach(DataSet1.TKMRow row in ds.TKM.Rows)
 				{
@@ -348,39 +365,9 @@ namespace WinClient
 				textBox1.AppendText("--X\r\n");
 		}
 
-		private void PutOYN()
-		{
-			textBox1.AppendText("\r\nOyuncular\r\n");
-
-			if(wsOyn.ReadyState != WebSocketState.Open)
-				wsOyn.Connect();
-
-			if(wsOyn.ReadyState == WebSocketState.Open)
-			{
-				int nor = oynTableAdapter.FillByStu(this.ds.OYN);
-				textBox1.AppendText($"--Kayıt sayısı: {nor}\r\n");
-
-				foreach(DataSet1.OYNRow row in ds.OYN.Rows)
-				{
-					var obj = new Oyn();
-					obj.NOR = nor--;
-					
-					obj.ID = row.ID;
-					obj.Stu = row.STU;
-					obj.Ad = row.AD;
-					obj.Sex = row.SEX;
-
-					string output = JsonConvert.SerializeObject(obj);
-					wsOyn.Send(output);
-				}
-			}
-			else
-				textBox1.AppendText("--X\r\n");
-		}
-
 		private void PutTRN(long TrnID)
 		{
-			textBox1.AppendText("\r\nTurnuvalar\r\n");
+			textBox1.Invoke(new Action(() => textBox1.AppendText("\r\nTurnuvalar\r\n")));
 
 			if(wsTrn.ReadyState != WebSocketState.Open)
 				wsTrn.Connect();
@@ -392,8 +379,8 @@ namespace WinClient
 					nor = trnTableAdapter.FillByStu(this.ds.TRN);
 				else
 					nor = trnTableAdapter.FillByTrnStu(this.ds.TRN, TrnID);
-				
-				textBox1.AppendText($"--Kayıt sayısı: {nor}\r\n");
+
+				TrnSay = nor;
 
 				foreach(DataSet1.TRNRow row in ds.TRN.Rows)
 				{
@@ -424,12 +411,11 @@ namespace WinClient
 			{
 				int nor = 0;
 				if(TrnID == 0)
-					nor = msbTableAdapter.Fill(this.ds.MSB);
+					nor = msbTableAdapter.FillByStu(this.ds.MSB);
 				else
 					nor = msbTableAdapter.FillByTrnStu(this.ds.MSB, TrnID);
 
 				MsbSay = nor;
-				//textBox1.AppendText($"--Kayıt sayısı: {nor}\r\n");
 
 				foreach(DataSet1.MSBRow row in ds.MSB.Rows)
 				{
@@ -468,12 +454,11 @@ namespace WinClient
 			{
 				int nor = 0;
 				if(TrnID == 0)
-					nor = macTableAdapter.Fill(this.ds.MAC);
+					nor = macTableAdapter.FillByStu(this.ds.MAC);
 				else
 					nor = macTableAdapter.FillByTrnStu(this.ds.MAC, TrnID);
 
 				MacSay = nor;
-				//textBox1.AppendText($"--Kayıt sayısı: {nor}\r\n");
 
 				foreach(DataSet1.MACRow row in ds.MAC.Rows)
 				{
@@ -523,6 +508,8 @@ namespace WinClient
 
 		#endregion
 
+		#region Get SC TableReocrdCounts
+
 		private int GetOynSay()
 		{
 			var response = client.GetAsync("http://rest.masatenisi.online/OynSay").Result;
@@ -562,6 +549,8 @@ namespace WinClient
 			MacSay = Convert.ToInt32(data);
 			return MacSay;
 		}
+
+		#endregion
 
 		private void POSTdenemeButton_Click(object sender, EventArgs e)
 		{
