@@ -98,7 +98,7 @@ namespace WinClient
 		public string Stu;
 
 		public long TrnID;
-		public long MsbRN;
+		public long MsbID;
 		public long HOyn1ID;
 		public long HOyn2ID;
 		public long GOyn1ID;
