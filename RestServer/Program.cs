@@ -8,11 +8,8 @@ namespace RestServer
 	{
 		static void Main()
 		{
-			Handle.POST("/Tkm", (TkmJson jsn) => 
-			{
-				return jsn; 
-			});
-
+			#region TableRecordCounts
+			
 			Handle.GET("/OynSay", () =>
 			{
 				var nor = Db.SQL<long>("select count(o) from OYN o").First;
@@ -42,6 +39,8 @@ namespace RestServer
 				var nor = Db.SQL<long>("select count(o) from MAC o").First;
 				return nor.ToString();
 			});
+			
+			#endregion
 
 			#region WebSocketUpgrade
 
@@ -485,6 +484,15 @@ namespace RestServer
 					ws.Send(jsn.ToJson());
 				}
 			});
+
+			#endregion
+
+			#region Deneme
+
+			Handle.POST( "/Tkm", (TkmJson jsn) =>
+			{
+				return jsn;
+			} );
 
 			#endregion
 		}
