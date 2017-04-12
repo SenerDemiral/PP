@@ -8,9 +8,14 @@ namespace RestServer
 	{
 		static void Main()
 		{
+			Handle.POST("/Tkm", (TkmJson jsb) => 
+			{
+				return "OK"; 
+			});
+
 			#region WebSocketUpgrade
 
-			Handle.GET("/wsOynConnect", (Request req) =>
+				Handle.GET("/wsOynConnect", (Request req) =>
 			{
 				if(req.WebSocketUpgrade)
 				{

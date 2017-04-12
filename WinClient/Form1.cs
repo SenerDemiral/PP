@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using WebSocketSharp;
+using System.Net.Http;
 
 namespace WinClient
 {
@@ -22,9 +23,13 @@ namespace WinClient
 		private static WebSocket wsMsb = new WebSocket("ws://rest.masatenisi.online/wsMsbConnect");
 		private static WebSocket wsMac = new WebSocket("ws://rest.masatenisi.online/wsMacConnect");
 
+		static HttpClient client = new HttpClient();
+
 		public Form1()
 		{
 			InitializeComponent();
+
+			
 		}
 
 		private void GETbutton_Click(object sender, EventArgs e)
@@ -47,13 +52,16 @@ namespace WinClient
 			textBox1.AppendText("Put to Server\r\n");
 			Application.DoEvents();
 
-			PutOYN();
-			PutTKM();
 			PutTRN(TrnID);
+			System.Threading.Thread.Sleep(1000);
+			PutTKM();
+			System.Threading.Thread.Sleep(1000);
+			PutOYN();
+			System.Threading.Thread.Sleep(1000);
+			Application.DoEvents();
 			//PutMSB(TrnID);
 			//PutMAC(TrnID);
 
-			textBox1.AppendText("End\r\n");
 			Application.DoEvents();
 		}
 
@@ -78,8 +86,8 @@ namespace WinClient
 			Oyn d = JsonConvert.DeserializeObject<Oyn>(e.Data);
 			queriesTableAdapter.OYN_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.Ad, d.Sex);
 			//System.Threading.Thread.Sleep(100);
-			label1.Invoke(new Action(() => label1.Text = $"{d.PutGet} -> {d.NOR - 1}"));
-			textBox1.Invoke(new Action(() => textBox1.AppendText($" {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
+			label1.Invoke(new Action(() => label1.Text = $"Oyn: {d.PutGet} -> {d.NOR - 1}"));
+			textBox1.Invoke(new Action(() => textBox1.AppendText($"Oyn: {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
 		}
 
 		private void wsTkm_OnMessage(object sender, MessageEventArgs e)
@@ -91,10 +99,11 @@ namespace WinClient
 				queriesTableAdapter.TKM_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.Ad);
 				scope.Complete();
 			}*/
+			
 			queriesTableAdapter.TKM_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.Ad);
 			//System.Threading.Thread.Sleep(100);
-			label1.Invoke(new Action(() => label1.Text = $"{d.PutGet} -> {d.NOR - 1}"));
-			textBox1.Invoke(new Action(() => textBox1.AppendText($" {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
+			label1.Invoke(new Action(() => label1.Text = $"Tkm: {d.PutGet} -> {d.NOR - 1}"));
+			textBox1.Invoke(new Action(() => textBox1.AppendText($"Tkm: {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
 		}
 
 		private void wsTrn_OnMessage(object sender, MessageEventArgs e)
@@ -105,24 +114,24 @@ namespace WinClient
 			Trn d = JsonConvert.DeserializeObject<Trn>(e.Data);
 			queriesTableAdapter.TRN_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.Ad, d.Tarih);
 			//System.Threading.Thread.Sleep(100);
-			label1.Invoke(new Action(() => label1.Text = $"{d.PutGet} -> {d.NOR - 1}"));
-			textBox1.Invoke(new Action(() => textBox1.AppendText($" {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
+			label1.Invoke(new Action(() => label1.Text = $"Trn: {d.PutGet} -> {d.NOR - 1}"));
+			textBox1.Invoke(new Action(() => textBox1.AppendText($"Trn: {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
 		}
 
 		private void wsMsb_OnMessage(object sender, MessageEventArgs e)
 		{
 			Msb d = JsonConvert.DeserializeObject<Msb>(e.Data);
 			queriesTableAdapter.MSB_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.TrnID, d.Tarih, d.Skl, d.Ktg, d.Rnd, d.Grp, d.HTkmID, d.GTkmID);
-			label1.Invoke(new Action(() => label1.Text = $"{d.PutGet} -> {d.NOR - 1}"));
-			textBox1.Invoke(new Action(() => textBox1.AppendText($" {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
+			label1.Invoke(new Action(() => label1.Text = $"Msb: {d.PutGet} -> {d.NOR - 1}"));
+			textBox1.Invoke(new Action(() => textBox1.AppendText($"Msb: {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
 		}
 
 		private void wsMac_OnMessage(object sender, MessageEventArgs e)
 		{
 			Mac d = JsonConvert.DeserializeObject<Mac>(e.Data);
 			queriesTableAdapter.MAC_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.TrnID, d.MsbRN, d.Ktg, d.Sra, d.HOyn1ID, d.HOyn2ID, d.GOyn1ID, d.GOyn2ID, d.S1HP, d.S1GP, d.S2HP, d.S2GP, d.S3HP, d.S3GP, d.S4HP, d.S4GP, d.S5HP, d.S5GP, d.S6HP, d.S6GP, d.S7HP, d.S7GP);
-			label1.Invoke(new Action(() => label1.Text = $"{d.PutGet} -> {d.NOR-1}"));
-			textBox1.Invoke(new Action(() => textBox1.AppendText($" {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
+			label1.Invoke(new Action(() => label1.Text = $"Mac: {d.PutGet} -> {d.NOR-1}"));
+			textBox1.Invoke(new Action(() => textBox1.AppendText($"Mac: {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
 		}
 
 		#endregion
@@ -247,6 +256,7 @@ namespace WinClient
 
 					string output = JsonConvert.SerializeObject(obj);
 					wsTkm.Send(output);
+
 				}
 			}
 			else
@@ -427,6 +437,23 @@ namespace WinClient
 
 		#endregion
 
+		private void POSTdenemeButton_Click(object sender, EventArgs e)
+		{
+			//HttpRequestMessage rm = new HttpRequestMessage(HttpMethod.Put, "");
+			//client.SendAsync(rm, HttpCompletionOption.ResponseContentRead);
+			
+			var obj = new Tkm();
+			obj.NOR = 1;
+			obj.ID = 123;
+			obj.Stu = "P";
+			obj.Ad = "CanCan";
+
+			string output = JsonConvert.SerializeObject(obj);
+			var response = client.PostAsync("http://rest.masatenis.online/Tkm",
+				new StringContent(output, Encoding.UTF8, "application/json")).Result;
+			var data = response.Content.ReadAsStringAsync().Result;
+			//Tkm d = JsonConvert.DeserializeObject<Tkm>(data);
+		}
 	}
 
 
