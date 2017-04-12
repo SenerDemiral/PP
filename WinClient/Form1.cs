@@ -34,12 +34,14 @@ namespace WinClient
 
 		private void GETbutton_Click(object sender, EventArgs e)
 		{
+			GETbutton.Enabled = false;
+
 			textBox1.Clear();
 			textBox1.AppendText("Get from Server\r\n");
 			Application.DoEvents();
 
 			//GetTKM();
-			//GetOYN();
+			GetOYN();
 			//GetTRN();
 			//GetMSB();
 			GetMAC();
@@ -48,6 +50,7 @@ namespace WinClient
 
 		private void PUTbutton_Click(object sender, EventArgs e)
 		{
+
 			textBox1.Clear();
 			textBox1.AppendText("Put to Server\r\n");
 			Application.DoEvents();
@@ -80,6 +83,7 @@ namespace WinClient
 		}
 
 		#region OnMessage
+		int OynSay = 0;
 
 		private void wsOyn_OnMessage(object sender, MessageEventArgs e)
 		{
@@ -88,6 +92,10 @@ namespace WinClient
 			//System.Threading.Thread.Sleep(100);
 			label1.Invoke(new Action(() => label1.Text = $"Oyn: {d.PutGet} -> {d.NOR - 1}"));
 			textBox1.Invoke(new Action(() => textBox1.AppendText($"Oyn: {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
+
+			OynSay--;
+			if (OynSay == 0)
+				GETbutton.Invoke(new Action(() => GETbutton.Text = "xxx"));
 		}
 
 		private void wsTkm_OnMessage(object sender, MessageEventArgs e)
@@ -129,7 +137,7 @@ namespace WinClient
 		private void wsMac_OnMessage(object sender, MessageEventArgs e)
 		{
 			Mac d = JsonConvert.DeserializeObject<Mac>(e.Data);
-			queriesTableAdapter.MAC_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.TrnID, d.MsbRN, d.Ktg, d.Sra, d.HOyn1ID, d.HOyn2ID, d.GOyn1ID, d.GOyn2ID, d.S1HP, d.S1GP, d.S2HP, d.S2GP, d.S3HP, d.S3GP, d.S4HP, d.S4GP, d.S5HP, d.S5GP, d.S6HP, d.S6GP, d.S7HP, d.S7GP);
+			//queriesTableAdapter.MAC_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.TrnID, d.MsbRN, d.Ktg, d.Sra, d.HOyn1ID, d.HOyn2ID, d.GOyn1ID, d.GOyn2ID, d.S1HP, d.S1GP, d.S2HP, d.S2GP, d.S3HP, d.S3GP, d.S4HP, d.S4GP, d.S5HP, d.S5GP, d.S6HP, d.S6GP, d.S7HP, d.S7GP);
 			label1.Invoke(new Action(() => label1.Text = $"Mac: {d.PutGet} -> {d.NOR-1}"));
 			textBox1.Invoke(new Action(() => textBox1.AppendText($"Mac: {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
 		}
@@ -168,6 +176,7 @@ namespace WinClient
 				var obj = new Oyn();
 				obj.PutGet = "G";
 				string output = JsonConvert.SerializeObject(obj);
+				OynSay = 200;
 				wsOyn.Send(output);
 			}
 			else
@@ -448,11 +457,18 @@ namespace WinClient
 			obj.Stu = "P";
 			obj.Ad = "CanCan";
 
-			string output = JsonConvert.SerializeObject(obj);
-			var response = client.PostAsync("http://rest.masatenis.online/Tkm",
-				new StringContent(output, Encoding.UTF8, "application/json")).Result;
-			var data = response.Content.ReadAsStringAsync().Result;
-			//Tkm d = JsonConvert.DeserializeObject<Tkm>(data);
+			for(int i = 0; i < 100; i++)
+			{
+				obj.NOR = i;
+				string output = JsonConvert.SerializeObject(obj);
+				var response = client.PostAsync("http://rest.masatenisi.online/Tkm",
+					new StringContent(output, Encoding.UTF8, "application/json")).Result;
+				
+				var data = response.Content.ReadAsStringAsync().Result;
+				Tkm d = JsonConvert.DeserializeObject<Tkm>(data);
+
+				textBox1.AppendText($"--Kayıt sayısı: {d.NOR}\r\n");
+			}
 		}
 	}
 

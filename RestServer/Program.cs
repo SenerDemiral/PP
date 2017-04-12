@@ -13,9 +13,15 @@ namespace RestServer
 				return jsn; 
 			});
 
+			Handle.GET("/OynSay", () =>
+			{
+				var nor = Db.SQL<long>("select count(o) from PPDB.OYN o").First;
+				return nor.ToString();
+			});
+
 			#region WebSocketUpgrade
 
-				Handle.GET("/wsOynConnect", (Request req) =>
+			Handle.GET("/wsOynConnect", (Request req) =>
 			{
 				if(req.WebSocketUpgrade)
 				{
