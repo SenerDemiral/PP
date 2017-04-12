@@ -140,7 +140,6 @@ namespace RestServer
 						}
 					});
 
-					System.Threading.Thread.Sleep(100);
 					ws.Send(jsn.ToJson());
 				}
 			});
@@ -188,7 +187,6 @@ namespace RestServer
 						}
 					});
 
-					System.Threading.Thread.Sleep(100);
 					ws.Send(jsn.ToJson());
 				}
 			});
@@ -238,7 +236,6 @@ namespace RestServer
 						}
 					});
 
-					System.Threading.Thread.Sleep(100);
 					ws.Send(jsn.ToJson());
 				}
 			});
