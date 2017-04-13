@@ -11,7 +11,7 @@ namespace PPDB
 		public string Ad;
 		public string Sex;
 
-		public OYN()
+		public OYN ()
 		{
 			Sex = "E";
 		}
@@ -30,7 +30,7 @@ namespace PPDB
 		public DateTime Trh;
 
 		// Computed Fields
-		public string Tarih => Trh.ToString("yyyy-MM-dd HH:mm:ss");
+		public string Tarih => Trh.ToString( "yyyy-MM-dd HH:mm:ss" );
 	}
 
 	[Database]
@@ -46,13 +46,21 @@ namespace PPDB
 		public string Rnd;
 		public string Grp;
 
-		public short HP;    // MsbHomePuan if Skl=T
-		public short GP;
+		public short HTP;	// HomeTkmPuan if Skl=T
+		public short GTP;
+		public short HTMP;	// HomeTkmMacPuan
+		public short GTMP;
+		
+		public short HTMAS; // HomeTkmMac AldigiSingle
+		public short HTMAD;
+		public short GTMAS; // GuestTkmMac AldigiSingle
+		public short GTMAD;
 
 		// Computed Fields
-		public string Tarih => Trh.ToString("yyyy-MM-dd HH:mm:ss");
+		public string Tarih => Trh.ToString( "yyyy-MM-dd HH:mm:ss" );
+		public string Bitti => HTP == 0 && GTP == 0 ? "F" : "T";
 
-		public MSB()
+		public MSB ()
 		{
 			Skl = "?";
 			Ktg = "?";
@@ -70,11 +78,11 @@ namespace PPDB
 		public OYN HOyn2;
 		public OYN GOyn1;
 		public OYN GOyn2;
-		
+
 		public string Ktg;
 		public short Sra;
-	
-		public short S1HP;	// Set1HomePuan(Sayı)
+
+		public short S1HP;  // Set1HomePuan(Sayı)
 		public short S1GP;
 		public short S2HP;
 		public short S2GP;
@@ -92,10 +100,10 @@ namespace PPDB
 		public string HWL;  // Home Win/Lost
 		public string GWL;  // Guest Win/Lost
 
-		public short HP;	// MacHomePuan
+		public short HP;    // MacHomePuan
 		public short GP;
 
-		public MAC()
+		public MAC ()
 		{
 			Ktg = "?";
 			Sra = 0;
@@ -121,4 +129,49 @@ namespace PPDB
 		}
 	}
 
+	[Database]
+	public class TRNTKM
+	{
+		public TRN Trn;
+		public TKM Tkm;
+
+		public short MO;
+		public short MA;
+		public short MV;
+		public short MB;
+		public short MPA;
+		public short MPV;
+
+		public TRNTKM ()
+		{
+			MO = 0;
+			MA = 0;
+			MV = 0;
+			MB = 0;
+			MPA = 0;
+			MPV = 0;
+		}
+	}
+
+	[Database]
+	public class TRNOYN
+	{
+		public TRN Trn;
+		public OYN Oyn;
+
+		public short SrtNo;
+
+		public TRNOYN ()
+		{
+			SrtNo = 0;
+		}
+	}
+
+	[Database]
+	public class TRNTKMOYN
+	{
+		public TRN Trn;
+		public TKM Tkm;
+		public OYN Oyn;
+	}
 }

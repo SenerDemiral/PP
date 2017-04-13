@@ -12,6 +12,14 @@
 	"Rnd": "",
 	"Grp": "",
 	"HTkmID": 0,
-	"GTkmID": 0
+	"GTkmID": 0,
 
+	"HTP": 0,
+	"GTP": 0,
+	"HTMP": 0,
+	"GTMP": 0,
+	"HTMAS": 0,
+	"HTMAD": 0,
+	"GTMAS": 0,
+	"GTMAD": 0
 }

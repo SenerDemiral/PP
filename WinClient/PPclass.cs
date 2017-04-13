@@ -80,11 +80,31 @@ namespace WinClient
 		public long HTkmID;
 		public long GTkmID;
 
-		public Msb()
+		public short HTP;   // HomeTkmPuan if Skl=T
+		public short GTP;
+		public short HTMP;  // HomeTkmMacPuan
+		public short GTMP;
+
+		public short HTMAS; // HomeTkmMac AldigiSingle
+		public short HTMAD;
+		public short GTMAS; // GuestTkmMac AldigiSingle
+		public short GTMAD;
+
+		public Msb ()
 		{
 			PutGet = "P";
 			NewID = 0;
 			NOR = 0;    //Number of Record left
+			
+			HTP = 0;    // HomeTkmPuan Musabaka
+			GTP = 0;
+			HTMP = 0;   // HomeTkmMacPuan
+			GTMP = 0;
+
+			HTMAS = 0;  // HomeTkmMac AldigiSingle
+			HTMAD = 0;
+			GTMAS = 0;
+			GTMAD = 0;
 		}
 	}
 
@@ -131,7 +151,88 @@ namespace WinClient
 		{
 			PutGet = "P";
 			NewID = 0;
-			NOR = 0;	//Number of Record left
+			NOR = 0;    //Number of Record left
+
+			HWL = "-";
+			GWL = "-";
+			HP = 0;
+			GP = 0;
+		}
+	}
+
+	public class TrnTkm
+	{
+		public string PutGet;
+		public long NewID;
+		public int NOR;
+
+		public long ID;
+		public string Stu;
+		public long TrnID;
+		public long TkmID;
+
+		public short MO;
+		public short MA;
+		public short MV;
+		public short MB;
+		public short MPA;
+		public short MPV;
+
+		public TrnTkm ()
+		{
+			PutGet = "P";
+			NewID = 0;
+			NOR = 0;    //Number of Record left
+
+			MO = 0;
+			MA = 0;
+			MV = 0;
+			MB = 0;
+			MPA = 0;
+			MPV = 0;
+		}
+	}
+
+	public class TrnTkmOyn
+	{
+		public string PutGet;
+		public long NewID;
+		public int NOR;
+
+		public long ID;
+		public string Stu;
+		public long TrnID;
+		public long TkmID;
+		public long OynID;
+
+		public TrnTkmOyn ()
+		{
+			PutGet = "P";
+			NewID = 0;
+			NOR = 0;    //Number of Record left
+		}
+	}
+
+	public class TrnOyn
+	{
+		public string PutGet;
+		public long NewID;
+		public int NOR;
+
+		public long ID;
+		public string Stu;
+		public long TrnID;
+		public long OynID;
+
+		public short SrtNo;
+
+		public TrnOyn ()
+		{
+			PutGet = "P";
+			NewID = 0;
+			NOR = 0;    //Number of Record left
+
+			SrtNo = 0;
 		}
 	}
 

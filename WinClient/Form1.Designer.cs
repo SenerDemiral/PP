@@ -40,6 +40,8 @@
 			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.POSTdenemeButton = new System.Windows.Forms.Button();
+			this.trntkmTableAdapter = new WinClient.DataSet1TableAdapters.TRNTKMTableAdapter();
+			this.trntkmoynTableAdapter = new WinClient.DataSet1TableAdapters.TRNTKMOYNTableAdapter();
 			((System.ComponentModel.ISupportInitialize)(this.ds)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -120,6 +122,14 @@
 			this.POSTdenemeButton.UseVisualStyleBackColor = true;
 			this.POSTdenemeButton.Click += new System.EventHandler(this.POSTdenemeButton_Click);
 			// 
+			// trntkmTableAdapter
+			// 
+			this.trntkmTableAdapter.ClearBeforeFill = true;
+			// 
+			// trntkmoynTableAdapter
+			// 
+			this.trntkmoynTableAdapter.ClearBeforeFill = true;
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -152,6 +162,8 @@
 		private System.Windows.Forms.TextBox textBox1;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Button POSTdenemeButton;
+		private DataSet1TableAdapters.TRNTKMTableAdapter trntkmTableAdapter;
+		private DataSet1TableAdapters.TRNTKMOYNTableAdapter trntkmoynTableAdapter;
 	}
 }
 

@@ -20,6 +20,8 @@ namespace WinClient
 		private static WebSocket wsTkm = new WebSocket("ws://rest.masatenisi.online/wsTkmConnect");
 		private static WebSocket wsOyn = new WebSocket("ws://rest.masatenisi.online/wsOynConnect");
 		private static WebSocket wsTrn = new WebSocket("ws://rest.masatenisi.online/wsTrnConnect");
+		private static WebSocket wsTrnTkm = new WebSocket("ws://rest.masatenisi.online/wsTrnTkmConnect");
+		private static WebSocket wsTrnTkmOyn = new WebSocket("ws://rest.masatenisi.online/wsTrnTkmOynConnect");
 		private static WebSocket wsMsb = new WebSocket("ws://rest.masatenisi.online/wsMsbConnect");
 		private static WebSocket wsMac = new WebSocket("ws://rest.masatenisi.online/wsMacConnect");
 
@@ -29,6 +31,8 @@ namespace WinClient
 		int oynSay = 0,
 			tkmSay = 0,
 			trnSay = 0,
+			trnTkmSay = 0,
+			trnTkmOynSay = 0,
 			msbSay = 0,
 			macSay = 0;
 
@@ -67,6 +71,34 @@ namespace WinClient
 			{
 				trnSay = value;
 				if (trnSay == 0)
+					if (putGet == "G")
+						GetTRNTKM();
+					else
+						PutTRNTKM( TrnID );
+			}
+		}
+
+		public int TrnTkmSay
+		{
+			get { return trnTkmSay; }
+			set
+			{
+				trnTkmSay = value;
+				if (trnTkmSay == 0)
+					if (putGet == "G")
+						GetTRNTKMOYN();
+					else
+						PutTRNTKMOYN( TrnID );
+			}
+		}
+
+		public int TrnTkmOynSay
+		{
+			get { return trnTkmOynSay; }
+			set
+			{
+				trnTkmOynSay = value;
+				if (trnTkmOynSay == 0)
 					if (putGet == "G")
 						GetMSB();
 					else
@@ -146,6 +178,8 @@ namespace WinClient
 			wsOyn.OnMessage += wsOyn_OnMessage;
 			wsTkm.OnMessage += wsTkm_OnMessage;
 			wsTrn.OnMessage += wsTrn_OnMessage;
+			wsTrnTkm.OnMessage += wsTrnTkm_OnMessage;
+			wsTrnTkmOyn.OnMessage += wsTrnTkmOyn_OnMessage;
 			wsMsb.OnMessage += wsMsb_OnMessage;
 			wsMac.OnMessage += wsMac_OnMessage;
 		}
@@ -155,7 +189,7 @@ namespace WinClient
 		private void wsOyn_OnMessage(object sender, MessageEventArgs e)
 		{
 			Oyn d = JsonConvert.DeserializeObject<Oyn>(e.Data);
-			queriesTableAdapter.OYN_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.Ad, d.Sex);
+			queriesTableAdapter.MDF_OYN(d.PutGet, d.NewID, d.ID, d.Stu, d.Ad, d.Sex);
 			textBox1.Invoke(new Action(() => textBox1.AppendText($"Oyn: {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
 
 			OynSay--;
@@ -164,7 +198,7 @@ namespace WinClient
 		private void wsTkm_OnMessage(object sender, MessageEventArgs e)
 		{
 			Tkm d = JsonConvert.DeserializeObject<Tkm>(e.Data);
-			queriesTableAdapter.TKM_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.Ad);
+			queriesTableAdapter.MDF_TKM(d.PutGet, d.NewID, d.ID, d.Stu, d.Ad);
 			textBox1.Invoke(new Action(() => textBox1.AppendText($"Tkm: {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
 			
 			TkmSay--;
@@ -176,16 +210,34 @@ namespace WinClient
 			//2:FB2SC Client PutTRN ile FB kayitlarini gonderir, duzeltme varsa gelir (Sadece ID duzeltilir)
 			
 			Trn d = JsonConvert.DeserializeObject<Trn>(e.Data);
-			queriesTableAdapter.TRN_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.Ad, d.Tarih);
+			queriesTableAdapter.MDF_TRN(d.PutGet, d.NewID, d.ID, d.Stu, d.Ad, d.Tarih);
 			textBox1.Invoke(new Action(() => textBox1.AppendText($"Trn: {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
 			
 			TrnSay--;
 		}
 
+		private void wsTrnTkm_OnMessage (object sender, MessageEventArgs e)
+		{
+			TrnTkm d = JsonConvert.DeserializeObject<TrnTkm>(e.Data);
+			queriesTableAdapter.MDF_TRNTKM( d.PutGet, d.NewID, d.ID, d.Stu, d.TrnID, d.TkmID, d.MO, d.MA, d.MV, d.MB, d.MPA, d.MPV );
+			textBox1.Invoke( new Action( () => textBox1.AppendText( $"TrnTkm: {d.PutGet} -> {d.NOR} {d.ID}\r\n" ) ) );
+
+			TrnTkmSay--;
+		}
+
+		private void wsTrnTkmOyn_OnMessage (object sender, MessageEventArgs e)
+		{
+			TrnTkmOyn d = JsonConvert.DeserializeObject<TrnTkmOyn>(e.Data);
+			queriesTableAdapter.MDF_TRNTKMOYN( d.PutGet, d.NewID, d.ID, d.Stu, d.TrnID, d.TkmID, d.OynID );
+			textBox1.Invoke( new Action( () => textBox1.AppendText( $"TrnTkm: {d.PutGet} -> {d.NOR} {d.ID}\r\n" ) ) );
+
+			TrnTkmOynSay--;
+		}
+
 		private void wsMsb_OnMessage(object sender, MessageEventArgs e)
 		{
 			Msb d = JsonConvert.DeserializeObject<Msb>(e.Data);
-			queriesTableAdapter.MSB_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.TrnID, d.Tarih, d.Skl, d.Ktg, d.Rnd, d.Grp, d.HTkmID, d.GTkmID);
+			queriesTableAdapter.MDF_MSB(d.PutGet, d.NewID, d.ID, d.Stu, d.TrnID, d.Tarih, d.Skl, d.Ktg, d.Rnd, d.Grp, d.HTkmID, d.GTkmID, d.HTP, d.GTP, d.HTMP, d.GTMP, d.HTMAS, d.HTMAD, d.GTMAS, d.GTMAD);
 			textBox1.Invoke(new Action(() => textBox1.AppendText($"Msb: {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
 			
 			MsbSay--;
@@ -194,7 +246,7 @@ namespace WinClient
 		private void wsMac_OnMessage(object sender, MessageEventArgs e)
 		{
 			Mac d = JsonConvert.DeserializeObject<Mac>(e.Data);
-			queriesTableAdapter.MAC_MDF(d.PutGet, d.NewID, d.ID, d.Stu, d.TrnID, d.MsbID, d.Ktg, d.Sra, d.HOyn1ID, d.HOyn2ID, d.GOyn1ID, d.GOyn2ID, d.S1HP, d.S1GP, d.S2HP, d.S2GP, d.S3HP, d.S3GP, d.S4HP, d.S4GP, d.S5HP, d.S5GP, d.S6HP, d.S6GP, d.S7HP, d.S7GP);
+			queriesTableAdapter.MDF_MAC(d.PutGet, d.NewID, d.ID, d.Stu, d.TrnID, d.MsbID, d.Ktg, d.Sra, d.HOyn1ID, d.HOyn2ID, d.GOyn1ID, d.GOyn2ID, d.S1HP, d.S1GP, d.S2HP, d.S2GP, d.S3HP, d.S3GP, d.S4HP, d.S4GP, d.S5HP, d.S5GP, d.S6HP, d.S6GP, d.S7HP, d.S7GP);
 			textBox1.Invoke(new Action(() => textBox1.AppendText($"Mac: {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
 			
 			MacSay--;
@@ -260,6 +312,44 @@ namespace WinClient
 			}
 			else
 				textBox1.Invoke(new Action(() => textBox1.AppendText("\r\nNo Connection\r\n")));
+		}
+
+		private void GetTRNTKM ()
+		{
+			textBox1.Invoke( new Action( () => textBox1.AppendText( "\r\nTurnuva Takımları\r\n" ) ) );
+
+			if (wsTrnTkm.ReadyState != WebSocketState.Open)
+				wsTrnTkm.Connect();
+
+			if (wsTrnTkm.ReadyState == WebSocketState.Open)
+			{
+				var obj = new TrnTkm();
+				obj.PutGet = "G";
+				string output = JsonConvert.SerializeObject(obj);
+				if (GetTrnTkmSay() > 0)
+					wsTrnTkm.Send( output );
+			}
+			else
+				textBox1.Invoke( new Action( () => textBox1.AppendText( "\r\nNo Connection\r\n" ) ) );
+		}
+
+		private void GetTRNTKMOYN ()
+		{
+			textBox1.Invoke( new Action( () => textBox1.AppendText( "\r\nTurnuva Takım Oyuncuları\r\n" ) ) );
+
+			if (wsTrnTkmOyn.ReadyState != WebSocketState.Open)
+				wsTrnTkmOyn.Connect();
+
+			if (wsTrnTkmOyn.ReadyState == WebSocketState.Open)
+			{
+				var obj = new TrnTkm();
+				obj.PutGet = "G";
+				string output = JsonConvert.SerializeObject(obj);
+				if (GetTrnTkmOynSay() > 0)
+					wsTrnTkm.Send( output );
+			}
+			else
+				textBox1.Invoke( new Action( () => textBox1.AppendText( "\r\nNo Connection\r\n" ) ) );
 		}
 
 		private void GetMSB()
@@ -400,6 +490,84 @@ namespace WinClient
 				textBox1.AppendText("--X\r\n");
 		}
 
+		private void PutTRNTKM (long TrnID)
+		{
+			textBox1.Invoke( new Action( () => textBox1.AppendText( "\r\nTurnuva Takımları\r\n" ) ) );
+
+			if (wsTrnTkm.ReadyState != WebSocketState.Open)
+				wsTrnTkm.Connect();
+
+			if (wsTrnTkm.ReadyState == WebSocketState.Open)
+			{
+				int nor = 0;
+				if (TrnID == 0)
+					nor = trntkmTableAdapter.FillByStu( this.ds.TRNTKM );
+				else
+					nor = trntkmTableAdapter.FillByTrnStu( this.ds.TRNTKM, TrnID );
+
+				TrnTkmSay = nor;
+
+				foreach (DataSet1.TRNTKMRow row in ds.TRNTKM.Rows)
+				{
+					var obj = new TrnTkm();
+					obj.NOR = nor--;
+
+					obj.ID = row.ID;
+					obj.Stu = row.STU;
+					obj.TrnID = row.TRNID;
+					obj.TkmID = row.TKMID;
+
+					obj.MO = row.IsMONull() ? (short)0 : row.MO;
+					obj.MA = row.IsMANull() ? (short)0 : row.MA;
+					obj.MV = row.IsMVNull() ? (short)0 : row.MV;
+					obj.MB = row.IsMBNull() ? (short)0 : row.MB;
+					obj.MPA = row.IsMPANull() ? (short)0 : row.MPA;
+					obj.MPV = row.IsMPVNull() ? (short)0 : row.MPV;
+
+					string output = JsonConvert.SerializeObject(obj);
+					wsTrn.Send( output );
+				}
+			}
+			else
+				textBox1.AppendText( "--X\r\n" );
+		}
+
+		private void PutTRNTKMOYN (long TrnID)
+		{
+			textBox1.Invoke( new Action( () => textBox1.AppendText( "\r\nTurnuva Takımları\r\n" ) ) );
+
+			if (wsTrnTkmOyn.ReadyState != WebSocketState.Open)
+				wsTrnTkmOyn.Connect();
+
+			if (wsTrnTkmOyn.ReadyState == WebSocketState.Open)
+			{
+				int nor = 0;
+				if (TrnID == 0)
+					nor = trntkmoynTableAdapter.FillByStu( this.ds.TRNTKMOYN );
+				else
+					nor = trntkmoynTableAdapter.FillByTrnStu( this.ds.TRNTKMOYN, TrnID );
+
+				TrnTkmOynSay = nor;
+
+				foreach (DataSet1.TRNTKMOYNRow row in ds.TRNTKMOYN.Rows)
+				{
+					var obj = new TrnTkmOyn();
+					obj.NOR = nor--;
+
+					obj.ID = row.ID;
+					obj.Stu = row.STU;
+					obj.TrnID = row.TRNID;
+					obj.TkmID = row.TKMID;
+					obj.OynID = row.OYNID;
+
+					string output = JsonConvert.SerializeObject(obj);
+					wsTrn.Send( output );
+				}
+			}
+			else
+				textBox1.AppendText( "--X\r\n" );
+		}
+
 		private void PutMSB(long TrnID)
 		{
 			textBox1.Invoke(new Action(() => textBox1.AppendText("\r\nMüsabakalar\r\n")));
@@ -434,6 +602,15 @@ namespace WinClient
 
 					obj.HTkmID = row.IsHTKMIDNull() ? 0 : row.HTKMID;
 					obj.GTkmID = row.IsGTKMIDNull() ? 0 : row.GTKMID;
+
+					obj.HTP = row.IsHTPNull() ? (short)0 : row.HTP;
+					obj.GTP = row.IsGTPNull() ? (short)0 : row.GTP;
+					obj.HTMP = row.IsHTMPNull() ? (short)0 : row.HTMP;
+					obj.GTMP = row.IsGTMPNull() ? (short)0 : row.GTMP;
+					obj.HTMAS = row.IsHTMASNull() ? (short)0 : row.HTMAS;
+					obj.HTMAD = row.IsHTMADNull() ? (short)0 : row.HTMAD;
+					obj.GTMAS = row.IsGTMASNull() ? (short)0 : row.GTMAS;
+					obj.GTMAD = row.IsGTMADNull() ? (short)0 : row.GTMAD;
 
 					string output = JsonConvert.SerializeObject(obj);
 					wsMsb.Send(output);
@@ -532,6 +709,22 @@ namespace WinClient
 			var data = response.Content.ReadAsStringAsync().Result;
 			TrnSay = Convert.ToInt32(data);
 			return TrnSay;
+		}
+
+		private int GetTrnTkmSay ()
+		{
+			var response = client.GetAsync("http://rest.masatenisi.online/TrnTkmSay").Result;
+			var data = response.Content.ReadAsStringAsync().Result;
+			TrnTkmSay = Convert.ToInt32( data );
+			return TrnTkmSay;
+		}
+
+		private int GetTrnTkmOynSay ()
+		{
+			var response = client.GetAsync("http://rest.masatenisi.online/TrnTkmOynSay").Result;
+			var data = response.Content.ReadAsStringAsync().Result;
+			TrnTkmOynSay = Convert.ToInt32( data );
+			return TrnTkmOynSay;
 		}
 
 		private int GetMsbSay()

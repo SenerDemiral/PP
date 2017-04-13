@@ -49,7 +49,7 @@ namespace RestServer
 				if(req.WebSocketUpgrade)
 				{
 					req.SendUpgrade("wsOyn");
-					Console.WriteLine("ws Connected {0}", DateTime.Now);
+					Console.WriteLine("wsOyn Connected {0}", DateTime.Now);
 					return HandlerStatus.Handled;
 				}
 
@@ -65,7 +65,7 @@ namespace RestServer
 				if(req.WebSocketUpgrade)
 				{
 					req.SendUpgrade("wsTkm");
-					Console.WriteLine("ws Connected {0}", DateTime.Now);
+					Console.WriteLine("wsTkm Connected {0}", DateTime.Now);
 					return HandlerStatus.Handled;
 				}
 
@@ -81,7 +81,7 @@ namespace RestServer
 				if(req.WebSocketUpgrade)
 				{
 					req.SendUpgrade("wsTrn");
-					Console.WriteLine("ws Connected {0}", DateTime.Now);
+					Console.WriteLine("wsTrn Connected {0}", DateTime.Now);
 					return HandlerStatus.Handled;
 				}
 
@@ -92,12 +92,44 @@ namespace RestServer
 				};
 			});
 
+			Handle.GET( "/wsTrnTkmConnect", (Request req) =>
+			{
+				if (req.WebSocketUpgrade)
+				{
+					req.SendUpgrade( "wsTrnTkm" );
+					Console.WriteLine( "wsTrnTkm Connected {0}", DateTime.Now );
+					return HandlerStatus.Handled;
+				}
+
+				return new Response()
+				{
+					StatusCode = 500,
+					StatusDescription = "WebSocket upgrade on " + req.Uri + " was not approved."
+				};
+			} );
+
+			Handle.GET( "/wsTrnTkmOynConnect", (Request req) =>
+			{
+				if (req.WebSocketUpgrade)
+				{
+					req.SendUpgrade( "wsTrnTkmOyn" );
+					Console.WriteLine( "wsTrnTkmOyn Connected {0}", DateTime.Now );
+					return HandlerStatus.Handled;
+				}
+
+				return new Response()
+				{
+					StatusCode = 500,
+					StatusDescription = "WebSocket upgrade on " + req.Uri + " was not approved."
+				};
+			} );
+
 			Handle.GET("/wsMsbConnect", (Request req) =>
 			{
 				if(req.WebSocketUpgrade)
 				{
 					req.SendUpgrade("wsMsb");
-					Console.WriteLine("ws Connected {0}", DateTime.Now);
+					Console.WriteLine("wsMsb Connected {0}", DateTime.Now);
 					return HandlerStatus.Handled;
 				}
 
@@ -113,7 +145,7 @@ namespace RestServer
 				if(req.WebSocketUpgrade)
 				{
 					req.SendUpgrade("wsMac");
-					Console.WriteLine("ws Connected {0}", DateTime.Now);
+					Console.WriteLine("wsMac Connected {0}", DateTime.Now);
 					return HandlerStatus.Handled;
 				}
 
@@ -274,6 +306,130 @@ namespace RestServer
 				}
 			});
 
+			Handle.WebSocket( "wsTrnTkm", (String s, WebSocket ws) =>
+			{
+				TrnTkmJson jsn = new TrnTkmJson();
+				jsn.PopulateFromJson( s );
+
+				if (jsn.PutGet == "G")
+				{
+					var nor = Db.SQL<long>("select count(o) from TRNTKM o").First;
+
+					var trn = Db.SQL<TRNTKM>("select o from TRNTKM o");
+					foreach (var obj in trn)
+					{
+						jsn.NOR = nor--;
+						jsn.ID = (long)obj.GetObjectNo();
+						jsn.TrnID = (long)obj.Trn.GetObjectNo();
+						jsn.TkmID = (long)obj.Tkm.GetObjectNo();
+						
+						jsn.MO = obj.MO;
+						jsn.MA = obj.MA;
+						jsn.MV = obj.MV;
+						jsn.MB = obj.MB;
+						jsn.MPA = obj.MPA;
+						jsn.MPV = obj.MPV;
+
+						ws.Send( jsn.ToJson() );
+					}
+				}
+				else if (jsn.PutGet == "P")
+				{
+					Db.Transact( () =>
+					{
+						if (jsn.ID < 0)
+						{
+							var obj = new TRNTKM()
+							{
+								Trn = (TRN)DbHelper.FromID((ulong)jsn.TrnID),
+								Tkm = (TKM)DbHelper.FromID((ulong)jsn.TkmID),
+
+								MO = (short)jsn.MO,
+								MA = (short)jsn.MA,
+								MV = (short)jsn.MV,
+								MB = (short)jsn.MB,
+								MPA = (short)jsn.MPA,
+								MPV = (short)jsn.MPV,
+							};
+							jsn.NewID = (long)obj.GetObjectNo();
+						}
+						else
+						{
+							var obj = (TRNTKM)DbHelper.FromID((ulong)jsn.ID);
+							if (jsn.Stu == "D")
+								obj.Delete();
+							else
+							{
+								obj.Trn = (TRN)DbHelper.FromID( (ulong)jsn.TrnID );
+								obj.Tkm = (TKM)DbHelper.FromID( (ulong)jsn.TkmID );
+
+								obj.MO = (short)jsn.MO;
+								obj.MA = (short)jsn.MA;
+								obj.MV = (short)jsn.MV;
+								obj.MB = (short)jsn.MB;
+								obj.MPA = (short)jsn.MPA;
+								obj.MPV = (short)jsn.MPV;
+							}
+						}
+					} );
+
+					ws.Send( jsn.ToJson() );
+				}
+			} );
+
+			Handle.WebSocket( "wsTrnTkmOyn", (String s, WebSocket ws) =>
+			{
+				TrnTkmOynJson jsn = new TrnTkmOynJson();
+				jsn.PopulateFromJson( s );
+
+				if (jsn.PutGet == "G")
+				{
+					var nor = Db.SQL<long>("select count(o) from TRNTKMOYN o").First;
+
+					var trn = Db.SQL<TRNTKMOYN>("select o from TRNTKM o");
+					foreach (var obj in trn)
+					{
+						jsn.NOR = nor--;
+						jsn.ID = (long)obj.GetObjectNo();
+						jsn.TrnID = (long)obj.Trn.GetObjectNo();
+						jsn.TkmID = (long)obj.Tkm.GetObjectNo();
+						jsn.OynID = (long)obj.Oyn.GetObjectNo();
+
+						ws.Send( jsn.ToJson() );
+					}
+				}
+				else if (jsn.PutGet == "P")
+				{
+					Db.Transact( () =>
+					{
+						if (jsn.ID < 0)
+						{
+							var obj = new TRNTKMOYN()
+							{
+								Trn = (TRN)DbHelper.FromID((ulong)jsn.TrnID),
+								Tkm = (TKM)DbHelper.FromID((ulong)jsn.TkmID),
+								Oyn = (OYN)DbHelper.FromID((ulong)jsn.OynID),
+							};
+							jsn.NewID = (long)obj.GetObjectNo();
+						}
+						else
+						{
+							var obj = (TRNTKMOYN)DbHelper.FromID((ulong)jsn.ID);
+							if (jsn.Stu == "D")
+								obj.Delete();
+							else
+							{
+								obj.Trn = (TRN)DbHelper.FromID( (ulong)jsn.TrnID );
+								obj.Tkm = (TKM)DbHelper.FromID( (ulong)jsn.TkmID );
+								obj.Oyn = (OYN)DbHelper.FromID( (ulong)jsn.OynID );
+							}
+						}
+					} );
+
+					ws.Send( jsn.ToJson() );
+				}
+			} );
+
 			Handle.WebSocket("wsMsb", (String s, WebSocket ws) =>
 			{
 				MsbJson jsn = new MsbJson();
@@ -300,6 +456,15 @@ namespace RestServer
 						jsn.HTkmID = (long)obj.HTkm.GetObjectNo();
 						jsn.GTkmID = (long)obj.GTkm.GetObjectNo();
 
+						jsn.HTP = obj.HTP;
+						jsn.GTP = obj.GTP;
+						jsn.HTMP = obj.HTMP;
+						jsn.GTMP = obj.GTMP;
+						jsn.HTMAS = obj.HTMAS;
+						jsn.HTMAD = obj.HTMAD;
+						jsn.GTMAS = obj.GTMAS;
+						jsn.GTMAD = obj.GTMAD;
+
 						ws.Send(jsn.ToJson());
 					}
 				}
@@ -319,7 +484,17 @@ namespace RestServer
 								Skl = jsn.Skl,
 								Ktg = jsn.Ktg,
 								Rnd = jsn.Rnd,
-								Grp = jsn.Grp
+								Grp = jsn.Grp,
+	
+								HTP   = (short)jsn.HTP,
+								GTP   = (short)jsn.GTP,
+								HTMP  = (short)jsn.HTMP,
+								GTMP  = (short)jsn.GTMP,
+								HTMAS = (short)jsn.HTMAS,
+								HTMAD = (short)jsn.HTMAD,
+								GTMAS = (short)jsn.GTMAS,
+								GTMAD = (short)jsn.GTMAD,
+
 							};
 							jsn.NewID = (long)obj.GetObjectNo();
 						}
@@ -338,6 +513,16 @@ namespace RestServer
 								obj.Ktg = jsn.Ktg;
 								obj.Rnd = jsn.Rnd;
 								obj.Grp = jsn.Grp;
+
+								obj.HTP = (short)jsn.HTP;
+								obj.GTP = (short)jsn.GTP;
+								obj.HTMP = (short)jsn.HTMP;
+								obj.GTMP = (short)jsn.GTMP;
+								obj.HTMAS = (short)jsn.HTMAS;
+								obj.HTMAD = (short)jsn.HTMAD;
+								obj.GTMAS = (short)jsn.GTMAS;
+								obj.GTMAD = (short)jsn.GTMAD;
+
 							}
 						}
 					});
