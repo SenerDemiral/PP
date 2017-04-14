@@ -142,6 +142,9 @@ namespace PPDB
 		public short MPA;
 		public short MPV;
 
+		public string TrnAd => this.Trn.Ad;
+		public string TkmAd => this.Tkm.Ad;
+
 		public TRNTKM ()
 		{
 			MO = 0;
@@ -161,6 +164,9 @@ namespace PPDB
 
 		public short SrtNo;
 
+		public string TrnAd => this.Trn.Ad;
+		public string OynAd => this.Oyn.Ad;
+		
 		public TRNOYN ()
 		{
 			SrtNo = 0;
@@ -173,5 +179,9 @@ namespace PPDB
 		public TRN Trn;
 		public TKM Tkm;
 		public OYN Oyn;
+
+		public string TrnAd => this.Trn.Ad;
+		public string TkmAd => this.Tkm.Ad;
+		public string OynAd => this.Oyn.Ad;
 	}
 }

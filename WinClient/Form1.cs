@@ -525,7 +525,7 @@ namespace WinClient
 					obj.MPV = row.IsMPVNull() ? (short)0 : row.MPV;
 
 					string output = JsonConvert.SerializeObject(obj);
-					wsTrn.Send( output );
+					wsTrnTkm.Send( output );
 				}
 			}
 			else
@@ -561,7 +561,7 @@ namespace WinClient
 					obj.OynID = row.OYNID;
 
 					string output = JsonConvert.SerializeObject(obj);
-					wsTrn.Send( output );
+					wsTrnTkmOyn.Send( output );
 				}
 			}
 			else
