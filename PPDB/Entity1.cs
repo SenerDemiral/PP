@@ -100,7 +100,9 @@ namespace PPDB
 		public string HWL;  // Home Win/Lost
 		public string GWL;  // Guest Win/Lost
 
-		public short HP;    // MacHomePuan
+		public short HS;    // HomeSet
+		public short GS;
+		public short HP;    // HomePuan
 		public short GP;
 
 		public MAC ()
@@ -124,6 +126,8 @@ namespace PPDB
 
 			HWL = "-";
 			GWL = "-";
+			HS = 0;
+			GS = 0;
 			HP = 0;
 			GP = 0;
 		}
