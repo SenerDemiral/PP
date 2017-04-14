@@ -434,12 +434,12 @@ namespace RestServer
 						jsn.TrnID = (long)obj.Trn.GetObjectNo();
 						jsn.TkmID = (long)obj.Tkm.GetObjectNo();
 						
-						jsn.MO = obj.MO;
-						jsn.MA = obj.MA;
-						jsn.MV = obj.MV;
-						jsn.MB = obj.MB;
-						jsn.MPA = obj.MPA;
-						jsn.MPV = obj.MPV;
+						jsn.MsbO = obj.MsbO;
+						jsn.MsbA = obj.MsbA;
+						jsn.MsbV = obj.MsbV;
+						jsn.MsbB = obj.MsbB;
+						jsn.MsbPA = obj.MsbPA;
+						jsn.MsbPV = obj.MsbPV;
 
 						ws.Send( jsn.ToJson() );
 					}
@@ -455,12 +455,12 @@ namespace RestServer
 								Trn = (TRN)DbHelper.FromID((ulong)jsn.TrnID),
 								Tkm = (TKM)DbHelper.FromID((ulong)jsn.TkmID),
 
-								MO = (short)jsn.MO,
-								MA = (short)jsn.MA,
-								MV = (short)jsn.MV,
-								MB = (short)jsn.MB,
-								MPA = (short)jsn.MPA,
-								MPV = (short)jsn.MPV,
+								MsbO = (short)jsn.MsbO,
+								MsbA = (short)jsn.MsbA,
+								MsbV = (short)jsn.MsbV,
+								MsbB = (short)jsn.MsbB,
+								MsbPA = (short)jsn.MsbPA,
+								MsbPV = (short)jsn.MsbPV,
 							};
 							jsn.NewID = (long)obj.GetObjectNo();
 						}
@@ -474,12 +474,12 @@ namespace RestServer
 								obj.Trn = (TRN)DbHelper.FromID( (ulong)jsn.TrnID );
 								obj.Tkm = (TKM)DbHelper.FromID( (ulong)jsn.TkmID );
 
-								obj.MO = (short)jsn.MO;
-								obj.MA = (short)jsn.MA;
-								obj.MV = (short)jsn.MV;
-								obj.MB = (short)jsn.MB;
-								obj.MPA = (short)jsn.MPA;
-								obj.MPV = (short)jsn.MPV;
+								obj.MsbO = (short)jsn.MsbO;
+								obj.MsbA = (short)jsn.MsbA;
+								obj.MsbV = (short)jsn.MsbV;
+								obj.MsbB = (short)jsn.MsbB;
+								obj.MsbPA = (short)jsn.MsbPA;
+								obj.MsbPV = (short)jsn.MsbPV;
 							}
 						}
 					} );

@@ -139,24 +139,24 @@ namespace PPDB
 		public TRN Trn;
 		public TKM Tkm;
 
-		public short MO;
-		public short MA;
-		public short MV;
-		public short MB;
-		public short MPA;
-		public short MPV;
+		public short MsbO;
+		public short MsbA;
+		public short MsbV;
+		public short MsbB;
+		public short MsbPA;
+		public short MsbPV;
 
 		public string TrnAd => this.Trn.Ad;
 		public string TkmAd => this.Tkm.Ad;
 
 		public TRNTKM ()
 		{
-			MO = 0;
-			MA = 0;
-			MV = 0;
-			MB = 0;
-			MPA = 0;
-			MPV = 0;
+			MsbO = 0;
+			MsbA = 0;
+			MsbV = 0;
+			MsbB = 0;
+			MsbPA = 0;
+			MsbPV = 0;
 		}
 	}
 

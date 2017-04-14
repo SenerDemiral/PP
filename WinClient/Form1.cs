@@ -245,7 +245,7 @@ namespace WinClient
 		private void wsTrnTkm_OnMessage (object sender, MessageEventArgs e)
 		{
 			TrnTkm d = JsonConvert.DeserializeObject<TrnTkm>(e.Data);
-			queriesTableAdapter.MDF_TRNTKM( d.PutGet, d.NewID, d.ID, d.Stu, d.TrnID, d.TkmID, d.MO, d.MA, d.MV, d.MB, d.MPA, d.MPV );
+			queriesTableAdapter.MDF_TRNTKM( d.PutGet, d.NewID, d.ID, d.Stu, d.TrnID, d.TkmID, d.MsbO, d.MsbA, d.MsbV, d.MsbB, d.MsbPA, d.MsbPV );
 			textBox1.Invoke( new Action( () => textBox1.AppendText( $"TrnTkm: {d.PutGet} -> {d.NOR} {d.ID}\r\n" ) ) );
 
 			TrnTkmSay--;
@@ -604,12 +604,12 @@ namespace WinClient
 					obj.TrnID = row.TRNID;
 					obj.TkmID = row.TKMID;
 
-					obj.MO = row.IsMONull() ? (short)0 : row.MO;
-					obj.MA = row.IsMANull() ? (short)0 : row.MA;
-					obj.MV = row.IsMVNull() ? (short)0 : row.MV;
-					obj.MB = row.IsMBNull() ? (short)0 : row.MB;
-					obj.MPA = row.IsMPANull() ? (short)0 : row.MPA;
-					obj.MPV = row.IsMPVNull() ? (short)0 : row.MPV;
+					obj.MsbO = row.IsMSBONull() ? (short)0 : row.MSBO;
+					obj.MsbA = row.IsMSBANull() ? (short)0 : row.MSBA;
+					obj.MsbV = row.IsMSBVNull() ? (short)0 : row.MSBV;
+					obj.MsbB = row.IsMSBBNull() ? (short)0 : row.MSBB;
+					obj.MsbPA = row.IsMSBPANull() ? (short)0 : row.MSBPA;
+					obj.MsbPV = row.IsMSBPVNull() ? (short)0 : row.MSBPV;
 
 					string output = JsonConvert.SerializeObject(obj);
 					wsTrnTkm.Send( output );
