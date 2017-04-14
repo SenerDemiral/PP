@@ -20,6 +20,7 @@ namespace WinClient
 		private static WebSocket wsTkm = new WebSocket("ws://rest.masatenisi.online/wsTkmConnect");
 		private static WebSocket wsOyn = new WebSocket("ws://rest.masatenisi.online/wsOynConnect");
 		private static WebSocket wsTrn = new WebSocket("ws://rest.masatenisi.online/wsTrnConnect");
+		private static WebSocket wsTrnOyn = new WebSocket("ws://rest.masatenisi.online/wsTrnOynConnect");
 		private static WebSocket wsTrnTkm = new WebSocket("ws://rest.masatenisi.online/wsTrnTkmConnect");
 		private static WebSocket wsTrnTkmOyn = new WebSocket("ws://rest.masatenisi.online/wsTrnTkmOynConnect");
 		private static WebSocket wsMsb = new WebSocket("ws://rest.masatenisi.online/wsMsbConnect");
@@ -31,6 +32,7 @@ namespace WinClient
 		int oynSay = 0,
 			tkmSay = 0,
 			trnSay = 0,
+			trnOynSay = 0,
 			trnTkmSay = 0,
 			trnTkmOynSay = 0,
 			msbSay = 0,
@@ -71,6 +73,20 @@ namespace WinClient
 			{
 				trnSay = value;
 				if (trnSay == 0)
+					if (putGet == "G")
+						GetTRNOYN();
+					else
+						PutTRNOYN( TrnID );
+			}
+		}
+
+		public int TrnOynSay
+		{
+			get { return trnOynSay; }
+			set
+			{
+				trnOynSay = value;
+				if (trnOynSay == 0)
 					if (putGet == "G")
 						GetTRNTKM();
 					else
@@ -178,6 +194,7 @@ namespace WinClient
 			wsOyn.OnMessage += wsOyn_OnMessage;
 			wsTkm.OnMessage += wsTkm_OnMessage;
 			wsTrn.OnMessage += wsTrn_OnMessage;
+			wsTrnOyn.OnMessage += wsTrnOyn_OnMessage;
 			wsTrnTkm.OnMessage += wsTrnTkm_OnMessage;
 			wsTrnTkmOyn.OnMessage += wsTrnTkmOyn_OnMessage;
 			wsMsb.OnMessage += wsMsb_OnMessage;
@@ -214,6 +231,15 @@ namespace WinClient
 			textBox1.Invoke(new Action(() => textBox1.AppendText($"Trn: {d.PutGet} -> {d.NOR} {d.ID}\r\n")));
 			
 			TrnSay--;
+		}
+
+		private void wsTrnOyn_OnMessage (object sender, MessageEventArgs e)
+		{
+			TrnOyn d = JsonConvert.DeserializeObject<TrnOyn>(e.Data);
+			queriesTableAdapter.MDF_TRNOYN( d.PutGet, d.NewID, d.ID, d.Stu, d.TrnID, d.OynID, d.SrtNo, d.MacOS, d.MacAS, d.MacVS, d.MacOD, d.MacAD, d.MacVD );
+			textBox1.Invoke( new Action( () => textBox1.AppendText( $"TrnOyn: {d.PutGet} -> {d.NOR} {d.ID}\r\n" ) ) );
+
+			TrnOynSay--;
 		}
 
 		private void wsTrnTkm_OnMessage (object sender, MessageEventArgs e)
@@ -312,6 +338,25 @@ namespace WinClient
 			}
 			else
 				textBox1.Invoke(new Action(() => textBox1.AppendText("\r\nNo Connection\r\n")));
+		}
+
+		private void GetTRNOYN ()
+		{
+			textBox1.Invoke( new Action( () => textBox1.AppendText( "\r\nTurnuva Oyuncuları\r\n" ) ) );
+
+			if (wsTrnOyn.ReadyState != WebSocketState.Open)
+				wsTrnOyn.Connect();
+
+			if (wsTrnOyn.ReadyState == WebSocketState.Open)
+			{
+				var obj = new TrnOyn();
+				obj.PutGet = "G";
+				string output = JsonConvert.SerializeObject(obj);
+				if (GetTrnOynSay() > 0)
+					wsTrnTkm.Send( output );
+			}
+			else
+				textBox1.Invoke( new Action( () => textBox1.AppendText( "\r\nNo Connection\r\n" ) ) );
 		}
 
 		private void GetTRNTKM ()
@@ -488,6 +533,48 @@ namespace WinClient
 			}
 			else
 				textBox1.AppendText("--X\r\n");
+		}
+
+		private void PutTRNOYN (long TrnID)
+		{
+			textBox1.Invoke( new Action( () => textBox1.AppendText( "\r\nTurnuva Oyuncuları\r\n" ) ) );
+
+			if (wsTrnOyn.ReadyState != WebSocketState.Open)
+				wsTrnOyn.Connect();
+
+			if (wsTrnOyn.ReadyState == WebSocketState.Open)
+			{
+				int nor = 0;
+				if (TrnID == 0)
+					nor = trnoynTableAdapter.FillByStu( this.ds.TRNOYN );
+				else
+					nor = trnoynTableAdapter.FillByTrnStu( this.ds.TRNOYN, TrnID );
+
+				TrnOynSay = nor;
+
+				foreach (DataSet1.TRNOYNRow row in ds.TRNOYN.Rows)
+				{
+					var obj = new TrnOyn();
+					obj.NOR = nor--;
+
+					obj.ID = row.ID;
+					obj.Stu = row.STU;
+					obj.TrnID = row.TRNID;
+					obj.OynID = row.OYNID;
+
+					obj.MacOS = row.IsMACOSNull() ? (short)0 : row.MACOS;
+					obj.MacAS = row.IsMACASNull() ? (short)0 : row.MACAS;
+					obj.MacVS = row.IsMACVSNull() ? (short)0 : row.MACVS;
+					obj.MacOD = row.IsMACODNull() ? (short)0 : row.MACOD;
+					obj.MacAD = row.IsMACADNull() ? (short)0 : row.MACAD;
+					obj.MacVD = row.IsMACVDNull() ? (short)0 : row.MACVD;
+
+					string output = JsonConvert.SerializeObject(obj);
+					wsTrnOyn.Send( output );
+				}
+			}
+			else
+				textBox1.AppendText( "--X\r\n" );
 		}
 
 		private void PutTRNTKM (long TrnID)
@@ -709,6 +796,14 @@ namespace WinClient
 			var data = response.Content.ReadAsStringAsync().Result;
 			TrnSay = Convert.ToInt32(data);
 			return TrnSay;
+		}
+
+		private int GetTrnOynSay ()
+		{
+			var response = client.GetAsync("http://rest.masatenisi.online/TrnOynSay").Result;
+			var data = response.Content.ReadAsStringAsync().Result;
+			TrnOynSay = Convert.ToInt32( data );
+			return TrnOynSay;
 		}
 
 		private int GetTrnTkmSay ()

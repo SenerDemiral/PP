@@ -42,6 +42,7 @@
 			this.POSTdenemeButton = new System.Windows.Forms.Button();
 			this.trntkmTableAdapter = new WinClient.DataSet1TableAdapters.TRNTKMTableAdapter();
 			this.trntkmoynTableAdapter = new WinClient.DataSet1TableAdapters.TRNTKMOYNTableAdapter();
+			this.trnoynTableAdapter = new WinClient.DataSet1TableAdapters.TRNOYNTableAdapter();
 			((System.ComponentModel.ISupportInitialize)(this.ds)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -130,6 +131,10 @@
 			// 
 			this.trntkmoynTableAdapter.ClearBeforeFill = true;
 			// 
+			// trnoynTableAdapter
+			// 
+			this.trnoynTableAdapter.ClearBeforeFill = true;
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -164,6 +169,7 @@
 		private System.Windows.Forms.Button POSTdenemeButton;
 		private DataSet1TableAdapters.TRNTKMTableAdapter trntkmTableAdapter;
 		private DataSet1TableAdapters.TRNTKMOYNTableAdapter trntkmoynTableAdapter;
+		private DataSet1TableAdapters.TRNOYNTableAdapter trnoynTableAdapter;
 	}
 }
 

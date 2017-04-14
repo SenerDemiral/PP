@@ -28,6 +28,12 @@ namespace RestServer
 				return nor.ToString();
 			});
 
+			Handle.GET( "/TrnOynSay", () =>
+			{
+				var nor = Db.SQL<long>("select count(o) from TRNOYN o").First;
+				return nor.ToString();
+			} );
+
 			Handle.GET( "/TrnTkmSay", () =>
 			{
 				var nor = Db.SQL<long>("select count(o) from TRNTKM o").First;
@@ -103,6 +109,22 @@ namespace RestServer
 					StatusDescription = "WebSocket upgrade on " + req.Uri + " was not approved."
 				};
 			});
+
+			Handle.GET( "/wsTrnOynConnect", (Request req) =>
+			{
+				if (req.WebSocketUpgrade)
+				{
+					req.SendUpgrade( "wsTrnOyn" );
+					Console.WriteLine( "wsTrnOyn Connected {0}", DateTime.Now );
+					return HandlerStatus.Handled;
+				}
+
+				return new Response()
+				{
+					StatusCode = 500,
+					StatusDescription = "WebSocket upgrade on " + req.Uri + " was not approved."
+				};
+			} );
 
 			Handle.GET( "/wsTrnTkmConnect", (Request req) =>
 			{
@@ -317,6 +339,83 @@ namespace RestServer
 					ws.Send(jsn.ToJson());
 				}
 			});
+
+			Handle.WebSocket( "wsTrnOyn", (String s, WebSocket ws) =>
+			{
+				TrnOynJson jsn = new TrnOynJson();
+				jsn.PopulateFromJson( s );
+
+				if (jsn.PutGet == "G")
+				{
+					var nor = Db.SQL<long>("select count(o) from TRNOYN o").First;
+
+					var trn = Db.SQL<TRNOYN>("select o from TRNOYN o");
+					foreach (var obj in trn)
+					{
+						jsn.NOR = nor--;
+						jsn.ID = (long)obj.GetObjectNo();
+						jsn.TrnID = (long)obj.Trn.GetObjectNo();
+						jsn.OynID = (long)obj.Oyn.GetObjectNo();
+
+						jsn.SrtNo = obj.SrtNo;
+
+						jsn.MacOS = obj.MacOS;
+						jsn.MacAS = obj.MacAS;
+						jsn.MacVS = obj.MacVS;
+						jsn.MacOD = obj.MacOD;
+						jsn.MacAD = obj.MacAD;
+						jsn.MacVD = obj.MacVD;
+
+						ws.Send( jsn.ToJson() );
+					}
+				}
+				else if (jsn.PutGet == "P")
+				{
+					Db.Transact( () =>
+					{
+						if (jsn.ID < 0)
+						{
+							var obj = new TRNOYN()
+							{
+								Trn = (TRN)DbHelper.FromID((ulong)jsn.TrnID),
+								Oyn = (OYN)DbHelper.FromID((ulong)jsn.OynID),
+
+								SrtNo = (short)jsn.SrtNo,
+
+								MacOS = (short)jsn.MacOS,
+								MacAS = (short)jsn.MacAS,
+								MacVS = (short)jsn.MacVS,
+								MacOD = (short)jsn.MacOD,
+								MacAD = (short)jsn.MacAD,
+								MacVD = (short)jsn.MacVD,
+							};
+							jsn.NewID = (long)obj.GetObjectNo();
+						}
+						else
+						{
+							var obj = (TRNOYN)DbHelper.FromID((ulong)jsn.ID);
+							if (jsn.Stu == "D")
+								obj.Delete();
+							else
+							{
+								obj.Trn = (TRN)DbHelper.FromID( (ulong)jsn.TrnID );
+								obj.Oyn = (OYN)DbHelper.FromID( (ulong)jsn.OynID );
+
+								obj.SrtNo = (short)jsn.SrtNo;
+
+								obj.MacOS = (short)jsn.MacOS;
+								obj.MacAS = (short)jsn.MacAS;
+								obj.MacVS = (short)jsn.MacVS;
+								obj.MacOD = (short)jsn.MacOD;
+								obj.MacAD = (short)jsn.MacAD;
+								obj.MacVD = (short)jsn.MacVD;
+							}
+						}
+					} );
+
+					ws.Send( jsn.ToJson() );
+				}
+			} );
 
 			Handle.WebSocket( "wsTrnTkm", (String s, WebSocket ws) =>
 			{

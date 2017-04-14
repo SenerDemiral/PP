@@ -224,6 +224,13 @@ namespace WinClient
 		public long TrnID;
 		public long OynID;
 
+		public short MacOS;     // Mac Oynadigi Single
+		public short MacAS;
+		public short MacVS;
+		public short MacOD;
+		public short MacAD;
+		public short MacVD;
+
 		public short SrtNo;
 
 		public TrnOyn ()
@@ -233,6 +240,12 @@ namespace WinClient
 			NOR = 0;    //Number of Record left
 
 			SrtNo = 0;
+			MacOS = 0;
+			MacAS = 0;
+			MacVS = 0;
+			MacOD = 0;
+			MacAD = 0;
+			MacVD = 0;
 		}
 	}
 

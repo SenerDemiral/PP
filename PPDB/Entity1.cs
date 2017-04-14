@@ -164,12 +164,25 @@ namespace PPDB
 
 		public short SrtNo;
 
+		public short MacOS;		// Mac Oynadigi Single
+		public short MacAS;
+		public short MacVS;
+		public short MacOD;
+		public short MacAD;
+		public short MacVD;
+
 		public string TrnAd => this.Trn.Ad;
 		public string OynAd => this.Oyn.Ad;
 		
 		public TRNOYN ()
 		{
 			SrtNo = 0;
+			MacOS = 0;
+			MacAS = 0;
+			MacVS = 0;
+			MacOD = 0;
+			MacAD = 0;
+			MacVD = 0;
 		}
 	}
 
