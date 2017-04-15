@@ -7,7 +7,7 @@ namespace Web
 {
 	class Program
 	{
-		static List<TrnOynMac> macList = new List<TrnOynMac>();
+		static List<TrnOynMac> trnOynMacList = new List<TrnOynMac>();
 
 		static void Main ()
 		{
@@ -21,71 +21,103 @@ namespace Web
 
 		static void TrnOynMac_Create()
 		{
-			var trn = Db.SQL<TRN>("select o from TRN o");
-			foreach (var trnObj in trn)
+			ulong OynID = 0;
+			ulong HOyn1ID = 0;
+			ulong HOyn2ID = 0;
+			ulong GOyn1ID = 0;
+			ulong GOyn2ID = 0;
+
+			string OynAd = "";
+			string HOyn1Ad = "";
+			string HOyn2Ad = "";
+			string GOyn1Ad = "";
+			string GOyn2Ad = "";
+
+			var trnRecs = Db.SQL<TRN>("select o from TRN o");
+			foreach (var trn in trnRecs)
 			{
-				var trnOyn = Db.SQL<TRNOYN>("select o from TRNOYN o where o.Trn = ?", trnObj);
-				foreach (var trnOynObj in trnOyn)
+				var trnOynRecs = Db.SQL<TRNOYN>("select o from TRNOYN o where o.Trn = ?", trn);
+				foreach (var trnOyn in trnOynRecs)
 				{
-					var mac = Db.SQL<MAC>("select o from MAC o where o.Trn = ? and (o.Oyn1 = ? or Oyn2 = ?", trnObj, trnOynObj.Oyn, trnOynObj.Oyn);
-					foreach (var macObj in mac)
+					OynID = trnOyn.Oyn.GetObjectNo();
+					OynAd = trnOyn.Oyn.Ad;
+
+					var macRecs = Db.SQL<MAC>("select o from MAC o where o.Trn = ? and (o.HOyn1 = ? or HOyn2 = ? or GOyn1 = ? or GOyn2 = ?)", trn, trnOyn.Oyn, trnOyn.Oyn, trnOyn.Oyn, trnOyn.Oyn);
+					foreach (var mac in macRecs)
 					{
-						var trnOynMac = new TrnOynMac()
+						var tom = new TrnOynMac()
 						{
-							TrnID = trnObj.GetObjectNo(),
-							OynID = trnOynObj.Oyn.GetObjectNo(),
+							TrnID = trn.GetObjectNo(),
+							OynID = trnOyn.Oyn.GetObjectNo(),
 
-							MsbID = macObj.Msb.GetObjectNo(),
-							MsbTarih = macObj.Msb.Tarih,
-							MsbSkl = macObj.Msb.Skl,
-							MsbKtg = macObj.Msb.Ktg,
-							MsbRnd = macObj.Msb.Rnd,
-							MsbGrp = macObj.Msb.Grp,
+							MsbID = mac.Msb.GetObjectNo(),
+							MsbTarih = mac.Msb.Tarih,
+							MsbSkl = mac.Msb.Skl,
+							MsbKtg = mac.Msb.Ktg,
+							MsbRnd = mac.Msb.Rnd,
+							MsbGrp = mac.Msb.Grp,
 
-							Ktg = macObj.Ktg,
-							Sra = macObj.Sra
+							Ktg = mac.Ktg,
+							Sra = mac.Sra
 						};
 
-						if (trnOynMac.OynID == macObj.HOyn1.GetObjectNo() || trnOynMac.OynID == macObj.HOyn2.GetObjectNo())
+						HOyn1ID = mac.HOyn1 == null ? 0 : mac.HOyn1.GetObjectNo();
+						HOyn2ID = mac.HOyn2 == null ? 0 : mac.HOyn2.GetObjectNo();
+						GOyn1ID = mac.GOyn1 == null ? 0 : mac.GOyn1.GetObjectNo();
+						GOyn2ID = mac.GOyn2 == null ? 0 : mac.GOyn2.GetObjectNo();
+
+						HOyn1Ad = mac.HOyn1 == null ? "" : mac.HOyn1.Ad;
+						HOyn2Ad = mac.HOyn2 == null ? "" : mac.HOyn2.Ad;
+						GOyn1Ad = mac.GOyn1 == null ? "" : mac.GOyn1.Ad;
+						GOyn2Ad = mac.GOyn2 == null ? "" : mac.GOyn2.Ad;
+
+
+						if (OynID == HOyn1ID || OynID == HOyn2ID)
 						{
-							trnOynMac.OynS = macObj.HS;
-							trnOynMac.OynP = macObj.HP;
-							trnOynMac.OynWL = macObj.HWL;
-							trnOynMac.OynPID = trnOynObj.Oyn.GetObjectNo() == macObj.HOyn1.GetObjectNo() ? macObj.HOyn2.GetObjectNo() : macObj.HOyn1.GetObjectNo();
-							trnOynMac.OynTkmID = macObj.Msb.HTkm.GetObjectNo();
+							tom.OynS = mac.HS;
+							tom.OynP = mac.HP;
+							tom.OynWL = mac.HWL;
+							tom.OynPID = OynID == HOyn1ID ? HOyn2ID : HOyn1ID;
+							tom.OynTkmID = mac.Msb.HTkm.GetObjectNo();
+							tom.OynTkmAd = mac.Msb.HTkm.Ad;
 
-							trnOynMac.RkpS = macObj.GS;
-							trnOynMac.RkpP = macObj.GP;
-							trnOynMac.RkpWL = macObj.GWL;
-							trnOynMac.Rkp1ID = macObj.GOyn1.GetObjectNo();
-							trnOynMac.Rkp2ID = macObj.GOyn2.GetObjectNo();
-							trnOynMac.RkpTkmID = macObj.Msb.GTkm.GetObjectNo();
+							tom.RkpS = mac.GS;
+							tom.RkpP = mac.GP;
+							tom.RkpWL = mac.GWL;
+							tom.Rkp1ID = GOyn1ID;
+							tom.Rkp1Ad = GOyn1Ad;
+							tom.Rkp2ID = GOyn2ID;
+							tom.Rkp2Ad = GOyn2Ad;
+							tom.RkpTkmID = mac.Msb.GTkm.GetObjectNo();
+							tom.RkpTkmAd = mac.Msb.GTkm.Ad;
 
-							trnOynMac.Setler =  (macObj.S1HP + macObj.S1GP) == 0 ? "" : (macObj.S1HP < macObj.S1GP ? "–" : "+") + Math.Min( macObj.S1HP, macObj.S1GP ).ToString() + " ";
-							trnOynMac.Setler += (macObj.S1HP + macObj.S1GP) == 0 ? "" : (macObj.S2HP < macObj.S2GP ? "–" : "+") + Math.Min( macObj.S2HP, macObj.S2GP ).ToString() + " ";
-							trnOynMac.Setler += (macObj.S3HP + macObj.S3GP) == 0 ? "" : (macObj.S3HP < macObj.S3GP ? "–" : "+") + Math.Min( macObj.S3HP, macObj.S3GP ).ToString() + " ";
+							tom.Setler =  (mac.S1HP + mac.S1GP) == 0 ? "" : (mac.S1HP < mac.S1GP ? "–" : "+") + Math.Min( mac.S1HP, mac.S1GP ).ToString() + " ";
+							tom.Setler += (mac.S1HP + mac.S1GP) == 0 ? "" : (mac.S2HP < mac.S2GP ? "–" : "+") + Math.Min( mac.S2HP, mac.S2GP ).ToString() + " ";
+							tom.Setler += (mac.S3HP + mac.S3GP) == 0 ? "" : (mac.S3HP < mac.S3GP ? "–" : "+") + Math.Min( mac.S3HP, mac.S3GP ).ToString() + " ";
 						}
 						else
 						{
-							trnOynMac.OynS = macObj.GS;
-							trnOynMac.OynP = macObj.GP;
-							trnOynMac.OynWL = macObj.GWL;
-							trnOynMac.OynPID = trnOynObj.Oyn.GetObjectNo() == macObj.GOyn1.GetObjectNo() ? macObj.GOyn2.GetObjectNo() : macObj.GOyn1.GetObjectNo();
-							trnOynMac.OynTkmID = macObj.Msb.GTkm.GetObjectNo();
+							tom.OynS = mac.GS;
+							tom.OynP = mac.GP;
+							tom.OynWL = mac.GWL;
+							tom.OynPID = OynID == GOyn1ID ? GOyn2ID : GOyn1ID;
+							tom.OynTkmID = mac.Msb.GTkm.GetObjectNo();
 
-							trnOynMac.RkpS = macObj.HS;
-							trnOynMac.RkpP = macObj.HP;
-							trnOynMac.RkpWL = macObj.HWL;
-							trnOynMac.Rkp1ID = macObj.HOyn1.GetObjectNo();
-							trnOynMac.Rkp2ID = macObj.HOyn2.GetObjectNo();
-							trnOynMac.RkpTkmID = macObj.Msb.HTkm.GetObjectNo();
+							tom.RkpS = mac.HS;
+							tom.RkpP = mac.HP;
+							tom.RkpWL = mac.HWL;
+							tom.Rkp1ID = HOyn1ID;
+							tom.Rkp1Ad = HOyn1Ad;
+							tom.Rkp2ID = HOyn2ID;
+							tom.Rkp2Ad = HOyn2Ad;
+							tom.RkpTkmID = mac.Msb.HTkm.GetObjectNo();
 
-							trnOynMac.Setler =  (macObj.S1HP + macObj.S1GP) == 0 ? "" : (macObj.S1HP < macObj.S1GP ? "–" : "+") + Math.Min( macObj.S1HP, macObj.S1GP ).ToString() + " ";
-							trnOynMac.Setler += (macObj.S1HP + macObj.S1GP) == 0 ? "" : (macObj.S2HP < macObj.S2GP ? "–" : "+") + Math.Min( macObj.S2HP, macObj.S2GP ).ToString() + " ";
-							trnOynMac.Setler += (macObj.S3HP + macObj.S3GP) == 0 ? "" : (macObj.S3HP < macObj.S3GP ? "–" : "+") + Math.Min( macObj.S3HP, macObj.S3GP ).ToString() + " ";
+							tom.Setler =  (mac.S1HP + mac.S1GP) == 0 ? "" : (mac.S1HP < mac.S1GP ? "–" : "+") + Math.Min( mac.S1HP, mac.S1GP ).ToString() + " ";
+							tom.Setler += (mac.S1HP + mac.S1GP) == 0 ? "" : (mac.S2HP < mac.S2GP ? "–" : "+") + Math.Min( mac.S2HP, mac.S2GP ).ToString() + " ";
+							tom.Setler += (mac.S3HP + mac.S3GP) == 0 ? "" : (mac.S3HP < mac.S3GP ? "–" : "+") + Math.Min( mac.S3HP, mac.S3GP ).ToString() + " ";
 						}
 
-						macList.Add( trnOynMac );
+						trnOynMacList.Add( tom );
 					}
 				}
 			}
