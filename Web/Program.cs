@@ -2,6 +2,7 @@
 using Starcounter;
 using PPDB;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Web
 {
@@ -14,11 +15,20 @@ namespace Web
 			Handle.GET( "/Web/Den1", () =>
 			{
 				TrnOynMac_Create();
+				deneme( 34 );
 				return "OK";
 			} );
 
 		}
 
+		static void deneme(ulong oynID)
+		{
+			var sener = from r
+						in trnOynMacList
+						where r.OynID == oynID
+						select r;
+		}
+		
 		static void TrnOynMac_Create()
 		{
 			ulong OynID = 0;
