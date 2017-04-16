@@ -81,7 +81,8 @@ namespace Web
 				}
 				byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
 				//myString = Encoding.UTF8.GetString( bytes );
-				return Encoding.ASCII.GetString( bytes ); ;
+				//return Encoding.ASCII.GetString( bytes );
+				return "Şener DEMİRAL";
 			} );
 		}
 
