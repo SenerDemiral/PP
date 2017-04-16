@@ -3,6 +3,7 @@ using Starcounter;
 using PPDB;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Web
 {
@@ -10,8 +11,53 @@ namespace Web
 	{
 		static List<TrnOynMac> trnOynMacList = new List<TrnOynMac>();
 
+
 		static void Main ()
 		{
+			string html = @"<!DOCTYPE html>
+				<html>
+				<head>
+					<meta charset=""utf-8"">
+				    <meta name=""viewport"" content=""width=device-width, initial-scale=1, shrink-to-fit=yes"">
+					<title>{0}</title>
+					
+					<script src=""/sys/webcomponentsjs/webcomponents.min.js""></script>
+					<script src=""/sys/thenBy.js""></script>
+					<link rel=""import"" href=""/sys/polymer/polymer.html"">
+					<link rel=""import"" href=""/sys/starcounter.html"">
+					<link rel=""import"" href=""/sys/starcounter-include/starcounter-include.html"">
+					<link rel=""import"" href=""/sys/starcounter-debug-aid/src/starcounter-debug-aid.html"">
+					
+					<!--<link rel=""import"" href=""/sys/bootstrap.html"">
+					<link rel=""import"" href=""/sys/iron-icons/maps-icons.html"">
+					<link rel=""stylesheet"" href=""https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"" integrity=""sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"" crossorigin=""anonymous"">
+					
+					<link rel=""stylesheet"" href=""https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"" crossorigin=""anonymous"">
+					-->
+					
+					<link rel=""stylesheet"" href=""/sys/Stylesheet1.css"">
+				
+				</head>
+				<body>
+					<template is=""dom-bind"" id=""puppet-root"">
+						<template is=""imported-template"" content$=""{{{{model.Html}}}}"" model=""{{{{model}}}}""></template>
+					</template>
+					<puppet-client ref=""puppet-root"" remote-url=""{1}"" use-web-socket=""true""></puppet-client>
+					<starcounter-debug-aid></starcounter-debug-aid>
+
+					<!--
+					<script src=""https://code.jquery.com/jquery-3.1.1.slim.min.js"" integrity=""sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"" crossorigin=""anonymous""></script>
+					<script src=""https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"" integrity=""sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"" crossorigin=""anonymous""></script>
+					<script src=""https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"" integrity=""sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"" crossorigin=""anonymous""></script>
+					-->
+				</body>
+				</html>";
+
+			//Application.Current.Use( new HtmlFromJsonProvider() );
+			//Application.Current.Use( new PartialToStandaloneHtmlProvider(html) );
+
+			TrnOynMac_Create();
+
 			Handle.GET( "/Web/Den1", () =>
 			{
 				TrnOynMac_Create();
@@ -19,6 +65,24 @@ namespace Web
 				return "OK";
 			} );
 
+			Handle.GET( "/Web/{?}", (string oynID) =>
+			{
+				var sener = from r
+						in trnOynMacList
+							where r.OynID == Convert.ToUInt64(oynID)
+							select r;
+
+				StringBuilder sb = new StringBuilder();
+				string aaa = "";
+				foreach (var sen in sener)
+				{
+					sb.AppendLine( $"{sen.MacID} {sen.MsbID} {sen.OynAd} {sen.OynTkmAd} {sen.RkpTkmAd} {sen.Rkp1Ad} {sen.Rkp2Ad} {sen.Ktg} {sen.Sra} {sen.Setler}" );
+					aaa = sen.OynAd;
+				}
+				byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
+				//myString = Encoding.UTF8.GetString( bytes );
+				return Encoding.ASCII.GetString( bytes ); ;
+			} );
 		}
 
 		static void deneme(ulong oynID)
@@ -27,6 +91,11 @@ namespace Web
 						in trnOynMacList
 						where r.OynID == oynID
 						select r;
+
+			foreach (var sen in sener)
+			{
+				
+			}
 		}
 		
 		static void TrnOynMac_Create()
@@ -59,6 +128,7 @@ namespace Web
 						{
 							TrnID = trn.GetObjectNo(),
 							OynID = trnOyn.Oyn.GetObjectNo(),
+							MacID = mac.GetObjectNo(),
 
 							MsbID = mac.Msb.GetObjectNo(),
 							MsbTarih = mac.Msb.Tarih,
@@ -71,6 +141,8 @@ namespace Web
 							Sra = mac.Sra
 						};
 
+						tom.OynAd = OynAd;
+
 						HOyn1ID = mac.HOyn1 == null ? 0 : mac.HOyn1.GetObjectNo();
 						HOyn2ID = mac.HOyn2 == null ? 0 : mac.HOyn2.GetObjectNo();
 						GOyn1ID = mac.GOyn1 == null ? 0 : mac.GOyn1.GetObjectNo();
@@ -80,7 +152,6 @@ namespace Web
 						HOyn2Ad = mac.HOyn2 == null ? "" : mac.HOyn2.Ad;
 						GOyn1Ad = mac.GOyn1 == null ? "" : mac.GOyn1.Ad;
 						GOyn2Ad = mac.GOyn2 == null ? "" : mac.GOyn2.Ad;
-
 
 						if (OynID == HOyn1ID || OynID == HOyn2ID)
 						{
@@ -101,9 +172,9 @@ namespace Web
 							tom.RkpTkmID = mac.Msb.GTkm.GetObjectNo();
 							tom.RkpTkmAd = mac.Msb.GTkm.Ad;
 
-							tom.Setler =  (mac.S1HP + mac.S1GP) == 0 ? "" : (mac.S1HP < mac.S1GP ? "–" : "+") + Math.Min( mac.S1HP, mac.S1GP ).ToString() + " ";
-							tom.Setler += (mac.S1HP + mac.S1GP) == 0 ? "" : (mac.S2HP < mac.S2GP ? "–" : "+") + Math.Min( mac.S2HP, mac.S2GP ).ToString() + " ";
-							tom.Setler += (mac.S3HP + mac.S3GP) == 0 ? "" : (mac.S3HP < mac.S3GP ? "–" : "+") + Math.Min( mac.S3HP, mac.S3GP ).ToString() + " ";
+							tom.Setler =  (mac.S1HP + mac.S1GP) == 0 ? "" : (mac.S1HP < mac.S1GP ? "-" : "+") + Math.Min( mac.S1HP, mac.S1GP ).ToString() + " ";
+							tom.Setler += (mac.S1HP + mac.S1GP) == 0 ? "" : (mac.S2HP < mac.S2GP ? "-" : "+") + Math.Min( mac.S2HP, mac.S2GP ).ToString() + " ";
+							tom.Setler += (mac.S3HP + mac.S3GP) == 0 ? "" : (mac.S3HP < mac.S3GP ? "-" : "+") + Math.Min( mac.S3HP, mac.S3GP ).ToString() + " ";
 						}
 						else
 						{
@@ -112,6 +183,7 @@ namespace Web
 							tom.OynWL = mac.GWL;
 							tom.OynPID = OynID == GOyn1ID ? GOyn2ID : GOyn1ID;
 							tom.OynTkmID = mac.Msb.GTkm.GetObjectNo();
+							tom.OynTkmAd = mac.Msb.GTkm.Ad;
 
 							tom.RkpS = mac.HS;
 							tom.RkpP = mac.HP;
@@ -121,10 +193,11 @@ namespace Web
 							tom.Rkp2ID = HOyn2ID;
 							tom.Rkp2Ad = HOyn2Ad;
 							tom.RkpTkmID = mac.Msb.HTkm.GetObjectNo();
+							tom.RkpTkmAd = mac.Msb.HTkm.Ad;
 
-							tom.Setler =  (mac.S1HP + mac.S1GP) == 0 ? "" : (mac.S1HP < mac.S1GP ? "–" : "+") + Math.Min( mac.S1HP, mac.S1GP ).ToString() + " ";
-							tom.Setler += (mac.S1HP + mac.S1GP) == 0 ? "" : (mac.S2HP < mac.S2GP ? "–" : "+") + Math.Min( mac.S2HP, mac.S2GP ).ToString() + " ";
-							tom.Setler += (mac.S3HP + mac.S3GP) == 0 ? "" : (mac.S3HP < mac.S3GP ? "–" : "+") + Math.Min( mac.S3HP, mac.S3GP ).ToString() + " ";
+							tom.Setler =  (mac.S1HP + mac.S1GP) == 0 ? "" : (mac.S1HP < mac.S1GP ? "-" : "+") + Math.Min( mac.S1HP, mac.S1GP ).ToString() + " ";
+							tom.Setler += (mac.S1HP + mac.S1GP) == 0 ? "" : (mac.S2HP < mac.S2GP ? "-" : "+") + Math.Min( mac.S2HP, mac.S2GP ).ToString() + " ";
+							tom.Setler += (mac.S3HP + mac.S3GP) == 0 ? "" : (mac.S3HP < mac.S3GP ? "-" : "+") + Math.Min( mac.S3HP, mac.S3GP ).ToString() + " ";
 						}
 
 						trnOynMacList.Add( tom );

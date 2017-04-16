@@ -10,13 +10,15 @@ namespace Web
 	{
 		public ulong TrnID;
 		public ulong OynID;
-		
+		public string OynAd;
+
 		public ulong MsbID;
 		public string MsbTarih;
 		public string MsbSkl;
 		public string MsbKtg;
 		public string MsbRnd;
 		public string MsbGrp;
+		public ulong MacID;
 		public string Ktg;
 		public short Sra;
 		public ulong OynTkmID;
