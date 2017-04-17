@@ -65,24 +65,28 @@ namespace Web
 				return "OK";
 			} );
 
-			Handle.GET( "/Web/{?}", (string oynID) =>
+			Handle.GET( "/Web/{?}", (string oID) =>
 			{
+				ulong oynID = Convert.ToUInt64(oID);
+
+				var oynObj = (OYN)DbHelper.FromID(oynID);
+
 				var sener = from r
-						in trnOynMacList
-							where r.OynID == Convert.ToUInt64(oynID)
+							in trnOynMacList
+							where r.OynID == oynID
 							select r;
 
 				StringBuilder sb = new StringBuilder();
-				string aaa = "";
+				sb.AppendLine( $"<h2>{oynObj.Ad} #{oynObj.GetObjectNo()}</h2></br>" );
 				foreach (var sen in sener)
 				{
-					sb.AppendLine( $"{sen.MacID} {sen.MsbID} {sen.OynAd} {sen.OynTkmAd} {sen.RkpTkmAd} {sen.Rkp1Ad} {sen.Rkp2Ad} {sen.Ktg} {sen.Sra} {sen.Setler}" );
-					aaa = sen.OynAd;
+					if (sen.Ktg == "S")
+						sb.AppendLine( $"{sen.OynWL} {sen.MacID, 10} {sen.MsbID} {sen.OynTkmAd} {sen.RkpTkmAd} {sen.Rkp1Ad}{sen.Rkp2Ad} {sen.Ktg} {sen.Sra} [{sen.Setler}     ]</br>" );
+					else
+						sb.AppendLine( $"{sen.OynWL} {sen.MacID, 10} {sen.MsbID} {sen.OynTkmAd} {sen.RkpTkmAd} {sen.Rkp1Ad}+{sen.Rkp2Ad} {sen.Ktg} {sen.Sra} [{sen.Setler}]</br>" );
 				}
-				byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-				//myString = Encoding.UTF8.GetString( bytes );
-				//return Encoding.ASCII.GetString( bytes );
-				return "Şener DEMİRAL";
+				
+				return $"<html><head><meta charset='utf-8'><body>{sb.ToString()}</body></head></html>";
 			} );
 		}
 
