@@ -178,6 +178,7 @@ namespace PPDB
 
 		public string TrnAd => this.Trn.Ad;
 		public string OynAd => this.Oyn.Ad;
+		public short MacFS => (short)(MacAS - MacVS);
 		
 		public TRNOYN ()
 		{

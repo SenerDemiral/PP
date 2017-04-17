@@ -13,6 +13,7 @@ namespace Web
 		public string OynAd;
 
 		public ulong MsbID;
+		public DateTime MsbTrh;
 		public string MsbTarih;
 		public string MsbSkl;
 		public string MsbKtg;

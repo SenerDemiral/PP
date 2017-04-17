@@ -65,27 +65,65 @@ namespace Web
 				return "OK";
 			} );
 
-			Handle.GET( "/Web/{?}", (string oID) =>
+			Handle.GET( "/Web/TrnOynMac/{?}/{?}", (string tID, string oID) =>
 			{
+				ulong trnID = Convert.ToUInt64(tID);
 				ulong oynID = Convert.ToUInt64(oID);
+				StringBuilder sb = new StringBuilder();
 
-				var oynObj = (OYN)DbHelper.FromID(oynID);
+				var trn = (TRN)DbHelper.FromID(trnID);
+				var oyn = (OYN)DbHelper.FromID(oynID);
+				sb.AppendLine( $"<h2>{trn.Ad} #{trn.GetObjectNo()}</h2></br>" );
+				sb.AppendLine( $"<h3>{oyn.Ad} #{oyn.GetObjectNo()}</h3></br>" );
 
 				var sener = from r
 							in trnOynMacList
-							where r.OynID == oynID
+							where r.TrnID == trnID && r.OynID == oynID
+							orderby r.Ktg descending, r.MsbTrh
 							select r;
 
-				StringBuilder sb = new StringBuilder();
-				sb.AppendLine( $"<h2>{oynObj.Ad} #{oynObj.GetObjectNo()}</h2></br>" );
 				foreach (var sen in sener)
 				{
 					if (sen.Ktg == "S")
-						sb.AppendLine( $"{sen.OynSnc} {sen.MacID, 10} {sen.MsbID} {sen.OynTkmAd} {sen.RkpTkmAd} {sen.Rkp1Ad}{sen.Rkp2Ad} {sen.Ktg} {sen.Sra} [{sen.Setler}     ]</br>" );
+						sb.AppendLine( $"{sen.Ktg}/{sen.Sra} {sen.MsbTarih.Substring( 0, 10 )} {sen.OynSnc} [{sen.Setler}] {sen.MacID, 10} {sen.MsbID} {sen.OynTkmAd} {sen.RkpTkmAd} {sen.Rkp1Ad}{sen.Rkp2Ad}</br>" );
 					else
-						sb.AppendLine( $"{sen.OynSnc} {sen.MacID, 10} {sen.MsbID} {sen.OynTkmAd} {sen.RkpTkmAd} {sen.Rkp1Ad}+{sen.Rkp2Ad} {sen.Ktg} {sen.Sra} [{sen.Setler}]</br>" );
+						sb.AppendLine( $"{sen.Ktg}/{sen.Sra} {sen.MsbTarih.Substring( 0, 10 )} {sen.OynSnc} [{sen.Setler}] {sen.MacID,10} {sen.MsbID} {sen.OynTkmAd} {sen.RkpTkmAd} {sen.Rkp1Ad}+{sen.Rkp2Ad}</br>" );
+				}
+
+				return $"<html><head><meta charset='utf-8'><body>{sb.ToString()}</body></head></html>";
+			} );
+
+			Handle.GET( "/Web/TrnTkm/{?}", (string tID) =>
+			{
+				ulong trnID = Convert.ToUInt64(tID);
+				StringBuilder sb = new StringBuilder();
+
+				var trn = (TRN)DbHelper.FromID(trnID);
+				sb.AppendLine( $"<h2>{trn.Ad} #{trn.GetObjectNo()}</h2></br>" );
+
+				var recs = Db.SQL<TRNTKM>("select o from TRNTKM o where o.Trn = ? order by o.MsbPA desc, o,MsbPV", trn);
+				foreach (var obj in recs)
+				{
+					sb.AppendLine( $"{obj.TkmAd} AP:{obj.MsbPA} VP:{obj.MsbPV} O:{obj.MsbO} G:{obj.MsbA} M:{obj.MsbV} B:{obj.MsbB}</br>" );
 				}
 				
+				return $"<html><head><meta charset='utf-8'><body>{sb.ToString()}</body></head></html>";
+			} );
+
+			Handle.GET( "/Web/TrnOyn/{?}", (string tID) =>
+			{
+				ulong trnID = Convert.ToUInt64(tID);
+				StringBuilder sb = new StringBuilder();
+
+				var trn = (TRN)DbHelper.FromID(trnID);
+				sb.AppendLine( $"<h2>{trn.Ad} #{trn.GetObjectNo()}</h2></br>" );
+
+				var recs = Db.SQL<TRNOYN>("select o from TRNOYN o where o.Trn = ? order by o.MacFS desc", trn);
+				foreach (var obj in recs)
+				{
+					sb.AppendLine( $"{obj.OynAd} Sngl:[{obj.MacOS} {obj.MacAS} {obj.MacVS}] -- Dbl:[{obj.MacOD} {obj.MacAD} {obj.MacVD}]</br>" );
+				}
+
 				return $"<html><head><meta charset='utf-8'><body>{sb.ToString()}</body></head></html>";
 			} );
 		}
@@ -137,6 +175,7 @@ namespace Web
 							MacID = mac.GetObjectNo(),
 
 							MsbID = mac.Msb.GetObjectNo(),
+							MsbTrh = mac.Msb.Trh,
 							MsbTarih = mac.Msb.Tarih,
 							MsbSkl = mac.Msb.Skl,
 							MsbKtg = mac.Msb.Ktg,
@@ -178,9 +217,9 @@ namespace Web
 							tom.RkpTkmID = mac.Msb.GTkm.GetObjectNo();
 							tom.RkpTkmAd = mac.Msb.GTkm.Ad;
 
-							tom.Setler =  (mac.S1HP + mac.S1GP) == 0 ? "" : (mac.S1HP < mac.S1GP ? "-" : "+") + Math.Min( mac.S1HP, mac.S1GP ).ToString() + " ";
-							tom.Setler += (mac.S1HP + mac.S1GP) == 0 ? "" : (mac.S2HP < mac.S2GP ? "-" : "+") + Math.Min( mac.S2HP, mac.S2GP ).ToString() + " ";
-							tom.Setler += (mac.S3HP + mac.S3GP) == 0 ? "" : (mac.S3HP < mac.S3GP ? "-" : "+") + Math.Min( mac.S3HP, mac.S3GP ).ToString() + " ";
+							tom.Setler =  (mac.S1HP + mac.S1GP) == 0 ? "" : (mac.S1HP > mac.S1GP ? "-" : "+") + Math.Min( mac.S1HP, mac.S1GP ).ToString() + " ";
+							tom.Setler += (mac.S1HP + mac.S1GP) == 0 ? "" : (mac.S2HP > mac.S2GP ? "-" : "+") + Math.Min( mac.S2HP, mac.S2GP ).ToString() + " ";
+							tom.Setler += (mac.S3HP + mac.S3GP) == 0 ? "" : (mac.S3HP > mac.S3GP ? "-" : "+") + Math.Min( mac.S3HP, mac.S3GP ).ToString() + " ";
 						}
 						else
 						{
@@ -205,7 +244,7 @@ namespace Web
 							tom.Setler += (mac.S1HP + mac.S1GP) == 0 ? "" : (mac.S2HP < mac.S2GP ? "-" : "+") + Math.Min( mac.S2HP, mac.S2GP ).ToString() + " ";
 							tom.Setler += (mac.S3HP + mac.S3GP) == 0 ? "" : (mac.S3HP < mac.S3GP ? "-" : "+") + Math.Min( mac.S3HP, mac.S3GP ).ToString() + " ";
 						}
-
+						tom.Setler = tom.Setler.TrimEnd( new char[] { ' ' } );
 						trnOynMacList.Add( tom );
 					}
 				}
