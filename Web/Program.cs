@@ -95,6 +95,7 @@ namespace Web
 			var sener = from r
 						in trnOynMacList
 						where r.OynID == oynID
+						orderby r.Ktg, r.Sra
 						select r;
 
 			foreach (var sen in sener)
