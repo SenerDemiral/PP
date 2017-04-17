@@ -4,12 +4,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Starcounter;
+using System.Linq;
+using System.Text;
 
 namespace PPDB
 {
 	public static class PpHlpr
 	{
 		public static List<TrnOynMac> trnOynMacList = new List<TrnOynMac>();
+		public static List<TrnOyn> trnOynList = new List<TrnOyn>();
+
+		public static void TrnOynOzet_Create()
+		{
+			var oyn = Db.SQL<OYN>("select o from OYN o");
+			foreach (var o in oyn)
+			{
+
+			}
+			/*
+			var sener = from r
+						in PpHlpr.trnOynMacList
+						where r.TrnID == trnID && r.OynID == oynID
+						orderby r.Ktg descending, r.MsbTrh
+						select r;
+			*/
+		}
 
 		public static void TrnOynMac_Create ()
 		{
