@@ -27,7 +27,7 @@ namespace Web
 		public string OynPAd;
 		public short OynS;
 		public short OynP;
-		public string OynWL;
+		public string OynSnc;
 		public ulong RkpTkmID;
 		public string RkpTkmAd;
 		public ulong Rkp1ID;
@@ -36,7 +36,7 @@ namespace Web
 		public string Rkp2Ad;
 		public short RkpS;
 		public short RkpP;
-		public string RkpWL;
+		public string RkpSnc;
 		public string Setler;
 	}
 }

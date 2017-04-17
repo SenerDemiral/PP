@@ -2184,13 +2184,13 @@ namespace WinClient {
             
             private global::System.Data.DataColumn columnGOYN2AD;
             
-            private global::System.Data.DataColumn columnHWL;
-            
-            private global::System.Data.DataColumn columnGWL;
-            
             private global::System.Data.DataColumn columnHS;
             
             private global::System.Data.DataColumn columnGS;
+            
+            private global::System.Data.DataColumn columnHSNC;
+            
+            private global::System.Data.DataColumn columnGSNC;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -2467,22 +2467,6 @@ namespace WinClient {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn HWLColumn {
-                get {
-                    return this.columnHWL;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn GWLColumn {
-                get {
-                    return this.columnGWL;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn HSColumn {
                 get {
                     return this.columnHS;
@@ -2494,6 +2478,22 @@ namespace WinClient {
             public global::System.Data.DataColumn GSColumn {
                 get {
                     return this.columnGS;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn HSNCColumn {
+                get {
+                    return this.columnHSNC;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn GSNCColumn {
+                get {
+                    return this.columnGSNC;
                 }
             }
             
@@ -2565,10 +2565,10 @@ namespace WinClient {
                         string HOYN2AD, 
                         string GOYN1AD, 
                         string GOYN2AD, 
-                        string HWL, 
-                        string GWL, 
                         short HS, 
-                        short GS) {
+                        short GS, 
+                        string HSNC, 
+                        string GSNC) {
                 MACRow rowMACRow = ((MACRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         ID,
@@ -2601,10 +2601,10 @@ namespace WinClient {
                         HOYN2AD,
                         GOYN1AD,
                         GOYN2AD,
-                        HWL,
-                        GWL,
                         HS,
-                        GS};
+                        GS,
+                        HSNC,
+                        GSNC};
                 if ((parentTRNRowByFK_MAC_TRN != null)) {
                     columnValuesArray[2] = parentTRNRowByFK_MAC_TRN[0];
                 }
@@ -2682,10 +2682,10 @@ namespace WinClient {
                 this.columnHOYN2AD = base.Columns["HOYN2AD"];
                 this.columnGOYN1AD = base.Columns["GOYN1AD"];
                 this.columnGOYN2AD = base.Columns["GOYN2AD"];
-                this.columnHWL = base.Columns["HWL"];
-                this.columnGWL = base.Columns["GWL"];
                 this.columnHS = base.Columns["HS"];
                 this.columnGS = base.Columns["GS"];
+                this.columnHSNC = base.Columns["HSNC"];
+                this.columnGSNC = base.Columns["GSNC"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2751,14 +2751,14 @@ namespace WinClient {
                 base.Columns.Add(this.columnGOYN1AD);
                 this.columnGOYN2AD = new global::System.Data.DataColumn("GOYN2AD", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnGOYN2AD);
-                this.columnHWL = new global::System.Data.DataColumn("HWL", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnHWL);
-                this.columnGWL = new global::System.Data.DataColumn("GWL", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnGWL);
                 this.columnHS = new global::System.Data.DataColumn("HS", typeof(short), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnHS);
                 this.columnGS = new global::System.Data.DataColumn("GS", typeof(short), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnGS);
+                this.columnHSNC = new global::System.Data.DataColumn("HSNC", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnHSNC);
+                this.columnGSNC = new global::System.Data.DataColumn("GSNC", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnGSNC);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnID}, true));
                 this.columnID.AllowDBNull = false;
@@ -2775,8 +2775,10 @@ namespace WinClient {
                 this.columnGOYN1AD.MaxLength = 100;
                 this.columnGOYN2AD.ReadOnly = true;
                 this.columnGOYN2AD.MaxLength = 100;
-                this.columnHWL.MaxLength = 1;
-                this.columnGWL.MaxLength = 1;
+                this.columnHSNC.ReadOnly = true;
+                this.columnHSNC.MaxLength = 1;
+                this.columnGSNC.ReadOnly = true;
+                this.columnGSNC.MaxLength = 1;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5634,38 +5636,6 @@ namespace WinClient {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string HWL {
-                get {
-                    try {
-                        return ((string)(this[this.tableMAC.HWLColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'HWL\' in table \'MAC\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableMAC.HWLColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string GWL {
-                get {
-                    try {
-                        return ((string)(this[this.tableMAC.GWLColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'GWL\' in table \'MAC\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableMAC.GWLColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public short HS {
                 get {
                     try {
@@ -5693,6 +5663,38 @@ namespace WinClient {
                 }
                 set {
                     this[this.tableMAC.GSColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string HSNC {
+                get {
+                    try {
+                        return ((string)(this[this.tableMAC.HSNCColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'HSNC\' in table \'MAC\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMAC.HSNCColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string GSNC {
+                get {
+                    try {
+                        return ((string)(this[this.tableMAC.GSNCColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'GSNC\' in table \'MAC\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMAC.GSNCColumn] = value;
                 }
             }
             
@@ -6088,30 +6090,6 @@ namespace WinClient {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsHWLNull() {
-                return this.IsNull(this.tableMAC.HWLColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetHWLNull() {
-                this[this.tableMAC.HWLColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsGWLNull() {
-                return this.IsNull(this.tableMAC.GWLColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetGWLNull() {
-                this[this.tableMAC.GWLColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsHSNull() {
                 return this.IsNull(this.tableMAC.HSColumn);
             }
@@ -6132,6 +6110,30 @@ namespace WinClient {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetGSNull() {
                 this[this.tableMAC.GSColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsHSNCNull() {
+                return this.IsNull(this.tableMAC.HSNCColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetHSNCNull() {
+                this[this.tableMAC.HSNCColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsGSNCNull() {
+                return this.IsNull(this.tableMAC.GSNCColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetGSNCNull() {
+                this[this.tableMAC.GSNCColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -8557,10 +8559,10 @@ namespace WinClient.DataSet1TableAdapters {
             tableMapping.ColumnMappings.Add("HOYN2AD", "HOYN2AD");
             tableMapping.ColumnMappings.Add("GOYN1AD", "GOYN1AD");
             tableMapping.ColumnMappings.Add("GOYN2AD", "GOYN2AD");
-            tableMapping.ColumnMappings.Add("HWL", "HWL");
-            tableMapping.ColumnMappings.Add("GWL", "GWL");
             tableMapping.ColumnMappings.Add("HS", "HS");
             tableMapping.ColumnMappings.Add("GS", "GS");
+            tableMapping.ColumnMappings.Add("HSNC", "HSNC");
+            tableMapping.ColumnMappings.Add("GSNC", "GSNC");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::FirebirdSql.Data.FirebirdClient.FbCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
@@ -8588,13 +8590,13 @@ namespace WinClient.DataSet1TableAdapters {
                 "ND ((@IsNull_HS = 1 AND \"HS\" IS NULL) OR (\"HS\" = @Original_HS)) AND ((@IsNull_GS" +
                 " = 1 AND \"GS\" IS NULL) OR (\"GS\" = @Original_GS)) AND ((@IsNull_HP = 1 AND \"HP\" I" +
                 "S NULL) OR (\"HP\" = @Original_HP)) AND ((@IsNull_GP = 1 AND \"GP\" IS NULL) OR (\"GP" +
-                "\" = @Original_GP)) AND ((@IsNull_HWL = 1 AND \"HWL\" IS NULL) OR (\"HWL\" = @Origina" +
-                "l_HWL)) AND ((@IsNull_GWL = 1 AND \"GWL\" IS NULL) OR (\"GWL\" = @Original_GWL)) AND" +
-                " ((@IsNull_HOYN1AD = 1 AND \"HOYN1AD\" IS NULL) OR (\"HOYN1AD\" = @Original_HOYN1AD)" +
-                ") AND ((@IsNull_HOYN2AD = 1 AND \"HOYN2AD\" IS NULL) OR (\"HOYN2AD\" = @Original_HOY" +
-                "N2AD)) AND ((@IsNull_GOYN1AD = 1 AND \"GOYN1AD\" IS NULL) OR (\"GOYN1AD\" = @Origina" +
-                "l_GOYN1AD)) AND ((@IsNull_GOYN2AD = 1 AND \"GOYN2AD\" IS NULL) OR (\"GOYN2AD\" = @Or" +
-                "iginal_GOYN2AD)))";
+                "\" = @Original_GP)) AND ((@IsNull_HOYN1AD = 1 AND \"HOYN1AD\" IS NULL) OR (\"HOYN1AD" +
+                "\" = @Original_HOYN1AD)) AND ((@IsNull_HOYN2AD = 1 AND \"HOYN2AD\" IS NULL) OR (\"HO" +
+                "YN2AD\" = @Original_HOYN2AD)) AND ((@IsNull_GOYN1AD = 1 AND \"GOYN1AD\" IS NULL) OR" +
+                " (\"GOYN1AD\" = @Original_GOYN1AD)) AND ((@IsNull_GOYN2AD = 1 AND \"GOYN2AD\" IS NUL" +
+                "L) OR (\"GOYN2AD\" = @Original_GOYN2AD)) AND ((@IsNull_HSNC = 1 AND \"HSNC\" IS NULL" +
+                ") OR (\"HSNC\" = @Original_HSNC)) AND ((@IsNull_GSNC = 1 AND \"GSNC\" IS NULL) OR (\"" +
+                "GSNC\" = @Original_GSNC)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             global::FirebirdSql.Data.FirebirdClient.FbParameter param = new global::FirebirdSql.Data.FirebirdClient.FbParameter();
             param.ParameterName = "@Original_ID";
@@ -9044,38 +9046,6 @@ namespace WinClient.DataSet1TableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::FirebirdSql.Data.FirebirdClient.FbParameter();
-            param.ParameterName = "@IsNull_HWL";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.Size = 1;
-            param.IsNullable = true;
-            param.SourceColumn = "HWL";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.DeleteCommand.Parameters.Add(param);
-            param = new global::FirebirdSql.Data.FirebirdClient.FbParameter();
-            param.ParameterName = "@Original_HWL";
-            param.Size = 1;
-            param.IsNullable = true;
-            param.SourceColumn = "HWL";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.DeleteCommand.Parameters.Add(param);
-            param = new global::FirebirdSql.Data.FirebirdClient.FbParameter();
-            param.ParameterName = "@IsNull_GWL";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.Size = 1;
-            param.IsNullable = true;
-            param.SourceColumn = "GWL";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.DeleteCommand.Parameters.Add(param);
-            param = new global::FirebirdSql.Data.FirebirdClient.FbParameter();
-            param.ParameterName = "@Original_GWL";
-            param.Size = 1;
-            param.IsNullable = true;
-            param.SourceColumn = "GWL";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.DeleteCommand.Parameters.Add(param);
-            param = new global::FirebirdSql.Data.FirebirdClient.FbParameter();
             param.ParameterName = "@IsNull_HOYN1AD";
             param.DbType = global::System.Data.DbType.Int32;
             param.Size = 100;
@@ -9139,9 +9109,41 @@ namespace WinClient.DataSet1TableAdapters {
             param.SourceColumn = "GOYN2AD";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::FirebirdSql.Data.FirebirdClient.FbParameter();
+            param.ParameterName = "@IsNull_HSNC";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.Size = 1;
+            param.IsNullable = true;
+            param.SourceColumn = "HSNC";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::FirebirdSql.Data.FirebirdClient.FbParameter();
+            param.ParameterName = "@Original_HSNC";
+            param.Size = 1;
+            param.IsNullable = true;
+            param.SourceColumn = "HSNC";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::FirebirdSql.Data.FirebirdClient.FbParameter();
+            param.ParameterName = "@IsNull_GSNC";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.Size = 1;
+            param.IsNullable = true;
+            param.SourceColumn = "GSNC";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::FirebirdSql.Data.FirebirdClient.FbParameter();
+            param.ParameterName = "@Original_GSNC";
+            param.Size = 1;
+            param.IsNullable = true;
+            param.SourceColumn = "GSNC";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
             this._adapter.InsertCommand = new global::FirebirdSql.Data.FirebirdClient.FbCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO ""MAC"" (""ID"", ""STU"", ""TRNID"", ""MSBID"", ""KTG"", ""SRA"", ""HOYN1ID"", ""HOYN2ID"", ""GOYN1ID"", ""GOYN2ID"", ""S1HP"", ""S1GP"", ""S2HP"", ""S2GP"", ""S3HP"", ""S3GP"", ""S4HP"", ""S4GP"", ""S5HP"", ""S5GP"", ""S6HP"", ""S6GP"", ""S7HP"", ""S7GP"", ""HS"", ""GS"", ""HP"", ""GP"", ""HWL"", ""GWL"") VALUES (@ID, @STU, @TRNID, @MSBID, @KTG, @SRA, @HOYN1ID, @HOYN2ID, @GOYN1ID, @GOYN2ID, @S1HP, @S1GP, @S2HP, @S2GP, @S3HP, @S3GP, @S4HP, @S4GP, @S5HP, @S5GP, @S6HP, @S6GP, @S7HP, @S7GP, @HS, @GS, @HP, @GP, @HWL, @GWL)";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO ""MAC"" (""ID"", ""STU"", ""TRNID"", ""MSBID"", ""KTG"", ""SRA"", ""HOYN1ID"", ""HOYN2ID"", ""GOYN1ID"", ""GOYN2ID"", ""S1HP"", ""S1GP"", ""S2HP"", ""S2GP"", ""S3HP"", ""S3GP"", ""S4HP"", ""S4GP"", ""S5HP"", ""S5GP"", ""S6HP"", ""S6GP"", ""S7HP"", ""S7GP"", ""HS"", ""GS"", ""HP"", ""GP"") VALUES (@ID, @STU, @TRNID, @MSBID, @KTG, @SRA, @HOYN1ID, @HOYN2ID, @GOYN1ID, @GOYN2ID, @S1HP, @S1GP, @S2HP, @S2GP, @S3HP, @S3GP, @S4HP, @S4GP, @S5HP, @S5GP, @S6HP, @S6GP, @S7HP, @S7GP, @HS, @GS, @HP, @GP)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::FirebirdSql.Data.FirebirdClient.FbParameter();
             param.ParameterName = "@ID";
@@ -9337,18 +9339,6 @@ namespace WinClient.DataSet1TableAdapters {
             param.IsNullable = true;
             param.SourceColumn = "GP";
             this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::FirebirdSql.Data.FirebirdClient.FbParameter();
-            param.ParameterName = "@HWL";
-            param.Size = 1;
-            param.IsNullable = true;
-            param.SourceColumn = "HWL";
-            this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::FirebirdSql.Data.FirebirdClient.FbParameter();
-            param.ParameterName = "@GWL";
-            param.Size = 1;
-            param.IsNullable = true;
-            param.SourceColumn = "GWL";
-            this._adapter.InsertCommand.Parameters.Add(param);
             this._adapter.UpdateCommand = new global::FirebirdSql.Data.FirebirdClient.FbCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
             this._adapter.UpdateCommand.CommandText = "UPDATE \"MAC\" SET \"ID\" = @ID, \"STU\" = @STU, \"TRNID\" = @TRNID, \"MSBID\" = @MSBID, \"K" +
@@ -9356,38 +9346,37 @@ namespace WinClient.DataSet1TableAdapters {
                 "= @GOYN1ID, \"GOYN2ID\" = @GOYN2ID, \"S1HP\" = @S1HP, \"S1GP\" = @S1GP, \"S2HP\" = @S2HP" +
                 ", \"S2GP\" = @S2GP, \"S3HP\" = @S3HP, \"S3GP\" = @S3GP, \"S4HP\" = @S4HP, \"S4GP\" = @S4GP" +
                 ", \"S5HP\" = @S5HP, \"S5GP\" = @S5GP, \"S6HP\" = @S6HP, \"S6GP\" = @S6GP, \"S7HP\" = @S7HP" +
-                ", \"S7GP\" = @S7GP, \"HS\" = @HS, \"GS\" = @GS, \"HP\" = @HP, \"GP\" = @GP, \"HWL\" = @HWL, " +
-                "\"GWL\" = @GWL WHERE ((\"ID\" = @Original_ID) AND ((@IsNull_STU = 1 AND \"STU\" IS NUL" +
-                "L) OR (\"STU\" = @Original_STU)) AND (\"TRNID\" = @Original_TRNID) AND (\"MSBID\" = @O" +
-                "riginal_MSBID) AND ((@IsNull_KTG = 1 AND \"KTG\" IS NULL) OR (\"KTG\" = @Original_KT" +
-                "G)) AND ((@IsNull_SRA = 1 AND \"SRA\" IS NULL) OR (\"SRA\" = @Original_SRA)) AND ((@" +
-                "IsNull_HOYN1ID = 1 AND \"HOYN1ID\" IS NULL) OR (\"HOYN1ID\" = @Original_HOYN1ID)) AN" +
-                "D ((@IsNull_HOYN2ID = 1 AND \"HOYN2ID\" IS NULL) OR (\"HOYN2ID\" = @Original_HOYN2ID" +
-                ")) AND ((@IsNull_GOYN1ID = 1 AND \"GOYN1ID\" IS NULL) OR (\"GOYN1ID\" = @Original_GO" +
-                "YN1ID)) AND ((@IsNull_GOYN2ID = 1 AND \"GOYN2ID\" IS NULL) OR (\"GOYN2ID\" = @Origin" +
-                "al_GOYN2ID)) AND ((@IsNull_S1HP = 1 AND \"S1HP\" IS NULL) OR (\"S1HP\" = @Original_S" +
-                "1HP)) AND ((@IsNull_S1GP = 1 AND \"S1GP\" IS NULL) OR (\"S1GP\" = @Original_S1GP)) A" +
-                "ND ((@IsNull_S2HP = 1 AND \"S2HP\" IS NULL) OR (\"S2HP\" = @Original_S2HP)) AND ((@I" +
-                "sNull_S2GP = 1 AND \"S2GP\" IS NULL) OR (\"S2GP\" = @Original_S2GP)) AND ((@IsNull_S" +
-                "3HP = 1 AND \"S3HP\" IS NULL) OR (\"S3HP\" = @Original_S3HP)) AND ((@IsNull_S3GP = 1" +
-                " AND \"S3GP\" IS NULL) OR (\"S3GP\" = @Original_S3GP)) AND ((@IsNull_S4HP = 1 AND \"S" +
-                "4HP\" IS NULL) OR (\"S4HP\" = @Original_S4HP)) AND ((@IsNull_S4GP = 1 AND \"S4GP\" IS" +
-                " NULL) OR (\"S4GP\" = @Original_S4GP)) AND ((@IsNull_S5HP = 1 AND \"S5HP\" IS NULL) " +
-                "OR (\"S5HP\" = @Original_S5HP)) AND ((@IsNull_S5GP = 1 AND \"S5GP\" IS NULL) OR (\"S5" +
-                "GP\" = @Original_S5GP)) AND ((@IsNull_S6HP = 1 AND \"S6HP\" IS NULL) OR (\"S6HP\" = @" +
-                "Original_S6HP)) AND ((@IsNull_S6GP = 1 AND \"S6GP\" IS NULL) OR (\"S6GP\" = @Origina" +
-                "l_S6GP)) AND ((@IsNull_S7HP = 1 AND \"S7HP\" IS NULL) OR (\"S7HP\" = @Original_S7HP)" +
-                ") AND ((@IsNull_S7GP = 1 AND \"S7GP\" IS NULL) OR (\"S7GP\" = @Original_S7GP)) AND (" +
-                "(@IsNull_HS = 1 AND \"HS\" IS NULL) OR (\"HS\" = @Original_HS)) AND ((@IsNull_GS = 1" +
-                " AND \"GS\" IS NULL) OR (\"GS\" = @Original_GS)) AND ((@IsNull_HP = 1 AND \"HP\" IS NU" +
-                "LL) OR (\"HP\" = @Original_HP)) AND ((@IsNull_GP = 1 AND \"GP\" IS NULL) OR (\"GP\" = " +
-                "@Original_GP)) AND ((@IsNull_HWL = 1 AND \"HWL\" IS NULL) OR (\"HWL\" = @Original_HW" +
-                "L)) AND ((@IsNull_GWL = 1 AND \"GWL\" IS NULL) OR (\"GWL\" = @Original_GWL)) AND ((@" +
-                "IsNull_HOYN1AD = 1 AND \"HOYN1AD\" IS NULL) OR (\"HOYN1AD\" = @Original_HOYN1AD)) AN" +
-                "D ((@IsNull_HOYN2AD = 1 AND \"HOYN2AD\" IS NULL) OR (\"HOYN2AD\" = @Original_HOYN2AD" +
-                ")) AND ((@IsNull_GOYN1AD = 1 AND \"GOYN1AD\" IS NULL) OR (\"GOYN1AD\" = @Original_GO" +
-                "YN1AD)) AND ((@IsNull_GOYN2AD = 1 AND \"GOYN2AD\" IS NULL) OR (\"GOYN2AD\" = @Origin" +
-                "al_GOYN2AD)))";
+                ", \"S7GP\" = @S7GP, \"HS\" = @HS, \"GS\" = @GS, \"HP\" = @HP, \"GP\" = @GP WHERE ((\"ID\" = " +
+                "@Original_ID) AND ((@IsNull_STU = 1 AND \"STU\" IS NULL) OR (\"STU\" = @Original_STU" +
+                ")) AND (\"TRNID\" = @Original_TRNID) AND (\"MSBID\" = @Original_MSBID) AND ((@IsNull" +
+                "_KTG = 1 AND \"KTG\" IS NULL) OR (\"KTG\" = @Original_KTG)) AND ((@IsNull_SRA = 1 AN" +
+                "D \"SRA\" IS NULL) OR (\"SRA\" = @Original_SRA)) AND ((@IsNull_HOYN1ID = 1 AND \"HOYN" +
+                "1ID\" IS NULL) OR (\"HOYN1ID\" = @Original_HOYN1ID)) AND ((@IsNull_HOYN2ID = 1 AND " +
+                "\"HOYN2ID\" IS NULL) OR (\"HOYN2ID\" = @Original_HOYN2ID)) AND ((@IsNull_GOYN1ID = 1" +
+                " AND \"GOYN1ID\" IS NULL) OR (\"GOYN1ID\" = @Original_GOYN1ID)) AND ((@IsNull_GOYN2I" +
+                "D = 1 AND \"GOYN2ID\" IS NULL) OR (\"GOYN2ID\" = @Original_GOYN2ID)) AND ((@IsNull_S" +
+                "1HP = 1 AND \"S1HP\" IS NULL) OR (\"S1HP\" = @Original_S1HP)) AND ((@IsNull_S1GP = 1" +
+                " AND \"S1GP\" IS NULL) OR (\"S1GP\" = @Original_S1GP)) AND ((@IsNull_S2HP = 1 AND \"S" +
+                "2HP\" IS NULL) OR (\"S2HP\" = @Original_S2HP)) AND ((@IsNull_S2GP = 1 AND \"S2GP\" IS" +
+                " NULL) OR (\"S2GP\" = @Original_S2GP)) AND ((@IsNull_S3HP = 1 AND \"S3HP\" IS NULL) " +
+                "OR (\"S3HP\" = @Original_S3HP)) AND ((@IsNull_S3GP = 1 AND \"S3GP\" IS NULL) OR (\"S3" +
+                "GP\" = @Original_S3GP)) AND ((@IsNull_S4HP = 1 AND \"S4HP\" IS NULL) OR (\"S4HP\" = @" +
+                "Original_S4HP)) AND ((@IsNull_S4GP = 1 AND \"S4GP\" IS NULL) OR (\"S4GP\" = @Origina" +
+                "l_S4GP)) AND ((@IsNull_S5HP = 1 AND \"S5HP\" IS NULL) OR (\"S5HP\" = @Original_S5HP)" +
+                ") AND ((@IsNull_S5GP = 1 AND \"S5GP\" IS NULL) OR (\"S5GP\" = @Original_S5GP)) AND (" +
+                "(@IsNull_S6HP = 1 AND \"S6HP\" IS NULL) OR (\"S6HP\" = @Original_S6HP)) AND ((@IsNul" +
+                "l_S6GP = 1 AND \"S6GP\" IS NULL) OR (\"S6GP\" = @Original_S6GP)) AND ((@IsNull_S7HP " +
+                "= 1 AND \"S7HP\" IS NULL) OR (\"S7HP\" = @Original_S7HP)) AND ((@IsNull_S7GP = 1 AND" +
+                " \"S7GP\" IS NULL) OR (\"S7GP\" = @Original_S7GP)) AND ((@IsNull_HS = 1 AND \"HS\" IS " +
+                "NULL) OR (\"HS\" = @Original_HS)) AND ((@IsNull_GS = 1 AND \"GS\" IS NULL) OR (\"GS\" " +
+                "= @Original_GS)) AND ((@IsNull_HP = 1 AND \"HP\" IS NULL) OR (\"HP\" = @Original_HP)" +
+                ") AND ((@IsNull_GP = 1 AND \"GP\" IS NULL) OR (\"GP\" = @Original_GP)) AND ((@IsNull" +
+                "_HOYN1AD = 1 AND \"HOYN1AD\" IS NULL) OR (\"HOYN1AD\" = @Original_HOYN1AD)) AND ((@I" +
+                "sNull_HOYN2AD = 1 AND \"HOYN2AD\" IS NULL) OR (\"HOYN2AD\" = @Original_HOYN2AD)) AND" +
+                " ((@IsNull_GOYN1AD = 1 AND \"GOYN1AD\" IS NULL) OR (\"GOYN1AD\" = @Original_GOYN1AD)" +
+                ") AND ((@IsNull_GOYN2AD = 1 AND \"GOYN2AD\" IS NULL) OR (\"GOYN2AD\" = @Original_GOY" +
+                "N2AD)) AND ((@IsNull_HSNC = 1 AND \"HSNC\" IS NULL) OR (\"HSNC\" = @Original_HSNC)) " +
+                "AND ((@IsNull_GSNC = 1 AND \"GSNC\" IS NULL) OR (\"GSNC\" = @Original_GSNC)))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::FirebirdSql.Data.FirebirdClient.FbParameter();
             param.ParameterName = "@ID";
@@ -9582,18 +9571,6 @@ namespace WinClient.DataSet1TableAdapters {
             param.Size = 2;
             param.IsNullable = true;
             param.SourceColumn = "GP";
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::FirebirdSql.Data.FirebirdClient.FbParameter();
-            param.ParameterName = "@HWL";
-            param.Size = 1;
-            param.IsNullable = true;
-            param.SourceColumn = "HWL";
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::FirebirdSql.Data.FirebirdClient.FbParameter();
-            param.ParameterName = "@GWL";
-            param.Size = 1;
-            param.IsNullable = true;
-            param.SourceColumn = "GWL";
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::FirebirdSql.Data.FirebirdClient.FbParameter();
             param.ParameterName = "@Original_ID";
@@ -10043,38 +10020,6 @@ namespace WinClient.DataSet1TableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::FirebirdSql.Data.FirebirdClient.FbParameter();
-            param.ParameterName = "@IsNull_HWL";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.Size = 1;
-            param.IsNullable = true;
-            param.SourceColumn = "HWL";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::FirebirdSql.Data.FirebirdClient.FbParameter();
-            param.ParameterName = "@Original_HWL";
-            param.Size = 1;
-            param.IsNullable = true;
-            param.SourceColumn = "HWL";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::FirebirdSql.Data.FirebirdClient.FbParameter();
-            param.ParameterName = "@IsNull_GWL";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.Size = 1;
-            param.IsNullable = true;
-            param.SourceColumn = "GWL";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::FirebirdSql.Data.FirebirdClient.FbParameter();
-            param.ParameterName = "@Original_GWL";
-            param.Size = 1;
-            param.IsNullable = true;
-            param.SourceColumn = "GWL";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::FirebirdSql.Data.FirebirdClient.FbParameter();
             param.ParameterName = "@IsNull_HOYN1AD";
             param.DbType = global::System.Data.DbType.Int32;
             param.Size = 100;
@@ -10136,6 +10081,38 @@ namespace WinClient.DataSet1TableAdapters {
             param.Size = 100;
             param.IsNullable = true;
             param.SourceColumn = "GOYN2AD";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::FirebirdSql.Data.FirebirdClient.FbParameter();
+            param.ParameterName = "@IsNull_HSNC";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.Size = 1;
+            param.IsNullable = true;
+            param.SourceColumn = "HSNC";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::FirebirdSql.Data.FirebirdClient.FbParameter();
+            param.ParameterName = "@Original_HSNC";
+            param.Size = 1;
+            param.IsNullable = true;
+            param.SourceColumn = "HSNC";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::FirebirdSql.Data.FirebirdClient.FbParameter();
+            param.ParameterName = "@IsNull_GSNC";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.Size = 1;
+            param.IsNullable = true;
+            param.SourceColumn = "GSNC";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::FirebirdSql.Data.FirebirdClient.FbParameter();
+            param.ParameterName = "@Original_GSNC";
+            param.Size = 1;
+            param.IsNullable = true;
+            param.SourceColumn = "GSNC";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
         }
@@ -11738,18 +11715,6 @@ namespace WinClient.DataSet1TableAdapters {
             param.IsNullable = true;
             param.SourceColumn = null;
             ((global::FirebirdSql.Data.FirebirdClient.FbCommand)(this._commandCollection[1])).Parameters.Add(param);
-            param = new global::FirebirdSql.Data.FirebirdClient.FbParameter();
-            param.ParameterName = "HWL";
-            param.Size = 1;
-            param.IsNullable = true;
-            param.SourceColumn = null;
-            ((global::FirebirdSql.Data.FirebirdClient.FbCommand)(this._commandCollection[1])).Parameters.Add(param);
-            param = new global::FirebirdSql.Data.FirebirdClient.FbParameter();
-            param.ParameterName = "GWL";
-            param.Size = 1;
-            param.IsNullable = true;
-            param.SourceColumn = null;
-            ((global::FirebirdSql.Data.FirebirdClient.FbCommand)(this._commandCollection[1])).Parameters.Add(param);
             this._commandCollection[2] = new global::FirebirdSql.Data.FirebirdClient.FbCommand();
             ((global::FirebirdSql.Data.FirebirdClient.FbCommand)(this._commandCollection[2])).Connection = new global::FirebirdSql.Data.FirebirdClient.FbConnection(global::WinClient.Properties.Settings.Default.ConnectionString);
             ((global::FirebirdSql.Data.FirebirdClient.FbCommand)(this._commandCollection[2])).CommandText = "\"MDF_MSB\"";
@@ -12476,9 +12441,7 @@ namespace WinClient.DataSet1TableAdapters {
                     global::System.Nullable<short> HS, 
                     global::System.Nullable<short> GS, 
                     global::System.Nullable<short> HP, 
-                    global::System.Nullable<short> GP, 
-                    string HWL, 
-                    string GWL) {
+                    global::System.Nullable<short> GP) {
             global::FirebirdSql.Data.FirebirdClient.FbCommand command = ((global::FirebirdSql.Data.FirebirdClient.FbCommand)(this.CommandCollection[1]));
             if ((GETPUT == null)) {
                 command.Parameters[0].Value = global::System.DBNull.Value;
@@ -12659,18 +12622,6 @@ namespace WinClient.DataSet1TableAdapters {
             }
             else {
                 command.Parameters[29].Value = global::System.DBNull.Value;
-            }
-            if ((HWL == null)) {
-                command.Parameters[30].Value = global::System.DBNull.Value;
-            }
-            else {
-                command.Parameters[30].Value = ((string)(HWL));
-            }
-            if ((GWL == null)) {
-                command.Parameters[31].Value = global::System.DBNull.Value;
-            }
-            else {
-                command.Parameters[31].Value = ((string)(GWL));
             }
             global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
             if (((command.Connection.State & global::System.Data.ConnectionState.Open) 

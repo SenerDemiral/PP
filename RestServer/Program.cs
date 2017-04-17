@@ -690,8 +690,6 @@ namespace RestServer
 						jsn.GS = obj.GS;
 						jsn.HP = obj.HP;
 						jsn.GP = obj.GP;
-						jsn.HWL = obj.HWL;
-						jsn.GWL = obj.GWL;
 
 						ws.Send(jsn.ToJson());
 					}
@@ -734,8 +732,6 @@ namespace RestServer
 								GS = (short)jsn.GS,
 								HP = (short)jsn.HP,
 								GP = (short)jsn.GP,
-								HWL = jsn.HWL,
-								GWL = jsn.GWL,
 							};
 
 							jsn.NewID = (long)obj.GetObjectNo();
@@ -777,8 +773,6 @@ namespace RestServer
 								obj.GS = (short)jsn.GS;
 								obj.HP = (short)jsn.HP;
 								obj.GP = (short)jsn.GP;
-								obj.HWL = jsn.HWL;
-								obj.GWL = jsn.GWL;
 							}
 						}
 					});

@@ -59,6 +59,8 @@ namespace PPDB
 		// Computed Fields
 		public string Tarih => Trh.ToString( "yyyy-MM-dd HH:mm:ss" );
 		public string Bitti => HTP == 0 && GTP == 0 ? "F" : "T";
+		public string HSnc => HTP == 0 && GTP == 0 ? "-" : (HTP == GTP ? "B" : (HTP > GTP ? "G" : "M"));
+		public string GSnc => HTP == 0 && GTP == 0 ? "-" : (HTP == GTP ? "B" : (HTP < GTP ? "G" : "M"));
 
 		public MSB ()
 		{
@@ -97,13 +99,14 @@ namespace PPDB
 		public short S7HP;
 		public short S7GP;
 
-		public string HWL;  // Home Win/Lost
-		public string GWL;  // Guest Win/Lost
-
 		public short HS;    // HomeSet
 		public short GS;
 		public short HP;    // HomePuan
 		public short GP;
+
+		// Computed Fields
+		public string HSnc => HS > GS ? "G" : "M";
+		public string GSnc => HS < GS ? "G" : "M";
 
 		public MAC ()
 		{
@@ -124,8 +127,6 @@ namespace PPDB
 			S7HP = 0;
 			S7GP = 0;
 
-			HWL = "-";
-			GWL = "-";
 			HS = 0;
 			GS = 0;
 			HP = 0;

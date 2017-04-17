@@ -142,8 +142,6 @@ namespace WinClient
 		public short S7HP;
 		public short S7GP;
 
-		public string HWL;  // Home Win/Lost
-		public string GWL;  // Guest Win/Lost
 		public short HS;	// HomeSet
 		public short GS;
 		public short HP;	// HomePuan
@@ -155,8 +153,6 @@ namespace WinClient
 			NewID = 0;
 			NOR = 0;    //Number of Record left
 
-			HWL = "-";
-			GWL = "-";
 			HS = 0;
 			GS = 0;
 			HP = 0;

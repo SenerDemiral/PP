@@ -81,9 +81,9 @@ namespace Web
 				foreach (var sen in sener)
 				{
 					if (sen.Ktg == "S")
-						sb.AppendLine( $"{sen.OynWL} {sen.MacID, 10} {sen.MsbID} {sen.OynTkmAd} {sen.RkpTkmAd} {sen.Rkp1Ad}{sen.Rkp2Ad} {sen.Ktg} {sen.Sra} [{sen.Setler}     ]</br>" );
+						sb.AppendLine( $"{sen.OynSnc} {sen.MacID, 10} {sen.MsbID} {sen.OynTkmAd} {sen.RkpTkmAd} {sen.Rkp1Ad}{sen.Rkp2Ad} {sen.Ktg} {sen.Sra} [{sen.Setler}     ]</br>" );
 					else
-						sb.AppendLine( $"{sen.OynWL} {sen.MacID, 10} {sen.MsbID} {sen.OynTkmAd} {sen.RkpTkmAd} {sen.Rkp1Ad}+{sen.Rkp2Ad} {sen.Ktg} {sen.Sra} [{sen.Setler}]</br>" );
+						sb.AppendLine( $"{sen.OynSnc} {sen.MacID, 10} {sen.MsbID} {sen.OynTkmAd} {sen.RkpTkmAd} {sen.Rkp1Ad}+{sen.Rkp2Ad} {sen.Ktg} {sen.Sra} [{sen.Setler}]</br>" );
 				}
 				
 				return $"<html><head><meta charset='utf-8'><body>{sb.ToString()}</body></head></html>";
@@ -162,14 +162,14 @@ namespace Web
 						{
 							tom.OynS = mac.HS;
 							tom.OynP = mac.HP;
-							tom.OynWL = mac.HWL;
+							tom.OynSnc = mac.HSnc;
 							tom.OynPID = OynID == HOyn1ID ? HOyn2ID : HOyn1ID;
 							tom.OynTkmID = mac.Msb.HTkm.GetObjectNo();
 							tom.OynTkmAd = mac.Msb.HTkm.Ad;
 
 							tom.RkpS = mac.GS;
 							tom.RkpP = mac.GP;
-							tom.RkpWL = mac.GWL;
+							tom.RkpSnc = mac.GSnc;
 							tom.Rkp1ID = GOyn1ID;
 							tom.Rkp1Ad = GOyn1Ad;
 							tom.Rkp2ID = GOyn2ID;
@@ -185,14 +185,14 @@ namespace Web
 						{
 							tom.OynS = mac.GS;
 							tom.OynP = mac.GP;
-							tom.OynWL = mac.GWL;
+							tom.OynSnc = mac.GSnc;
 							tom.OynPID = OynID == GOyn1ID ? GOyn2ID : GOyn1ID;
 							tom.OynTkmID = mac.Msb.GTkm.GetObjectNo();
 							tom.OynTkmAd = mac.Msb.GTkm.Ad;
 
 							tom.RkpS = mac.HS;
 							tom.RkpP = mac.HP;
-							tom.RkpWL = mac.HWL;
+							tom.RkpSnc = mac.HSnc;
 							tom.Rkp1ID = HOyn1ID;
 							tom.Rkp1Ad = HOyn1Ad;
 							tom.Rkp2ID = HOyn2ID;
