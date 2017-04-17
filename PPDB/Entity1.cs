@@ -59,9 +59,10 @@ namespace PPDB
 		// Computed Fields
 		public string Tarih => Trh.ToString( "yyyy-MM-dd HH:mm:ss" );
 		public string Bitti => HTP == 0 && GTP == 0 ? "F" : "T";
-		public string HSnc => HTP == 0 && GTP == 0 ? "-" : (HTP == GTP ? "B" : (HTP > GTP ? "G" : "M"));
-		public string GSnc => HTP == 0 && GTP == 0 ? "-" : (HTP == GTP ? "B" : (HTP < GTP ? "G" : "M"));
-
+		// TakimSonuc -Oynanmadi/Galip/Maglup/Berabere
+		public string HTSnc => HTP == 0 && GTP == 0 ? "-" : (HTP == GTP ? "B" : (HTP > GTP ? "G" : "M"));
+		public string GTSnc => HTP == 0 && GTP == 0 ? "-" : (HTP == GTP ? "B" : (HTP < GTP ? "G" : "M"));
+		
 		public MSB ()
 		{
 			Skl = "?";
