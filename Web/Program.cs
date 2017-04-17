@@ -9,7 +9,7 @@ namespace Web
 {
 	class Program
 	{
-		static List<TrnOynMac> trnOynMacList = new List<TrnOynMac>();
+		////static List<TrnOynMac> trnOynMacList = new List<TrnOynMac>();
 
 
 		static void Main ()
@@ -56,14 +56,8 @@ namespace Web
 			//Application.Current.Use( new HtmlFromJsonProvider() );
 			//Application.Current.Use( new PartialToStandaloneHtmlProvider(html) );
 
-			TrnOynMac_Create();
-
-			Handle.GET( "/Web/Den1", () =>
-			{
-				TrnOynMac_Create();
-				deneme( 34 );
-				return "OK";
-			} );
+			////TrnOynMac_Create();
+			PpHlpr.TrnOynMac_Create();
 
 			Handle.GET( "/Web/TrnOynMac/{?}/{?}", (string tID, string oID) =>
 			{
@@ -77,7 +71,7 @@ namespace Web
 				sb.AppendLine( $"<h3>{oyn.Ad} #{oyn.GetObjectNo()}</h3></br>" );
 
 				var sener = from r
-							in trnOynMacList
+							in PpHlpr.trnOynMacList
 							where r.TrnID == trnID && r.OynID == oynID
 							orderby r.Ktg descending, r.MsbTrh
 							select r;
@@ -128,20 +122,7 @@ namespace Web
 			} );
 		}
 
-		static void deneme(ulong oynID)
-		{
-			var sener = from r
-						in trnOynMacList
-						where r.OynID == oynID
-						orderby r.Ktg, r.Sra
-						select r;
-
-			foreach (var sen in sener)
-			{
-				
-			}
-		}
-		
+		/*
 		static void TrnOynMac_Create()
 		{
 			ulong OynID = 0;
@@ -250,5 +231,6 @@ namespace Web
 				}
 			}
 		}
+		*/
 	}
 }
