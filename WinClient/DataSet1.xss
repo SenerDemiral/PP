@@ -11,7 +11,7 @@
     <Shape ID="DesignTable:OYN" ZOrder="24" X="505" Y="57" Height="191" Width="171" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="121" />
     <Shape ID="DesignTable:MSB" ZOrder="13" X="148" Y="296" Height="343" Width="171" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="254" />
     <Shape ID="DesignTable:MAC" ZOrder="1" X="396" Y="308" Height="343" Width="173" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="254" />
-    <Shape ID="DesignTable:TRNTKM" ZOrder="2" X="626" Y="301" Height="324" Width="196" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="235" />
+    <Shape ID="DesignTable:TRNTKM" ZOrder="2" X="626" Y="301" Height="343" Width="196" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="235" />
     <Shape ID="DesignTable:TRNTKMOYN" ZOrder="10" X="844" Y="295" Height="210" Width="223" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="121" />
     <Shape ID="DesignTable:TRNOYN" ZOrder="6" X="851" Y="528" Height="343" Width="196" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="254" />
     <Shape ID="DesignSources:QueriesTableAdapter" ZOrder="3" X="724" Y="43" Height="182" Width="503" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="178" />
