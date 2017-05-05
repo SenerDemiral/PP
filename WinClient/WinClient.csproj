@@ -71,6 +71,41 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </Compile>
+    <Compile Include="DataSet2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet2.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DcbXF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DcbXF.Designer.cs">
+      <DependentUpon>DcbXF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DcdXF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DcdXF.Designer.cs">
+      <DependentUpon>DcdXF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DhtXF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DhtXF.Designer.cs">
+      <DependentUpon>DhtXF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DuaXF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DuaXF.Designer.cs">
+      <DependentUpon>DuaXF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DutXF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DutXF.Designer.cs">
+      <DependentUpon>DutXF.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,6 +145,21 @@
     <Compile Include="TrnXF.Designer.cs">
       <DependentUpon>TrnXF.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="DcbXF.resx">
+      <DependentUpon>DcbXF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DcdXF.resx">
+      <DependentUpon>DcdXF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DhtXF.resx">
+      <DependentUpon>DhtXF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DuaXF.resx">
+      <DependentUpon>DuaXF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DutXF.resx">
+      <DependentUpon>DutXF.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -148,6 +198,17 @@
     </None>
     <None Include="DataSet1.xss">
       <DependentUpon>DataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet2.xsc">
+      <DependentUpon>DataSet2.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet2.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet2.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DataSet2.xss">
+      <DependentUpon>DataSet2.xsd</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

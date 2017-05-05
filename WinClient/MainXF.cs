@@ -21,11 +21,19 @@ namespace WinClient
 
 		private void MainXF_Load (object sender, EventArgs e)
 		{
+			// TODO: This line of code loads data into the 'dataSet2.DHT' table. You can move, or remove it, as needed.
+			this.dHTTableAdapter.Fill( this.dataSet2.DHT );
+			// TODO: This line of code loads data into the 'dataSet2.DUT' table. You can move, or remove it, as needed.
+			this.dutTableAdapter.Fill( this.dataSet2.DUT );
 			tkmTableAdapter.Fill( dataSet1.TKM );
 			oynTableAdapter.Fill( dataSet1.OYN );
 
 		}
 
+		public long GetPK() {
+			return (long)queriesTableAdapter.GET_PK();
+		}
+		
 		private void oynBarButtonItem_ItemClick (object sender, ItemClickEventArgs e)
 		{
 			OynXF f = new OynXF();
@@ -56,6 +64,32 @@ namespace WinClient
 		{
 			Form1 f = new Form1();
 			f.Text = "2Web";
+			f.MdiParent = this;
+			f.Show();
+		}
+
+		private void uyeBarButtonItem_ItemClick (object sender, ItemClickEventArgs e)
+		{
+			DutXF f = new DutXF();
+			f.Text = "Üyeler";
+			f.MdiParent = this;
+			f.Show();
+
+		}
+
+		private void cariBarButtonItem_ItemClick (object sender, ItemClickEventArgs e)
+		{
+			DcbXF f = new DcbXF();
+			f.Text = "Cari";
+			f.MdiParent = this;
+			f.Show();
+
+		}
+
+		private void hspBarButtonItem_ItemClick (object sender, ItemClickEventArgs e)
+		{
+			DhtXF f = new DhtXF();
+			f.Text = "Hsp";
 			f.MdiParent = this;
 			f.Show();
 		}

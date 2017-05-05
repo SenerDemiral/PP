@@ -1,6 +1,6 @@
 ﻿namespace WinClient
 {
-	partial class OynXF
+	partial class DcdXF
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -29,11 +29,11 @@
 		private void InitializeComponent ()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OynXF));
-			this.dataSet1 = new WinClient.DataSet1();
-			this.oYNBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.oynTableAdapter = new WinClient.DataSet1TableAdapters.OYNTableAdapter();
-			this.oYNBindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DcdXF));
+			this.dataSet2 = new WinClient.DataSet2();
+			this.dcdBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.dcdTableAdapter = new WinClient.DataSet2TableAdapters.DCDTableAdapter();
+			this.dcdBindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
 			this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
 			this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
 			this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
@@ -45,43 +45,47 @@
 			this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
 			this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
 			this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-			this.oYNBindingNavigatorSaveItem = new System.Windows.Forms.ToolStripButton();
-			this.oynGridControl = new DevExpress.XtraGrid.GridControl();
+			this.dCDBindingNavigatorSaveItem = new System.Windows.Forms.ToolStripButton();
+			this.dcdGridControl = new DevExpress.XtraGrid.GridControl();
 			this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.colID = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colSTU = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colAD = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colDGMTRH = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colSEX = new DevExpress.XtraGrid.Columns.GridColumn();
-			((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.oYNBindingSource)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.oYNBindingNavigator)).BeginInit();
-			this.oYNBindingNavigator.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.oynGridControl)).BeginInit();
+			this.colDCBID = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colTRH = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colHSPNO = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colBRCTUT = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colALCTUT = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colDUTID = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colINFO = new DevExpress.XtraGrid.Columns.GridColumn();
+			((System.ComponentModel.ISupportInitialize)(this.dataSet2)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.dcdBindingSource)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.dcdBindingNavigator)).BeginInit();
+			this.dcdBindingNavigator.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dcdGridControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
 			this.SuspendLayout();
 			// 
-			// dataSet1
+			// dataSet2
 			// 
-			this.dataSet1.DataSetName = "DataSet1";
-			this.dataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+			this.dataSet2.DataSetName = "DataSet2";
+			this.dataSet2.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
 			// 
-			// oYNBindingSource
+			// dcdBindingSource
 			// 
-			this.oYNBindingSource.DataMember = "OYN";
-			this.oYNBindingSource.DataSource = this.dataSet1;
+			this.dcdBindingSource.DataMember = "DCD";
+			this.dcdBindingSource.DataSource = this.dataSet2;
 			// 
-			// oynTableAdapter
+			// dcdTableAdapter
 			// 
-			this.oynTableAdapter.ClearBeforeFill = true;
+			this.dcdTableAdapter.ClearBeforeFill = true;
 			// 
-			// oYNBindingNavigator
+			// dcdBindingNavigator
 			// 
-			this.oYNBindingNavigator.AddNewItem = this.bindingNavigatorAddNewItem;
-			this.oYNBindingNavigator.BindingSource = this.oYNBindingSource;
-			this.oYNBindingNavigator.CountItem = this.bindingNavigatorCountItem;
-			this.oYNBindingNavigator.DeleteItem = this.bindingNavigatorDeleteItem;
-			this.oYNBindingNavigator.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.dcdBindingNavigator.AddNewItem = this.bindingNavigatorAddNewItem;
+			this.dcdBindingNavigator.BindingSource = this.dcdBindingSource;
+			this.dcdBindingNavigator.CountItem = this.bindingNavigatorCountItem;
+			this.dcdBindingNavigator.DeleteItem = this.bindingNavigatorDeleteItem;
+			this.dcdBindingNavigator.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bindingNavigatorMoveFirstItem,
             this.bindingNavigatorMovePreviousItem,
             this.bindingNavigatorSeparator,
@@ -93,17 +97,17 @@
             this.bindingNavigatorSeparator2,
             this.bindingNavigatorAddNewItem,
             this.bindingNavigatorDeleteItem,
-            this.oYNBindingNavigatorSaveItem});
-			this.oYNBindingNavigator.Location = new System.Drawing.Point(0, 0);
-			this.oYNBindingNavigator.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
-			this.oYNBindingNavigator.MoveLastItem = this.bindingNavigatorMoveLastItem;
-			this.oYNBindingNavigator.MoveNextItem = this.bindingNavigatorMoveNextItem;
-			this.oYNBindingNavigator.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
-			this.oYNBindingNavigator.Name = "oYNBindingNavigator";
-			this.oYNBindingNavigator.PositionItem = this.bindingNavigatorPositionItem;
-			this.oYNBindingNavigator.Size = new System.Drawing.Size(563, 25);
-			this.oYNBindingNavigator.TabIndex = 0;
-			this.oYNBindingNavigator.Text = "bindingNavigator1";
+            this.dCDBindingNavigatorSaveItem});
+			this.dcdBindingNavigator.Location = new System.Drawing.Point(0, 0);
+			this.dcdBindingNavigator.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
+			this.dcdBindingNavigator.MoveLastItem = this.bindingNavigatorMoveLastItem;
+			this.dcdBindingNavigator.MoveNextItem = this.bindingNavigatorMoveNextItem;
+			this.dcdBindingNavigator.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
+			this.dcdBindingNavigator.Name = "dcdBindingNavigator";
+			this.dcdBindingNavigator.PositionItem = this.bindingNavigatorPositionItem;
+			this.dcdBindingNavigator.Size = new System.Drawing.Size(619, 25);
+			this.dcdBindingNavigator.TabIndex = 0;
+			this.dcdBindingNavigator.Text = "bindingNavigator1";
 			// 
 			// bindingNavigatorAddNewItem
 			// 
@@ -190,26 +194,25 @@
 			this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
 			this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 25);
 			// 
-			// oYNBindingNavigatorSaveItem
+			// dCDBindingNavigatorSaveItem
 			// 
-			this.oYNBindingNavigatorSaveItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.oYNBindingNavigatorSaveItem.Image = ((System.Drawing.Image)(resources.GetObject("oYNBindingNavigatorSaveItem.Image")));
-			this.oYNBindingNavigatorSaveItem.Name = "oYNBindingNavigatorSaveItem";
-			this.oYNBindingNavigatorSaveItem.Size = new System.Drawing.Size(23, 22);
-			this.oYNBindingNavigatorSaveItem.Text = "Save Data";
-			this.oYNBindingNavigatorSaveItem.Click += new System.EventHandler(this.oYNBindingNavigatorSaveItem_Click);
+			this.dCDBindingNavigatorSaveItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.dCDBindingNavigatorSaveItem.Image = ((System.Drawing.Image)(resources.GetObject("dCDBindingNavigatorSaveItem.Image")));
+			this.dCDBindingNavigatorSaveItem.Name = "dCDBindingNavigatorSaveItem";
+			this.dCDBindingNavigatorSaveItem.Size = new System.Drawing.Size(23, 22);
+			this.dCDBindingNavigatorSaveItem.Text = "Save Data";
+			this.dCDBindingNavigatorSaveItem.Click += new System.EventHandler(this.dCDBindingNavigatorSaveItem_Click);
 			// 
-			// oynGridControl
+			// dcdGridControl
 			// 
-			this.oynGridControl.DataSource = this.oYNBindingSource;
-			this.oynGridControl.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.oynGridControl.Location = new System.Drawing.Point(0, 25);
-			this.oynGridControl.MainView = this.gridView1;
-			this.oynGridControl.Name = "oynGridControl";
-			this.oynGridControl.ShowOnlyPredefinedDetails = true;
-			this.oynGridControl.Size = new System.Drawing.Size(563, 263);
-			this.oynGridControl.TabIndex = 1;
-			this.oynGridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+			this.dcdGridControl.DataSource = this.dcdBindingSource;
+			this.dcdGridControl.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.dcdGridControl.Location = new System.Drawing.Point(0, 25);
+			this.dcdGridControl.MainView = this.gridView1;
+			this.dcdGridControl.Name = "dcdGridControl";
+			this.dcdGridControl.Size = new System.Drawing.Size(619, 293);
+			this.dcdGridControl.TabIndex = 1;
+			this.dcdGridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
 			// 
 			// gridView1
@@ -217,13 +220,16 @@
 			this.gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colID,
             this.colSTU,
-            this.colAD,
-            this.colDGMTRH,
-            this.colSEX});
-			this.gridView1.GridControl = this.oynGridControl;
+            this.colDCBID,
+            this.colTRH,
+            this.colHSPNO,
+            this.colBRCTUT,
+            this.colALCTUT,
+            this.colDUTID,
+            this.colINFO});
+			this.gridView1.GridControl = this.dcdGridControl;
 			this.gridView1.Name = "gridView1";
-			this.gridView1.OptionsView.EnableAppearanceEvenRow = true;
-			this.gridView1.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Top;
+			this.gridView1.OptionsView.ShowFooter = true;
 			this.gridView1.InitNewRow += new DevExpress.XtraGrid.Views.Grid.InitNewRowEventHandler(this.gridView1_InitNewRow);
 			// 
 			// colID
@@ -246,55 +252,93 @@
 			this.colSTU.OptionsColumn.FixedWidth = true;
 			this.colSTU.Visible = true;
 			this.colSTU.VisibleIndex = 1;
-			this.colSTU.Width = 50;
+			this.colSTU.Width = 40;
 			// 
-			// colAD
+			// colDCBID
 			// 
-			this.colAD.Caption = "Ad";
-			this.colAD.FieldName = "AD";
-			this.colAD.Name = "colAD";
-			this.colAD.Visible = true;
-			this.colAD.VisibleIndex = 2;
-			this.colAD.Width = 209;
+			this.colDCBID.FieldName = "DCBID";
+			this.colDCBID.Name = "colDCBID";
+			this.colDCBID.OptionsColumn.AllowEdit = false;
+			this.colDCBID.OptionsColumn.AllowFocus = false;
+			this.colDCBID.Width = 70;
 			// 
-			// colDGMTRH
+			// colTRH
 			// 
-			this.colDGMTRH.Caption = "DğmTrh";
-			this.colDGMTRH.FieldName = "DGMTRH";
-			this.colDGMTRH.Name = "colDGMTRH";
-			this.colDGMTRH.OptionsColumn.FixedWidth = true;
-			this.colDGMTRH.Visible = true;
-			this.colDGMTRH.VisibleIndex = 3;
-			this.colDGMTRH.Width = 60;
+			this.colTRH.Caption = "Trh";
+			this.colTRH.FieldName = "TRH";
+			this.colTRH.Name = "colTRH";
+			this.colTRH.OptionsColumn.AllowEdit = false;
+			this.colTRH.OptionsColumn.AllowFocus = false;
+			this.colTRH.OptionsColumn.FixedWidth = true;
+			this.colTRH.Visible = true;
+			this.colTRH.VisibleIndex = 2;
+			this.colTRH.Width = 60;
 			// 
-			// colSEX
+			// colHSPNO
 			// 
-			this.colSEX.AppearanceCell.Options.UseTextOptions = true;
-			this.colSEX.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-			this.colSEX.Caption = "Sex";
-			this.colSEX.FieldName = "SEX";
-			this.colSEX.Name = "colSEX";
-			this.colSEX.OptionsColumn.FixedWidth = true;
-			this.colSEX.Visible = true;
-			this.colSEX.VisibleIndex = 4;
-			this.colSEX.Width = 50;
+			this.colHSPNO.Caption = "HspNo";
+			this.colHSPNO.FieldName = "HSPNO";
+			this.colHSPNO.Name = "colHSPNO";
+			this.colHSPNO.Visible = true;
+			this.colHSPNO.VisibleIndex = 3;
+			this.colHSPNO.Width = 74;
 			// 
-			// OynXF
+			// colBRCTUT
+			// 
+			this.colBRCTUT.Caption = "Borç";
+			this.colBRCTUT.FieldName = "BRCTUT";
+			this.colBRCTUT.Name = "colBRCTUT";
+			this.colBRCTUT.OptionsColumn.FixedWidth = true;
+			this.colBRCTUT.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "BRCTUT", "{0:n}")});
+			this.colBRCTUT.Visible = true;
+			this.colBRCTUT.VisibleIndex = 4;
+			// 
+			// colALCTUT
+			// 
+			this.colALCTUT.Caption = "Alacak";
+			this.colALCTUT.FieldName = "ALCTUT";
+			this.colALCTUT.Name = "colALCTUT";
+			this.colALCTUT.OptionsColumn.FixedWidth = true;
+			this.colALCTUT.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ALCTUT", "{0:n}")});
+			this.colALCTUT.Visible = true;
+			this.colALCTUT.VisibleIndex = 5;
+			// 
+			// colDUTID
+			// 
+			this.colDUTID.Caption = "Üye";
+			this.colDUTID.FieldName = "DUTID";
+			this.colDUTID.Name = "colDUTID";
+			this.colDUTID.Visible = true;
+			this.colDUTID.VisibleIndex = 6;
+			this.colDUTID.Width = 74;
+			// 
+			// colINFO
+			// 
+			this.colINFO.Caption = "Info";
+			this.colINFO.FieldName = "INFO";
+			this.colINFO.Name = "colINFO";
+			this.colINFO.Visible = true;
+			this.colINFO.VisibleIndex = 7;
+			this.colINFO.Width = 83;
+			// 
+			// DcdXF
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(563, 288);
-			this.Controls.Add(this.oynGridControl);
-			this.Controls.Add(this.oYNBindingNavigator);
-			this.Name = "OynXF";
-			this.Text = "OynXF";
-			this.Load += new System.EventHandler(this.OynXF_Load);
-			((System.ComponentModel.ISupportInitialize)(this.dataSet1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.oYNBindingSource)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.oYNBindingNavigator)).EndInit();
-			this.oYNBindingNavigator.ResumeLayout(false);
-			this.oYNBindingNavigator.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.oynGridControl)).EndInit();
+			this.ClientSize = new System.Drawing.Size(619, 318);
+			this.Controls.Add(this.dcdGridControl);
+			this.Controls.Add(this.dcdBindingNavigator);
+			this.Name = "DcdXF";
+			this.Text = "DcdXF";
+			this.Load += new System.EventHandler(this.DcdXF_Load);
+			((System.ComponentModel.ISupportInitialize)(this.dataSet2)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.dcdBindingSource)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.dcdBindingNavigator)).EndInit();
+			this.dcdBindingNavigator.ResumeLayout(false);
+			this.dcdBindingNavigator.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dcdGridControl)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -303,10 +347,10 @@
 
 		#endregion
 
-		private DataSet1 dataSet1;
-		private System.Windows.Forms.BindingSource oYNBindingSource;
-		private DataSet1TableAdapters.OYNTableAdapter oynTableAdapter;
-		private System.Windows.Forms.BindingNavigator oYNBindingNavigator;
+		private DataSet2 dataSet2;
+		private System.Windows.Forms.BindingSource dcdBindingSource;
+		private DataSet2TableAdapters.DCDTableAdapter dcdTableAdapter;
+		private System.Windows.Forms.BindingNavigator dcdBindingNavigator;
 		private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem;
 		private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem;
 		private System.Windows.Forms.ToolStripButton bindingNavigatorDeleteItem;
@@ -318,13 +362,17 @@
 		private System.Windows.Forms.ToolStripButton bindingNavigatorMoveNextItem;
 		private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem;
 		private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
-		private System.Windows.Forms.ToolStripButton oYNBindingNavigatorSaveItem;
-		private DevExpress.XtraGrid.GridControl oynGridControl;
+		private System.Windows.Forms.ToolStripButton dCDBindingNavigatorSaveItem;
+		private DevExpress.XtraGrid.GridControl dcdGridControl;
 		private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
 		private DevExpress.XtraGrid.Columns.GridColumn colID;
 		private DevExpress.XtraGrid.Columns.GridColumn colSTU;
-		private DevExpress.XtraGrid.Columns.GridColumn colAD;
-		private DevExpress.XtraGrid.Columns.GridColumn colDGMTRH;
-		private DevExpress.XtraGrid.Columns.GridColumn colSEX;
+		private DevExpress.XtraGrid.Columns.GridColumn colDCBID;
+		private DevExpress.XtraGrid.Columns.GridColumn colTRH;
+		private DevExpress.XtraGrid.Columns.GridColumn colHSPNO;
+		private DevExpress.XtraGrid.Columns.GridColumn colBRCTUT;
+		private DevExpress.XtraGrid.Columns.GridColumn colALCTUT;
+		private DevExpress.XtraGrid.Columns.GridColumn colDUTID;
+		private DevExpress.XtraGrid.Columns.GridColumn colINFO;
 	}
 }

@@ -11345,7 +11345,7 @@ namespace WinClient.DataSet1TableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.IDbCommand[9];
+            this._commandCollection = new global::System.Data.IDbCommand[10];
             this._commandCollection[0] = new global::FirebirdSql.Data.FirebirdClient.FbCommand();
             ((global::FirebirdSql.Data.FirebirdClient.FbCommand)(this._commandCollection[0])).Connection = new global::FirebirdSql.Data.FirebirdClient.FbConnection(global::WinClient.Properties.Settings.Default.ConnectionString);
             ((global::FirebirdSql.Data.FirebirdClient.FbCommand)(this._commandCollection[0])).CommandText = "\"MAC_MDF\"";
@@ -12227,6 +12227,10 @@ namespace WinClient.DataSet1TableAdapters {
             param.IsNullable = true;
             param.SourceColumn = null;
             ((global::FirebirdSql.Data.FirebirdClient.FbCommand)(this._commandCollection[8])).Parameters.Add(param);
+            this._commandCollection[9] = new global::FirebirdSql.Data.FirebirdClient.FbCommand();
+            ((global::FirebirdSql.Data.FirebirdClient.FbCommand)(this._commandCollection[9])).Connection = new global::FirebirdSql.Data.FirebirdClient.FbConnection(global::WinClient.Properties.Settings.Default.ConnectionString);
+            ((global::FirebirdSql.Data.FirebirdClient.FbCommand)(this._commandCollection[9])).CommandText = "\"GET_PK\"";
+            ((global::FirebirdSql.Data.FirebirdClient.FbCommand)(this._commandCollection[9])).CommandType = global::System.Data.CommandType.StoredProcedure;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -13251,6 +13255,34 @@ namespace WinClient.DataSet1TableAdapters {
                 }
             }
             return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual object GET_PK() {
+            global::FirebirdSql.Data.FirebirdClient.FbCommand command = ((global::FirebirdSql.Data.FirebirdClient.FbCommand)(this.CommandCollection[9]));
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            object returnValue;
+            try {
+                returnValue = command.ExecuteScalar();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            if (((returnValue == null) 
+                        || (returnValue.GetType() == typeof(global::System.DBNull)))) {
+                return null;
+            }
+            else {
+                return ((object)(returnValue));
+            }
         }
     }
 }

@@ -11,31 +11,30 @@ using DevExpress.XtraEditors;
 
 namespace WinClient
 {
-	public partial class OynXF : DevExpress.XtraEditors.XtraForm
+	public partial class DhtXF : DevExpress.XtraEditors.XtraForm
 	{
-		public OynXF ()
+		public DhtXF ()
 		{
 			InitializeComponent();
 		}
 
-		private void oYNBindingNavigatorSaveItem_Click (object sender, EventArgs e)
+		private void dHTBindingNavigatorSaveItem_Click (object sender, EventArgs e)
 		{
 			this.Validate();
-			this.oYNBindingSource.EndEdit();
-			this.oynTableAdapter.Update( this.dataSet1.OYN );
+			this.dhtBindingSource.EndEdit();
+			this.dhtTableAdapter.Update( this.dataSet2.DHT );
 
 		}
 
-		private void OynXF_Load (object sender, EventArgs e)
+		private void DhtXF_Load (object sender, EventArgs e)
 		{
-			this.oynTableAdapter.Fill( this.dataSet1.OYN );
-
+			this.dhtTableAdapter.Fill( this.dataSet2.DHT );
 		}
 
 		private void gridView1_InitNewRow (object sender, DevExpress.XtraGrid.Views.Grid.InitNewRowEventArgs e)
 		{
 			gridView1.SetRowCellValue( e.RowHandle, colID, Program.MF.GetPK() );
-			gridView1.SetRowCellValue( e.RowHandle, colSEX, "E" );      // Erkek
+
 		}
 	}
 }
